@@ -9,10 +9,9 @@ import Intro from '../components/introduction'
 import WorkGallery from '../components/workGallery'
 import localFont from '@next/font/local'
 import gsap from 'gsap'
-import {useContext, useRef} from 'react'
+import {useEffect,useRef} from 'react'
 import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from 'usehooks-ts'
-import {SmoothScrollContext} from '../public/context/SmoothScroll.context'
 
 const inter = Inter({ subsets: ['latin'] })
 const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
@@ -21,14 +20,6 @@ const Home =()=> {
   const app = useRef<HTMLDivElement>(null);
   //@ts-ignore
   const introtl = useRef();
-  //@ts-ignore
-  const {scroll} = useContext(SmoothScrollContext)
-
-  const goToTop = event => {
-    event.preventDefault()
-    //@ts-ignore
-    scroll && scroll.scrollTo(0)
-  }
 
   useIsomorphicLayoutEffect(() => {
     let lines;
@@ -47,7 +38,7 @@ const Home =()=> {
       introtl.current = gsap.timeline()
       .set("img",{clipPath:"inset(100% 0 0 0)"})
       .fromTo(".intro",{translateX:"-50%"},{translateX:0,duration:3,delay:3,ease:"power4.inOut"})
-      //.to(".cover",{display:"none"})
+      .to(".cover",{display:"none"})
       .to("img",{clipPath:"inset(0% 0 0 0)", duration:1, ease:"power4.inOut"},"+=0.3")
       .fromTo(".word",{translateY:"2em"},{translateY:0,duration:1,stagger:0.03},"<")
     },app);
@@ -63,9 +54,9 @@ const Home =()=> {
         <link rel="icon" href="/favicon.ico" />
         <link rel='manifest' href="/manifest.json" />
       </Head>
-      <div className={`${switzer.className} preload--container w-screen overflow-x-auto flex flex-nowrap bg-grey text-black h-screen`} ref={app}>
+      <div id="App" className={`${switzer.className} preload--container w-screen overflow-x-hidden flex flex-nowrap bg-grey text-black h-screen`} ref={app}>
       <div className="intro flex flex-row">
-        <div data-scroll-section className="w-screen">
+        <div data-scroll-container className="w-screen">
           <Intro />
           <WorkGallery />
           <HeaderMenu />

@@ -6,7 +6,7 @@ import MotionReel from "./heroCarousel";
 
 const Ampersand = ({container,glyph}) => {
     return (
-        <div data-scroll-speed="9" className="flex justify-end">
+        <div className="flex justify-end">
             <div className="ampersand relative overflow-hidden bg-red text-white rounded-full aspect-square w-ampMobile md:w-ampMd">
                 <div ref={container} className="amp-wrapper flex flex-col">
                     <div className="amp flex flex-col justify-center aspect-square w-full"><ArrowRight classToAdd="lgArrow rotate-90" color="#ffffff"/></div>
@@ -72,7 +72,7 @@ const Intro = () => {
     },[])
 
     return (
-        <div data-scroll data-scroll-speed="9" ref={introductionContent} className="introBody p-4 grid grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
+        <div data-scroll-section ref={introductionContent} className="introBody p-4 grid grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Graphic Designer & Creative Developer</h1>
             <p className="paragraph row-start-1 col-start-2 col-span-3 leading-tight text-msm text-black md:text-xl md:leading-6 md:col-start-2 md:col-end-6 md:row-start-2 md:row-span-2">I am Heber Jay Indino, most people know me as Jay, a designer and developer who specialize in creating meaningful and beautiful digital experiences and visual compositions. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
             <div className="relative row-start-2 row-span-2 col-start-1 col-span-4 md:col-start-7 md:col-span-4 md:row-start-1 md:row-span-4">
@@ -85,7 +85,7 @@ const Intro = () => {
             </div>
             <div className="funFact flex leading-tight text-msm md:text-sm row-start-6 md:row-start-5 md:col-start-2 col-span-2">
                 <div className="flex flex-col justify-center md:justify-end">
-                <h6 className=" font-semibold">Fun Fact:</h6>
+                <h6 data-scroll data-scroll-speed="9" className=" font-semibold">Fun Fact:</h6>
                 <h6 className=" font-semibold">This is NOT a website</h6>
                 <div className="flex gap-2">
                     <ArrowRight color="#F45844"/>
