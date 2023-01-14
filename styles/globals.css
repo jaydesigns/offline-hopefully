@@ -173,9 +173,14 @@ a {
   transform: translateY(100%);
 }
 
-img {
-  image-rendering: pixelated;
+/* img {
+  image-rendering: crisp-edges;
+  filter: grayscale(100%);
 }
+
+img:hover {
+  filter: grayscale(0%);
+} */
 
 .lgArrow{
   width:6vw;

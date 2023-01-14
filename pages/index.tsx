@@ -9,19 +9,23 @@ import Intro from '../components/introduction'
 import WorkGallery from '../components/workGallery'
 import localFont from '@next/font/local'
 import gsap from 'gsap'
-import {useEffect,useRef} from 'react'
+import {useLayoutEffect,useRef} from 'react'
 import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from 'usehooks-ts'
+import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
 
 const inter = Inter({ subsets: ['latin'] })
 const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
 
 const Home =()=> {
+  //Register GSAP Plugin - ScrollTrigger
+  gsap.registerPlugin(ScrollTrigger);
   const app = useRef<HTMLDivElement>(null);
+  //const homeWrapper = useRef<HTMLDivElement>(null);
   //@ts-ignore
   const introtl = useRef();
 
-  useIsomorphicLayoutEffect(() => {
+  useIsomorphicLayoutEffect(()=>{
     let lines;
     const runSplit = () => {
       //@ts-ignore
@@ -32,15 +36,29 @@ const Home =()=> {
         lines.revert();
         runSplit()
     })
+  })
+  
+  useIsomorphicLayoutEffect(()=>{
+    //const el = homeWrapper.current
+    const ctx = gsap.context(()=>{
+      //@ts-ignore
+      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{trigger:".selectedWork",scrub:true , start:"top bottom", end:"top center", pinSpacing:false}})
+    })
+    return () => ctx.revert()
+  },[])
+
+  useIsomorphicLayoutEffect(() => {
 
     const ctx = gsap.context(()=>{
       //@ts-ignore
       introtl.current = gsap.timeline()
+      .set(".word",{translateY: "2em"})
       .set("img",{clipPath:"inset(100% 0 0 0)"})
-      .fromTo(".intro",{translateX:"-50%"},{translateX:0,duration:3,delay:3,ease:"power4.inOut"})
-      .to(".cover",{display:"none"})
+      .set(".intro",{translateX:"-100%"})
+      .to(".intro",{translateX:0,duration:3,ease:"power4.inOut"})
+      // .to(".cover",{display:"none"})
       .to("img",{clipPath:"inset(0% 0 0 0)", duration:1, ease:"power4.inOut"},"+=0.3")
-      .fromTo(".word",{translateY:"2em"},{translateY:0,duration:1,stagger:0.03},"<")
+      .to(".word",{translateY:0,duration:1,stagger:0.03},"<")
     },app);
 
     return ()=>ctx.revert();
@@ -54,17 +72,18 @@ const Home =()=> {
         <link rel="icon" href="/favicon.ico" />
         <link rel='manifest' href="/manifest.json" />
       </Head>
-      <div id="App" className={`${switzer.className} preload--container w-screen overflow-x-hidden flex flex-nowrap bg-grey text-black h-screen`} ref={app}>
-      <div className="intro flex flex-row">
-        <div data-scroll-container className="w-screen">
+      <div id="App" className={`${switzer.className} relative preload--container w-screen h-screen bg-grey text-black`} ref={app}>
+      <div className="intro changeBG">
+        <div className="w-screen">
           <Intro />
           <WorkGallery />
-          <HeaderMenu />
         </div>
-        <div className="cover w-screen h-full bg-white">
+        {/* <div className="cover w-screen h-full bg-white">
           <Video />
-        </div>
-      </div>
+        </div> */}
+      </div>      
+      {/*@ts-ignore*/}
+      <HeaderMenu />
     </div>
     </>
   )
