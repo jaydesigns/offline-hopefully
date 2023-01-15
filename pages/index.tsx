@@ -13,6 +13,7 @@ import {useLayoutEffect,useRef} from 'react'
 import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from 'usehooks-ts'
 import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
+import PWAFeatures from '../components/pwaFeature'
 
 const inter = Inter({ subsets: ['latin'] })
 const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
@@ -77,6 +78,7 @@ const Home =()=> {
         <div className="w-screen">
           <Intro />
           <WorkGallery />
+          <PWAFeatures />
         </div>
         {/* <div className="cover w-screen h-full bg-white">
           <Video />

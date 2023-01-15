@@ -173,6 +173,9 @@ a {
   transform: translateY(100%);
 }
 
+.featureCover {
+  clip-path: url(#featureClip);
+}
 /* img {
   image-rendering: crisp-edges;
   filter: grayscale(100%);
