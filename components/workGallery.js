@@ -5,7 +5,7 @@ import Image from "next/image"
 
 const WorkGallery = () => {
     return(
-        <div className="flex flex-col text-white selectedWork w-full h-screen p-4 justify-between pb-36">
+        <div className="flex flex-col text-white selectedWork w-full h-screen p-4 justify-between pt-28">
             <div className="flex flex-col gap-4 md:flex-row">
                 <h1 className="flex-1 text-6xl text-white">Selected Work</h1>
                 <div className="flex-1 flex-col md:flex-row border-t border-white">
@@ -38,7 +38,7 @@ const WorkGallery = () => {
                         <p>What</p>
                     </div>
                     <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/ocean.jpg'} alt="image" width={260} height={568}></Image>
+                        <Image src={'/images/ocean.jpg'} alt="image" width={80} height={568}></Image>
                         <p>What</p>
                     </div>
                     <div className="card flex flex-col justify-start w-max">
@@ -58,7 +58,7 @@ const WorkGallery = () => {
                         <p>What</p>
                     </div>
                     <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/ocean.jpg'} alt="image" width={260} height={568}></Image>
+                        <Image src={'/images/ocean.jpg'} alt="image" width={80} height={568}></Image>
                         <p>What</p>
                     </div>
                     <div className="card flex flex-col justify-start w-max">

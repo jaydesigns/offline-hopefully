@@ -14,6 +14,7 @@ import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from 'usehooks-ts'
 import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
 import PWAFeatures from '../components/pwaFeature'
+import Contact from '../components/contact'
 
 const inter = Inter({ subsets: ['latin'] })
 const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
@@ -43,6 +44,9 @@ const Home =()=> {
     //const el = homeWrapper.current
     const ctx = gsap.context(()=>{
       //@ts-ignore
+      gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
+      //@ts-ignore
+      gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{trigger:".interactiveContact",scrub:true , start:"top +=75%", end:"top top", pinSpacing:false}})
       gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{trigger:".selectedWork",scrub:true , start:"top bottom", end:"top center", pinSpacing:false}})
     })
     return () => ctx.revert()
@@ -79,6 +83,7 @@ const Home =()=> {
           <Intro />
           <WorkGallery />
           <PWAFeatures />
+          <Contact />
         </div>
         {/* <div className="cover w-screen h-full bg-white">
           <Video />
