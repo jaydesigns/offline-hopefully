@@ -18,6 +18,7 @@ module.exports = {
         xxxl: '10vw',
         msm: '3.5vw',
         mxxxl: '11.5vw',
+        bio: ['16vw',0.8],
       },
       gridTemplateRows: {
         layout: '1fr 1fr 1fr 10vw 10vw 1fr',

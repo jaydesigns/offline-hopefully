@@ -9,7 +9,7 @@ import Intro from '../components/introduction'
 import WorkGallery from '../components/workGallery'
 import localFont from '@next/font/local'
 import gsap from 'gsap'
-import {useLayoutEffect,useRef} from 'react'
+import {useEffect,useRef, useState} from 'react'
 import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from 'usehooks-ts'
 import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
@@ -53,19 +53,17 @@ const Home =()=> {
   },[])
 
   useIsomorphicLayoutEffect(() => {
-
     const ctx = gsap.context(()=>{
       //@ts-ignore
       introtl.current = gsap.timeline()
-      .set(".word",{translateY: "2em"})
+      .set(".word",{translateY:"2em"})
       .set("img",{clipPath:"inset(100% 0 0 0)"})
       .set(".intro",{translateX:"-100%"})
       .to(".intro",{translateX:0,duration:3,ease:"power4.inOut"})
       // .to(".cover",{display:"none"})
       .to("img",{clipPath:"inset(0% 0 0 0)", duration:1, ease:"power4.inOut"},"+=0.3")
-      .to(".word",{translateY:0,duration:1,stagger:0.03},"<")
+      .to(".word",{translateY:0,duration:1,stagger:0.03})
     },app);
-
     return ()=>ctx.revert();
   },[])
   return (
