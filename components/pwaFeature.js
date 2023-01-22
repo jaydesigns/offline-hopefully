@@ -26,7 +26,7 @@ const PWAFeatures = () => {
     },[])
 
     return (
-        <div className="flex flex-col featureSection w-screen h-screen p-4 pt-28">
+        <div className="snap-start flex flex-col featureSection w-screen h-screen p-4 pb-28">
             <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4">
                 <span className="text-white">Installability</span>
                 <span className="text-white">Component-based</span>

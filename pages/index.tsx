@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
@@ -46,8 +45,8 @@ const Home =()=> {
       //@ts-ignore
       gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
       //@ts-ignore
-      gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{trigger:".interactiveContact",scrub:true , start:"top +=75%", end:"top top", pinSpacing:false}})
-      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{trigger:".selectedWork",scrub:true , start:"top bottom", end:"top center", pinSpacing:false}})
+      gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:".intro",trigger:".interactiveContact",scrub:true , start:"top +=75%", end:"top top", pinSpacing:false}})
+      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:".intro",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top center", pinSpacing:false}})
     })
     return () => ctx.revert()
   },[])
@@ -58,8 +57,8 @@ const Home =()=> {
       introtl.current = gsap.timeline()
       .set(".word",{translateY:"2em"})
       .set("img",{clipPath:"inset(100% 0 0 0)"})
-      .set(".intro",{translateX:"-100%"})
-      .to(".intro",{translateX:0,duration:3,ease:"power4.inOut"})
+      // .set(".intro",{translateX:"-100%"})
+      // .to(".intro",{translateX:0,duration:3,ease:"power4.inOut"})
       // .to(".cover",{display:"none"})
       .to("img",{clipPath:"inset(0% 0 0 0)", duration:1, ease:"power4.inOut"},"+=0.3")
       .to(".word",{translateY:0,duration:1,stagger:0.03})
@@ -76,20 +75,18 @@ const Home =()=> {
         <link rel='manifest' href="/manifest.json" />
       </Head>
       <div id="App" className={`${switzer.className} relative preload--container w-screen h-screen bg-grey text-black`} ref={app}>
-      <div className="intro changeBG">
-        <div className="w-screen">
-          <Intro />
-          <WorkGallery />
-          <PWAFeatures />
-          <Contact />
+        <div className="changeBG intro w-full h-full snap-y overflow-y-auto overflow-x-hidden">
+            <Intro />
+            <WorkGallery />
+            <PWAFeatures />
+            <Contact />
         </div>
-        {/* <div className="cover w-screen h-full bg-white">
-          <Video />
-        </div> */}
-      </div>      
-      {/*@ts-ignore*/}
-      <HeaderMenu />
-    </div>
+          {/* <div className="cover w-screen h-full bg-white">
+            <Video />
+          </div> */}
+        {/*@ts-ignore*/}
+        <HeaderMenu />
+      </div>
     </>
   )
 }

@@ -103,6 +103,8 @@ html.has-scroll-dragging {
   cursor: grabbing;
 }
 
+/*END OF LOCOMOTIVE SCROLL*/
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -176,14 +178,6 @@ a {
 .featureCover {
   clip-path: url(#featureClip);
 }
-/* img {
-  image-rendering: crisp-edges;
-  filter: grayscale(100%);
-}
-
-img:hover {
-  filter: grayscale(0%);
-} */
 
 .lgArrow{
   width:6vw;
@@ -192,6 +186,10 @@ img:hover {
 
 .line {
   overflow-y: hidden;
+}
+
+img {
+  object-fit: cover;
 }
 
 ::-webkit-scrollbar{

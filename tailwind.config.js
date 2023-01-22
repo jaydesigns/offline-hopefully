@@ -21,7 +21,7 @@ module.exports = {
         bio: ['16vw',0.8],
       },
       gridTemplateRows: {
-        layout: '1fr 1fr 1fr 10vw 10vw 1fr',
+        layout: '2vw 1fr 1fr 10vw 10vw 1fr',
         mobileLayout: '1fr 1fr 1fr 12vw 12vw 1fr',
       },
       width: {

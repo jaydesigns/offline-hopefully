@@ -5,7 +5,7 @@ import Image from "next/image"
 
 const WorkGallery = () => {
     return(
-        <div className="flex flex-col text-white selectedWork w-full h-screen p-4 justify-between pt-28">
+        <div className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 justify-between">
             <div className="flex flex-col gap-4 md:flex-row">
                 <h1 className="flex-1 text-6xl text-white">Selected Work</h1>
                 <div className="flex-1 flex-col md:flex-row border-t border-white">
@@ -29,45 +29,41 @@ const WorkGallery = () => {
             </div>
             <div className="flex overflow-x-auto w-screen">
                 <div className="flex flex-row gap-4 flex-nowrap">
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/aloha.jpg'} alt="image" width={260} height={568}></Image>
-                        <p>What</p>
+                    <div className="card flex flex-col justify-start w-96 h-96">
+                        <div className="relative h-2/3 w-full overflow-hidden">
+                            <Image src={'/images/aloha.jpg'} alt="image" fill style={{objectFit:"cover"}}></Image>
+                        </div>
+                        <p className="h-1/3">What</p>
                     </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/curve.jpg'} alt="image" width={160} height={568}></Image>
-                        <p>What</p>
+                    <div className="card flex flex-col justify-start w-96 h-96">
+                        <div className="relative h-2/3 w-full overflow-hidden">
+                            <Image src={'/images/aloha.jpg'} alt="image" fill style={{objectFit:"cover"}}></Image>
+                        </div>
+                        <p className="h-1/3">What</p>
                     </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/ocean.jpg'} alt="image" width={80} height={568}></Image>
-                        <p>What</p>
+                    <div className="card flex flex-col justify-start w-96 h-96">
+                        <div className="relative h-2/3 w-full overflow-hidden">
+                            <Image src={'/images/aloha.jpg'} alt="image" fill style={{objectFit:"cover"}}></Image>
+                        </div>
+                        <p className="h-1/3">What</p>
                     </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/cover-closeup.jpg'} alt="image" width={460} height={568}></Image>
-                        <p>What</p>
+                    <div className="card flex flex-col justify-start w-96 h-96">
+                        <div className="relative h-2/3 w-full overflow-hidden">
+                            <Image src={'/images/aloha.jpg'} alt="image" fill style={{objectFit:"cover"}}></Image>
+                        </div>
+                        <p className="h-1/3">What</p>
                     </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/DSC_0120_2.jpg'} alt="image" width={460} height={568}></Image>
-                        <p>What</p>
+                    <div className="card flex flex-col justify-start w-96 h-96">
+                        <div className="relative h-2/3 w-full overflow-hidden">
+                            <Image src={'/images/aloha.jpg'} alt="image" fill style={{objectFit:"cover"}}></Image>
+                        </div>
+                        <p className="h-1/3">What</p>
                     </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/aloha.jpg'} alt="image" width={260} height={568}></Image>
-                        <p>What</p>
-                    </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/curve.jpg'} alt="image" width={160} height={568}></Image>
-                        <p>What</p>
-                    </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/ocean.jpg'} alt="image" width={80} height={568}></Image>
-                        <p>What</p>
-                    </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/cover-closeup.jpg'} alt="image" width={460} height={568}></Image>
-                        <p>What</p>
-                    </div>
-                    <div className="card flex flex-col justify-start w-max">
-                        <Image src={'/images/DSC_0120_2.jpg'} alt="image" width={460} height={568}></Image>
-                        <p>What</p>
+                    <div className="card flex flex-col justify-start w-96 h-96">
+                        <div className="relative h-2/3 w-full overflow-hidden">
+                            <Image src={'/images/aloha.jpg'} alt="image" fill style={{objectFit:"cover"}}></Image>
+                        </div>
+                        <p className="h-1/3">What</p>
                     </div>
                 </div>
             </div>

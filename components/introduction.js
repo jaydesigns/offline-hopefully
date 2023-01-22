@@ -3,6 +3,7 @@ import { useEffect,useRef,useState} from "react";
 import ArrowRight from "./arrowRight";
 import gsap from "gsap";
 import MotionReel from "./heroCarousel";
+import Link from "next/link";
 
 const Ampersand = ({container,glyph}) => {
     return (
@@ -72,11 +73,21 @@ const Intro = () => {
     },[])
 
     return (
-        <div ref={introductionContent} className="introBody p-4 grid grid-cols-4 h-screen gap-2 grid-rows-mobileLayout md:gap-4 md:grid-cols-12 md:grid-rows-layout">
+        <div ref={introductionContent} className="snap-start introBody p-4 grid grid-cols-4 h-screen gap-2 grid-rows-mobileLayout md:gap-4 md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Graphic Designer & Creative Developer</h1>
             <p className="paragraph row-start-1 col-start-2 col-span-3 leading-tight text-msm text-black md:text-sm md:leading-4 md:col-start-2 md:col-end-6 md:row-start-2 md:row-span-2">I am Heber Jay Indino, most people know me as Jay, a designer and developer who specialize in creating meaningful and beautiful digital experiences and visual compositions. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
-            <div className="relative row-start-2 row-span-2 col-start-1 col-span-4 md:col-start-7 md:col-span-4 md:row-start-1 md:row-span-4">
-            <MotionReel classList="absolute bottom-0 object-cover w-full h-full" />
+            <div className="relative flex flex-col gap-4 bg-black p-8 row-start-2 row-span-2 col-start-1 col-span-4 md:col-start-8 md:col-span-2 md:row-start-2 md:row-span-2">
+                <div className="flex">
+                    <h6 className="text-sm text-white">View Selected Work</h6>
+                    <Link href="/project">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="42" viewBox="0 0 43 42" fill="none">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M21.4388 42C32.8739 42 42.1438 32.7301 42.1438 21.295C42.1438 9.86001 32.8739 0.590088 21.4388 0.590088C10.0038 0.590088 0.733887 9.86001 0.733887 21.295C0.733887 32.7301 10.0038 42 21.4388 42ZM3.98164 24.1778H26.9846L20.1903 30.9722L24.4557 35.2376L38.5316 21.1617L24.4557 7.08578L20.1903 11.3512L26.9846 18.1456H3.98164V24.1778Z" fill="white"/>
+                        </svg>
+                    </Link>
+                </div>
+                <div className="relative w-full h-full">
+                    <MotionReel classList="absolute bottom-0 object-cover w-full h-full" />
+                </div>
             </div>
             <TextSlider refr={heading1container} heading={"heading1"} gridPos="row-start-4 col-span-3 md:row-start-4 md:col-span-6" firstWord={myTitle[0]} secondWord={myTitle[3]}/>
             <TextSlider refr={heading2container} heading={"heading2"} gridPos="row-start-5 col-start-2 col-span-3 md:row-start-5 md:col-start-5 md:col-span-8" firstWord={myTitle[1]} secondWord={myTitle[4]}/>

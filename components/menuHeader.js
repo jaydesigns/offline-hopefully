@@ -15,21 +15,21 @@ const HeaderMenu = () => {
     const menuExpand = () => {
         let tl = gsap.timeline()
         tl.to(".linkName",{width: "4em", duration: 0.5, ease:"power3.inOut"})
-        tl.to(".linkText",{transform:"translateY(0%)", duration:0.5, delay:-0.5, stagger: 0.1})
+        tl.to(".linkText",{transform:"translateY(0%)", duration:0.5, stagger: 0.1},"-=0.5")
         setState(true);
         tl.play();
     }
     const menuShrink = () => {
         let tl = gsap.timeline()
         tl.to(".linkText",{transform:"translateY(100%)", duration: 0.5, stagger: 0.1})
-        tl.to(".linkName",{width: "0em", duration: 0.5, delay:-0.5, ease:"power3.inOut"})
+        tl.to(".linkName",{width: "0em", duration: 0.5, ease:"power3.inOut"},"-=0.5")
         setState(false);
         tl.play();
     }
 
     return(
         <>
-        <div className="changeBG w-full px-4 sticky bottom-0">
+        <div className="changeBG w-full px-4 fixed bottom-0">
         <div className="flex h-14 place-content-between border-t-2 border-darkGrey md:h-20">
             <div className="basis-1/3 py-4 mix-blend-exclusion">
                 <Link href={"/"}>
@@ -42,8 +42,8 @@ const HeaderMenu = () => {
             </div>
             <div className="navigationMenu flex gap-1 basis-1/3 justify-end h-full py-4" onTouchStart={state !== true ? menuExpand : menuShrink} onMouseEnter={menuExpand} onMouseLeave={menuShrink}>
                 <Link href={"bio"}><MenuItem str="bio" /></Link>
-                <MenuItem str="work" />
-                <MenuItem str="contact" />
+                <MenuItem str="socials" />
+                <MenuItem str="say hi" />
             </div>
         </div>
         </div>
