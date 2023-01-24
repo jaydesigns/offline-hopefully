@@ -192,6 +192,11 @@ img {
   object-fit: cover;
 }
 
+#smooth-content {
+  overflow: visible;
+  height: calc(100vh * 4)
+}
+
 ::-webkit-scrollbar{
   display: none;
 }

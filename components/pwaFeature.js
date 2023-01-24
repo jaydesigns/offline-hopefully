@@ -26,11 +26,11 @@ const PWAFeatures = () => {
     },[])
 
     return (
-        <div className="snap-start flex flex-col featureSection w-screen h-screen p-4 pb-28">
+        <div className="snap-start flex flex-col featureSection w-screen h-screen p-4 pb-28 text-black">
             <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4">
-                <span className="text-white">Installability</span>
-                <span className="text-white">Component-based</span>
-                <span className="text-white">Works Offline</span>
+                <span className="">Installability</span>
+                <span className="">Component-based</span>
+                <span className="">Works Offline</span>
             </div>
             <div className="relative w-full h-5/6">
                 <div className="featureCover w-full h-full overflow-hidden">
@@ -47,7 +47,7 @@ const PWAFeatures = () => {
                         </clipPath>
                     </defs>
                 </svg>
-                <div className="text-white absolute bottom-0 w-1/3">
+                <div className="absolute bottom-0 w-1/3">
                     <h4 className="text-6xl">Installability</h4>
                     <p>This web app utilizes new technology which enables you to install this web app on whatever device you&apos;re using. If you&apos;re using a smartphone, the app will be installed on your homescreen. If you are using a desktop device, it will be added to your app list.</p>
                 </div>

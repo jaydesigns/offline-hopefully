@@ -18,7 +18,7 @@ const Contact = () => {
     }
 
     return(
-        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-28 grid grid-rows-2">
+        <div className="interactiveContact snap-start w-screen h-screen text-white p-4 pt-28 grid grid-rows-2">
             <h3 ref={headingText} className="text-2xl md:text-6xl font-semibold indent-48">Hi! Thanks for taking interest in my work. I&apos;d like to meet you. What&apos;s your name?</h3>
             <form>
                 <input className="bg-black text-white p-2" placeholder="First name will do" value={firstName} onChange={handleChange}></input>
