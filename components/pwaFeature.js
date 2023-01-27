@@ -34,7 +34,7 @@ const PWAFeatures = () => {
             </div>
             <div className="relative w-full h-5/6">
                 <div className="featureCover w-full h-full overflow-hidden">
-                    <Image src="/images/guggenheim.jpg" alt="image" width={svgWidth} height={800}></Image>
+                    <Image src="/images/guggenheim.jpg" alt="image" fill style={{objectFit:"cover"}} placeholder="blur" blurDataURL="/images/guggenheim.jpg"></Image>
                 </div>
                 <svg id="clippingCanvas" className="absolute top-0 flex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
                     <defs>

@@ -5,9 +5,9 @@ import Image from "next/image"
 
 const WorkGallery = () => {
     return(
-        <div className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 justify-between">
+        <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 justify-between">
             <div className="flex flex-col gap-4 md:flex-row">
-                <h1 className="flex-1 text-6xl text-white">Selected Work</h1>
+                <h1 className="flex-1 text-6xl">Selected Work</h1>
                 <div className="flex-1 flex-col md:flex-row border-t border-white">
                     <span><span>+</span>Type of Work</span>
                     <div className="flex flex-col">

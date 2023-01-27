@@ -4,7 +4,6 @@ import { Inter } from '@next/font/google'
 import HeaderMenu from '../components/menuHeader'
 import Intro from '../components/introduction'
 import WorkGallery from '../components/workGallery'
-import localFont from '@next/font/local'
 import gsap from 'gsap'
 import { useContext, useRef, useState } from 'react'
 import SplitType from 'split-type'
@@ -15,7 +14,6 @@ import Contact from '../components/contact'
 import { SmootherContext } from '../SmootherContext'
 
 const inter = Inter({ subsets: ['latin'] })
-const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
 
 const Home =()=> {
   const smoother = useContext(SmootherContext)
@@ -42,19 +40,6 @@ const Home =()=> {
         runSplit()
     })
   })
-  
-  useIsomorphicLayoutEffect(()=>{
-    //const el = homeWrapper.current
-    const ctx = gsap.context(()=>{
-      //@ts-ignore
-      gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
-      //@ts-ignore
-      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".interactiveContact",scrub:true , start:"top bottom", end:"top top", pinSpacing:false}})
-      gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:"body",trigger:".featureSection",scrub:true , start:"top bottom", end:"top top", pinSpacing:false}})
-      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top top", pinSpacing:false}})
-    })
-    return () => ctx.revert()
-  },[])
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(()=>{
@@ -79,19 +64,18 @@ const Home =()=> {
         <link rel="icon" href="/favicon.ico" />
         <link rel='manifest' href="/manifest.json" />
       </Head>
-      <div id="App" className={`${switzer.className} relative preload--container w-screen h-screen bg-grey text-black`} ref={app}>
-        <div id="smooth-content" className="changeBG intro w-full h-full overflow-y-auto overflow-x-hidden">
-            <Intro />
-            <WorkGallery />
-            <PWAFeatures />
-            <Contact />
+      <Intro />
+      <WorkGallery />
+      <PWAFeatures />
+      <Contact />
+      {/* <main id="App" className={`${switzer.className} relative preload--container w-screen h-screen bg-grey text-black overflow-y-auto overflow-x-hidden`} ref={app}>
+        <div id="smooth-content" className="changeBG intro w-full h-full">
+            
         </div>
-          {/* <div className="cover w-screen h-full bg-white">
+          <div className="cover w-screen h-full bg-white">
             <Video />
-          </div> */}
-        {/*@ts-ignore*/}
-        <HeaderMenu />
-      </div>
+          </div> 
+      </main> */}
     </>
   )
 }

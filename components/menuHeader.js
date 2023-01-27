@@ -29,8 +29,8 @@ const HeaderMenu = () => {
 
     return(
         <>
-        <div className="changeBG w-full px-4 fixed bottom-0">
-        <div className="flex h-14 place-content-between border-t-2 border-darkGrey md:h-20">
+        <div className="changeBG w-full px-4 fixed bottom-0 bg-grey">
+        <div className="flex h-14 place-content-between border-t border-darkGrey md:h-20">
             <div className="basis-1/3 py-4 mix-blend-exclusion">
                 <Link href={"/"}>
                     <svg id="Layer_2" style={{height:'23px'}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.64 60"><defs></defs><g id="Layer_1-2"><rect fill="#FFFFFF" className="cls-1" x="69.82" y="17.51" width="17.82" height="42.49"/><polygon fill="#FFFFFF" className="cls-1" points="17.54 18 17.54 0 0 0 0 60 17.54 60 17.54 34.03 34.08 34.03 34.08 47.22 50.81 47.22 50.81 17.65 17.54 18"/></g></svg>
