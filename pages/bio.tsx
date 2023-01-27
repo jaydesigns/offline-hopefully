@@ -21,7 +21,7 @@ const Bio = () => {/*
 
     return(
         <Layout>
-            <main className={`${switzer.className} h-screen bg-grey`}>
+            <main className={`${switzer.className} bg-grey`}>
                 <div className="p-4 text-black pb-28">
                     <div className="text-bio tracking-tighter uppercase font-semibold grid grid-cols-12 border-b-2 pt-2 border-darkGrey">
                         <span>Heber</span><span className="col-start-9">Jay</span>

@@ -9,12 +9,19 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import HeaderMenu from '../components/menuHeader'
 import localFont from '@next/font/local'
 import Lenis from '@studio-freight/lenis'
+import SplitType from 'split-type'
+import Video from '../components/splashScreen'
+
 const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
 
 export default function App({ Component, pageProps }: AppProps) {
   const smoothWrapper = useRef();
   const smoothContent = useRef();
   const [smoother,setSmoother] = useState()
+  const splash = useRef()
+  //const app = useRef<HTMLDivElement>(null);
+  //@ts-ignore
+  const introtl = useRef();
   /* useIsomorphicLayoutEffect(()=>{
     gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
@@ -64,27 +71,66 @@ export default function App({ Component, pageProps }: AppProps) {
       //@ts-ignore
       gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
       //@ts-ignore
-      gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:"body",trigger:".interactiveContact",scrub:true , start:"top 50%", end:"top top", pinSpacing:false, markers:true}})
-      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top top", pinSpacing:false, markers:true}})
+      gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:"body",trigger:".interactiveContact",scrub:true , start:"top 50%", end:"top top", pinSpacing:false}})
+      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top top", pinSpacing:false}})
+    })
+    return () => ctx.revert()
+  },[])
+
+  
+  useIsomorphicLayoutEffect(()=>{
+    let lines;
+    const runSplit = () => {
+      //@ts-ignore
+      lines = new SplitType(".paragraph",{type:'lines'})
+    }
+    runSplit()
+    window.addEventListener("resize",()=>{
+        lines.revert();
+        runSplit()
+    })
+  })
+
+  useIsomorphicLayoutEffect(() => {
+    const ctx = gsap.context(()=>{
+      //@ts-ignore
+      introtl.current = gsap.timeline()
+      .set(".word",{translateY:"2em"})
+      .set("img",{clipPath:"inset(100% 0 0 0)"})
+      // .set(".intro",{translateX:"-100%"})
+      // .to(".intro",{translateX:0,duration:3,ease:"power4.inOut"})
+      // @ts-ignore
+      .set(splash.current,{clipPath:"inset(0 0 0 0"})
+      // @ts-ignore
+      .to(splash.current,{clipPath:"inset(0 0 0 100%)",delay:4,ease:"power4.inOut",duration:3})
+      // @ts-ignore
+      .to(splash.current,{display:"none"})
+      .to("img",{clipPath:"inset(0% 0 0 0)", duration:1, ease:"power4.inOut"},"+=0.3")
+      .to(".word",{translateY:0,duration:1,stagger:0.03})
+    },smoothContent);
+    return ()=>ctx.revert();
+  },[])
+
+  useIsomorphicLayoutEffect(()=>{
+    gsap.registerPlugin(ScrollTrigger)
+    const ctx = gsap.context(()=>{
+      gsap.to(".heroImage",{translateY:"50%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})
     })
     return () => ctx.revert()
   },[])
 
   return (
     <div>
-      {/* <SmootherContext.Provider value={smoother}>
-        <div ref={smoothWrapper} id="smooth-wrapper">
-          <div ref={smoothContent} id="smooth-content" className={`${switzer.className} changeBG`}>
-            <Component {...pageProps} />
-          </div>
-        </div>
-      </SmootherContext.Provider> */}
       {/* @ts-ignore */}
       <div ref={smoothWrapper} id="smooth-wrapper">
         {/* @ts-ignore */}
         <div ref={smoothContent} id="smooth-content" className={`${switzer.className} changeBG`}>
           <Component {...pageProps} />
         </div>
+      </div>
+      {/* @ts-ignore */}
+      <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
+        <Video />
       </div>
       <HeaderMenu />
     </div>

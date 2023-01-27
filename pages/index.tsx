@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-//import Video from '../components/splashScreen'
+import Video from '../components/splashScreen'
 // import HeaderMenu from '../components/menuHeader'
 import Intro from '../components/introduction'
 import WorkGallery from '../components/workGallery'
@@ -8,7 +8,7 @@ import { gsap } from 'gsap'
 import { useContext, useRef, useState } from 'react'
 import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
-// import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
 import PWAFeatures from '../components/pwaFeature'
 import Contact from '../components/contact'
 // import { SmootherContext } from '../SmootherContext'
@@ -19,42 +19,12 @@ const Home =()=> {
   //const smoother = useContext(SmootherContext)
   //Register GSAP Plugin - ScrollTrigger
   //gsap.registerPlugin(ScrollTrigger);
-  const app = useRef<HTMLDivElement>(null);
-  //const homeWrapper = useRef<HTMLDivElement>(null);
-  //@ts-ignore
-  const introtl = useRef();
 
   /* useIsomorphicLayoutEffect(() => {
     smoother && smoother.effects("[data-speed], [data-lag]", {});
   }, [smoother]); */
 
-  useIsomorphicLayoutEffect(()=>{
-    let lines;
-    const runSplit = () => {
-      //@ts-ignore
-      lines = new SplitType(".paragraph",{type:'lines'})
-    }
-    runSplit()
-    window.addEventListener("resize",()=>{
-        lines.revert();
-        runSplit()
-    })
-  })
 
-  useIsomorphicLayoutEffect(() => {
-    const ctx = gsap.context(()=>{
-      //@ts-ignore
-      introtl.current = gsap.timeline()
-      .set(".word",{translateY:"2em"})
-      .set("img",{clipPath:"inset(100% 0 0 0)"})
-      // .set(".intro",{translateX:"-100%"})
-      // .to(".intro",{translateX:0,duration:3,ease:"power4.inOut"})
-      // .to(".cover",{display:"none"})
-      .to("img",{clipPath:"inset(0% 0 0 0)", duration:1, ease:"power4.inOut"},"+=0.3")
-      .to(".word",{translateY:0,duration:1,stagger:0.03})
-    },app);
-    return ()=>ctx.revert();
-  },[])
   return (
     <>
       <Head>
@@ -64,18 +34,11 @@ const Home =()=> {
         <link rel="icon" href="/favicon.ico" />
         <link rel='manifest' href="/manifest.json" />
       </Head>
+      {/* @ts-ignore */}
       <Intro />
       <WorkGallery />
       <PWAFeatures />
       <Contact />
-      {/* <main id="App" className={`${switzer.className} relative preload--container w-screen h-screen bg-grey text-black overflow-y-auto overflow-x-hidden`} ref={app}>
-        <div id="smooth-content" className="changeBG intro w-full h-full">
-            
-        </div>
-          <div className="cover w-screen h-full bg-white">
-            <Video />
-          </div> 
-      </main> */}
     </>
   )
 }

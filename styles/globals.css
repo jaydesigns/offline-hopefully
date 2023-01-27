@@ -139,7 +139,8 @@ img {
 
 #smooth-content {
   overflow: visible;
-  height: calc(100vh * 4)
+  display: flex;
+  flex-direction: column;
 }
 
 ::-webkit-scrollbar{

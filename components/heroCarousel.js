@@ -19,13 +19,22 @@ const MotionReel = ({classList}) => {
     const reel = useRef()
 
     const randomAnimation = () => {
-        const rand = Math.floor(Math.random()*2)
+        const rand = Math.floor(Math.random()*4)
         console.log(rand);
         if (rand===0){
             return gsap.to(reel.current,{scale:1.7,duration:8, ease:"linear"})
         }
         if (rand===1){
             return gsap.to(reel.current,{left:0,duration:8, ease:"linear"})
+        }
+        if (rand===2){
+            return gsap.to(reel.current,{scale:1,duration:8, ease:"linear"})
+        }
+        if (rand===3){
+            return gsap.to(reel.current,{left:0,scale:1.7,duration:8, ease:"linear"})
+        }
+        if (rand===3){
+            return gsap.to(reel.current,{left:"-20%",scale:1,duration:8, ease:"linear"})
         }
         //zoom out
         //paralax slide

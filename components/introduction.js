@@ -41,7 +41,7 @@ const TextSlider = ({refr,heading,gridPos,firstWord,secondWord}) => {
     )
 }
 
-const Intro = () => {
+const Intro = ({app}) => {
     const [ myTitle,setMyTitle ] = useState([])
 
     let ampersandContainer = useRef();
@@ -76,7 +76,7 @@ const Intro = () => {
         <div ref={introductionContent} className="snap-start introBody p-4 grid grid-cols-4 h-screen gap-2 grid-rows-mobileLayout md:gap-4 md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Graphic Designer & Creative Developer</h1>
             <p className="paragraph row-start-1 col-start-2 col-span-3 leading-tight text-msm text-black md:text-sm md:leading-4 md:col-start-2 md:col-end-6 md:row-start-2 md:row-span-2">I am Heber Jay Indino, most people know me as Jay, a designer and developer who specialize in creating meaningful and beautiful digital experiences and visual compositions. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
-            <div className="relative overflow-hidden flex flex-col gap-4 bg-black row-start-2 row-span-2 col-start-1 col-span-4 md:col-start-7 md:col-span-4 md:row-start-2 md:row-span-3">
+            <div className="relative overflow-hidden flex flex-col gap-4 bg-black row-start-2 row-span-2 col-start-1 col-span-4 md:col-start-7 md:col-span-3 md:row-start-2 md:row-span-2">
                 <div className="flex z-10 p-8 mix-blend-exclusion">
                     <h6 className="text-sm text-white">View Selected Work</h6>
                     <Link href="/project">
@@ -85,7 +85,7 @@ const Intro = () => {
                         </svg>
                     </Link>
                 </div>
-                <MotionReel classList="absolute bottom-0 object-cover w-full h-full" />
+                <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>
             <TextSlider refr={heading1container} heading={"heading1"} gridPos="row-start-4 col-span-3 md:row-start-4 md:col-span-6" firstWord={myTitle[0]} secondWord={myTitle[3]}/>
             <TextSlider refr={heading2container} heading={"heading2"} gridPos="row-start-5 col-start-2 col-span-3 md:row-start-5 md:col-start-5 md:col-span-8" firstWord={myTitle[1]} secondWord={myTitle[4]}/>
@@ -94,7 +94,7 @@ const Intro = () => {
             </div>
             <div className="funFact flex leading-tight text-msm md:text-sm row-start-6 md:row-start-5 md:col-start-2 col-span-2">
                 <div className="flex flex-col justify-center md:justify-end pb-4">
-                <h6 className="">This is NOT a website</h6>
+                <h6 className="text-black">This is NOT a website</h6>
                 <div className="flex gap-2">
                     <ArrowRight color="#F45844"/>
                     <h6 className="text-red font-semibold uppercase underline">Wait...What?!</h6>
