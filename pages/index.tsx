@@ -1,32 +1,32 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 //import Video from '../components/splashScreen'
-import HeaderMenu from '../components/menuHeader'
+// import HeaderMenu from '../components/menuHeader'
 import Intro from '../components/introduction'
 import WorkGallery from '../components/workGallery'
-import gsap from 'gsap'
+import { gsap } from 'gsap'
 import { useContext, useRef, useState } from 'react'
 import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
-import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
+// import {ScrollTrigger} from "gsap/ScrollTrigger";
 import PWAFeatures from '../components/pwaFeature'
 import Contact from '../components/contact'
-import { SmootherContext } from '../SmootherContext'
+// import { SmootherContext } from '../SmootherContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
 const Home =()=> {
-  const smoother = useContext(SmootherContext)
+  //const smoother = useContext(SmootherContext)
   //Register GSAP Plugin - ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
+  //gsap.registerPlugin(ScrollTrigger);
   const app = useRef<HTMLDivElement>(null);
   //const homeWrapper = useRef<HTMLDivElement>(null);
   //@ts-ignore
   const introtl = useRef();
 
-  useIsomorphicLayoutEffect(() => {
+  /* useIsomorphicLayoutEffect(() => {
     smoother && smoother.effects("[data-speed], [data-lag]", {});
-  }, [smoother]);
+  }, [smoother]); */
 
   useIsomorphicLayoutEffect(()=>{
     let lines;

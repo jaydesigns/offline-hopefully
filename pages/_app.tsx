@@ -2,16 +2,16 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { useState, useRef } from 'react'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
-import gsap from 'gsap'
-import {ScrollTrigger} from 'gsap/ScrollTrigger'
-import {ScrollSmoother} from 'gsap-trial/dist/ScrollSmoother'
-import {SmootherContext} from '../SmootherContext'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+// import {ScrollSmoother} from 'gsap-trial/dist/ScrollSmoother'
+// import {SmootherContext} from '../SmootherContext'
 import HeaderMenu from '../components/menuHeader'
 import localFont from '@next/font/local'
 import Lenis from '@studio-freight/lenis'
 const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
   const smoothWrapper = useRef();
   const smoothContent = useRef();
   const [smoother,setSmoother] = useState()
@@ -34,7 +34,7 @@ export default function App({ Component, pageProps }) {
     const lenis = new Lenis({
       // wrapper:smoothWrapper.current,
       // content:smoothContent.current,
-      duration: 3,
+      duration: 2.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
       direction: 'vertical', // vertical, horizontal
       gestureDirection: 'vertical', // vertical, horizontal, both

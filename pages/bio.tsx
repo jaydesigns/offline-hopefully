@@ -1,15 +1,15 @@
-import Link from "next/link";
+// import Link from "next/link";
 import Layout from '../components/layout'
 import HeaderMenu from "../components/menuHeader";
 import localFont from '@next/font/local'
-import { useEffect } from "react";
-import { useIsomorphicLayoutEffect } from "usehooks-ts";
-import gsap from "gsap";
+// import { useEffect } from "react";
+// import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
+// import { gsap } from "gsap";
 import Image from "next/image";
 
 const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
 
-const Bio = () => {
+const Bio = () => {/* 
     useIsomorphicLayoutEffect(()=>{
         //const el = homeWrapper.current
         const ctx = gsap.context(()=>{
@@ -17,7 +17,7 @@ const Bio = () => {
           gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
           })
         return () => ctx.revert()
-      },[])
+    },[]) */
 
     return(
         <Layout>
