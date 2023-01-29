@@ -46,8 +46,8 @@ export default function App({ Component, pageProps }: AppProps) {
       direction: 'vertical', // vertical, horizontal
       gestureDirection: 'vertical', // vertical, horizontal, both
       smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
+      mouseMultiplier: 0.5,
+      smoothTouch: true,
       touchMultiplier: 2,
       infinite: false,
     })
@@ -96,7 +96,7 @@ export default function App({ Component, pageProps }: AppProps) {
       //@ts-ignore
       introtl.current = gsap.timeline()
       .set(".word",{translateY:"2em"})
-      .set("img",{clipPath:"inset(100% 0 0 0)"})
+      .set(".reel",{clipPath:"inset(0 0 100% 0)"})
       .set(".entra",{translateY:"2em"})
       // .set(".intro",{translateX:"-100%"})
       // .to(".intro",{translateX:0,duration:3,ease:"power4.inOut"})
@@ -108,7 +108,7 @@ export default function App({ Component, pageProps }: AppProps) {
       .to(splash.current,{display:"none"},"-=0.5")
       .to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
       .to(".word",{translateY:0,duration:1,stagger:0.02},"<")
-      .to("img",{clipPath:"inset(0% 0 0 0)", duration:2, ease:"power4.inOut"},"+=0.3")
+      .to(".reel",{clipPath:"inset(0 0 0% 0)", duration:2, ease:"power4.inOut"},"<")
     },smoothContent);
     return ()=>ctx.revert();
   },[])
@@ -119,6 +119,16 @@ export default function App({ Component, pageProps }: AppProps) {
       gsap.to(".heroImage",{translateY:"50%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})
     })
     return () => ctx.revert()
+  },[])
+
+  useIsomorphicLayoutEffect(()=>{
+    const ctx = gsap.context(()=>{
+      //@ts-ignore
+        introtl.current = gsap.timeline()
+        .set(".menuEntra",{translateY:"-100%"})
+        .to(".menuEntra",{translateY:0, stagger: 0.2, ease:"power3.out", duration: 1},"+=6")
+    })
+    return ()=>ctx.revert()
   },[])
 
   return (
