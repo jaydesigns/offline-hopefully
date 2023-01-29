@@ -97,16 +97,18 @@ export default function App({ Component, pageProps }: AppProps) {
       introtl.current = gsap.timeline()
       .set(".word",{translateY:"2em"})
       .set("img",{clipPath:"inset(100% 0 0 0)"})
+      .set(".entra",{translateY:"2em"})
       // .set(".intro",{translateX:"-100%"})
       // .to(".intro",{translateX:0,duration:3,ease:"power4.inOut"})
       // @ts-ignore
       .set(splash.current,{clipPath:"inset(0 0 0 0"})
       // @ts-ignore
-      .to(splash.current,{clipPath:"inset(0 0 0 100%)",delay:4,ease:"power4.inOut",duration:3})
+      .to(splash.current,{clipPath:"inset(0 0 0 100%)",delay:3,ease:"power4.inOut",duration:2})
       // @ts-ignore
-      .to(splash.current,{display:"none"})
-      .to("img",{clipPath:"inset(0% 0 0 0)", duration:1, ease:"power4.inOut"},"+=0.3")
-      .to(".word",{translateY:0,duration:1,stagger:0.03})
+      .to(splash.current,{display:"none"},"-=0.5")
+      .to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
+      .to(".word",{translateY:0,duration:1,stagger:0.02},"<")
+      .to("img",{clipPath:"inset(0% 0 0 0)", duration:2, ease:"power4.inOut"},"+=0.3")
     },smoothContent);
     return ()=>ctx.revert();
   },[])
@@ -120,6 +122,7 @@ export default function App({ Component, pageProps }: AppProps) {
   },[])
 
   return (
+    // @ts-ignore
     <div>
       {/* @ts-ignore */}
       <div ref={smoothWrapper} id="smooth-wrapper">

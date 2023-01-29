@@ -20,7 +20,6 @@ const MotionReel = ({classList}) => {
 
     const randomAnimation = () => {
         const rand = Math.floor(Math.random()*4)
-        console.log(rand);
         if (rand===0){
             return gsap.to(reel.current,{scale:1.7,duration:8, ease:"linear"})
         }
