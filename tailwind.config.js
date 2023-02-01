@@ -16,7 +16,7 @@ module.exports = {
       fontSize: {
         xxl: '6vw',
         xxxl: '10vw',
-        msm: '3.5vw',
+        msm: '3vw',
         mxxxl: '11.5vw',
         bio: ['16vw',0.8],
       },
