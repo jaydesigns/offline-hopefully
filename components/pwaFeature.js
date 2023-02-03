@@ -1,5 +1,8 @@
 import Image from "next/image"
 import { useEffect, useState } from "react"
+import LinkText from './linkText'
+
+//on mobile the top half could be the selection and image while the lower half is the text
 
 const PWAFeatures = () => {
     //const [featureSVG,setFeatureSVG] = useState()
@@ -26,7 +29,7 @@ const PWAFeatures = () => {
     },[])
 
     return (
-        <div className="snap-start flex flex-col featureSection w-screen h-screen p-4 pb-28 text-black">
+        <div className="snap-start flex flex-col featureSection w-screen h-screen p-4 pb-32 text-white">
             <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4">
                 <span className="">Installability</span>
                 <span className="">Component-based</span>
@@ -47,9 +50,10 @@ const PWAFeatures = () => {
                         </clipPath>
                     </defs>
                 </svg>
-                <div className="absolute bottom-0 w-1/3 text-white">
-                    <h4 className="text-6xl">Installability</h4>
+                <div className="absolute bottom-0 w-1/4 h-1/2 text-white flex flex-col justify-between pb-2">
+                    <h4 className="text-6xl tracking-tighter">Installability</h4>
                     <p>This web app utilizes new technology which enables you to install this web app on whatever device you&apos;re using. If you&apos;re using a smartphone, the app will be installed on your homescreen. If you are using a desktop device, it will be added to your app list.</p>
+                    <LinkText str={"Try it out"}/>
                 </div>
             </div>
         </div>
