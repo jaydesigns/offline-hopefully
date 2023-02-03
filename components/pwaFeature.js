@@ -47,7 +47,7 @@ const PWAFeatures = () => {
                         </clipPath>
                     </defs>
                 </svg>
-                <div className="absolute bottom-0 w-1/3">
+                <div className="absolute bottom-0 w-1/3 text-white">
                     <h4 className="text-6xl">Installability</h4>
                     <p>This web app utilizes new technology which enables you to install this web app on whatever device you&apos;re using. If you&apos;re using a smartphone, the app will be installed on your homescreen. If you are using a desktop device, it will be added to your app list.</p>
                 </div>

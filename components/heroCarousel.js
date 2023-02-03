@@ -21,7 +21,7 @@ const MotionReel = ({classList}) => {
 
     const randomAnimation = () => {
         const rand = Math.floor(Math.random()*5)
-        console.log(rand);
+        //console.log(rand);
         gsap.set(reel.current,{scale:1.3,left:0,rotate:0})
         
         if (rand===0){

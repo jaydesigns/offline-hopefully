@@ -143,6 +143,10 @@ img {
   flex-direction: column;
 }
 
+.workSelector:hover {
+  color: #F45844;
+}
+
 ::-webkit-scrollbar{
   display: none;
 }

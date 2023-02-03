@@ -15,7 +15,7 @@ import Contact from '../components/contact'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const Home =()=> {
+const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper})=> {
   //const smoother = useContext(SmootherContext)
   //Register GSAP Plugin - ScrollTrigger
   //gsap.registerPlugin(ScrollTrigger);
@@ -35,7 +35,7 @@ const Home =()=> {
         <link rel='manifest' href="/manifest.json" />
       </Head>
       {/* @ts-ignore */}
-      <Intro />
+      <Intro heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
       <WorkGallery />
       <PWAFeatures />
       <Contact />

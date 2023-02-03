@@ -43,17 +43,14 @@ const TextSlider = ({wrap,refr,heading,gridPos,firstWord,secondWord}) => {
     )
 }
 
-const Intro = ({app}) => {
+const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
     const [ myTitle,setMyTitle ] = useState([])
 
     let ampersandContainer = useRef();
-    let ampersandWrapper = useRef();
     let introductionContent = useRef();
     let marquee = useRef();
     let heading1container = useRef();
     let heading2container = useRef();
-    let heading1Wrapper = useRef();
-    let heading2Wrapper = useRef();
 
     useEffect(()=>{
         let jobTitles = document.querySelector("#jobTitles")
@@ -66,14 +63,8 @@ const Intro = ({app}) => {
             marquee.current = gsap.timeline()
             .set(heading1container.current,{translateY:0})
             .set(heading2container.current,{translateY:"-66.66%"})
-            .set(heading1Wrapper.current,{translateY:"33.33%"})
-            .set(heading2Wrapper.current,{translateY:"-33.33%"})
-            .set(ampersandWrapper.current,{translateY:"-110%"})
-            .to(heading1Wrapper.current,{translateY:0,delay:4,duration:2,ease:"power3.inOut"})
-            .to(heading2Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.85")
-            .to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
             marquee.current = gsap.timeline({repeat:-1})
-            .to(heading1container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2,delay:6})
+            .to(heading1container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2,delay:8})
             .to(heading2container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2},"-=1.05")
             .to(ampersandContainer.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2},"-=1.05")
             .to(heading1container.current,{translateY:"-66.66%",ease:"power3.inOut",duration:1.2},"+=6")
@@ -84,10 +75,10 @@ const Intro = ({app}) => {
     },[])
 
     return (
-        <div ref={introductionContent} className="snap-start introBody p-4 grid grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
+        <div ref={introductionContent} className="snap-start introBody p-4 grid gap-2 grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Graphic Designer & Creative Developer</h1>
             <p className="paragraph row-start-1 col-start-2 col-span-3 leading-tight text-msm text-black md:text-sm md:leading-4 md:col-start-2 md:col-end-6 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
-            <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-2 col-start-1 col-span-3 md:col-start-7 md:col-span-3 md:row-start-2 md:row-span-2">
+            <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-2 col-start-1 col-span-3 md:col-start-7 md:col-span-3 md:row-start-2 md:row-span-3">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>
             <TextSlider wrap={heading1Wrapper} refr={heading1container} heading={"heading1"} gridPos="row-start-4 col-span-3 md:row-start-4 md:col-span-6" firstWord={myTitle[0]} secondWord={myTitle[3]}/>

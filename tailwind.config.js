@@ -28,6 +28,9 @@ module.exports = {
         ampMobile: '12vw',
         ampMd: '9vw',
       },
+      lineHeight: {
+        suis: '0.85em',
+      },
     },
   },
   plugins: [],
