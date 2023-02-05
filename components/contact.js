@@ -51,7 +51,7 @@ const Contact = () => {
                 {step==="needs"&&<Needs handleChange={handleChange} handleNameResponse={handleNameResponse}/>}
             </div>
             <div className="row-start-6">
-                <h6 className="text-red text-xs font-semibold leading-tight">Don&apos;t worry, your name won&apos;t be saved anywhere.</h6>
+                <h6 className="text-red text-xs font-bold leading-tight">Don&apos;t worry, your name won&apos;t be saved anywhere.</h6>
             </div>
         </div>
     )

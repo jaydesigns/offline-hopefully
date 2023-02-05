@@ -75,7 +75,7 @@ const WorkGallery = () => {
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
         gsap.set(images.current.querySelectorAll("img"),{clipPath:"inset(100% 0 0 0)"})
-        gsap.to(images.current.querySelectorAll("img"),{clipPath:"inset(0% 0 0 0)",stagger: 0.2, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
+        gsap.to(images.current.querySelectorAll("img"),{clipPath:"inset(0% 0 0 0)",stagger: 0.2, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"55% bottom", end:"top top", scrub:true,pinSpacing:false}})
     },[])
 
     return(
@@ -87,7 +87,7 @@ const WorkGallery = () => {
             </div>
             <div className="flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    <Card title={"Hukilau Marketplace"} coverImg={'/images/aloha.jpg'} category={['Environmental Design','Branding']} imgWidth={368}/>
+                    <Card title={"Hukilau Marketplace"} coverImg={'/images/aloha.jpg'} category={['Environmental Design','Branding']} imgWidth={246}/>
                     <Card title={"Color Max Fencing"} coverImg={'/images/ColorMaxFence.jpg'} category={['UI Design']} imgWidth={512}/>
                     <Card title={"United Way"} coverImg={'/images/united-way.png'} category={['Branding','Publication Design']} imgWidth={368}/>
                     <Card title={"English Connect"} coverImg={'/images/stack-esp-por.jpg'} category={['Graphic Design','Identity System']} imgWidth={512}/>

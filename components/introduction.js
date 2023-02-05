@@ -78,8 +78,8 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
     return (
         <div ref={introductionContent} className="snap-start introBody p-4 grid gap-2 grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Graphic Designer & Creative Developer</h1>
-            <p className="paragraph row-start-1 col-start-2 col-span-3 leading-tight text-msm text-black md:text-sm md:leading-4 md:col-start-2 md:col-end-6 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
-            <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-2 col-start-1 col-span-3 md:col-start-7 md:col-span-3 md:row-start-2 md:row-span-3">
+            <p className="paragraph row-start-1 col-start-2 col-span-3 leading-tight text-msm text-black md:text-sm md:leading-4 md:col-start-2 md:col-end-6 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
+            <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-2 col-start-1 col-span-4 md:col-start-7 md:col-span-3 md:row-start-2 md:row-span-3">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>
             <TextSlider wrap={heading1Wrapper} refr={heading1container} heading={"heading1"} gridPos="row-start-4 col-span-3 md:row-start-4 md:col-span-6" firstWord={myTitle[0]} secondWord={myTitle[3]}/>

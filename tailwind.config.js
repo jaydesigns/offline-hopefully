@@ -19,13 +19,18 @@ module.exports = {
         msm: '3vw',
         mxxxl: '11.5vw',
         bio: ['16vw',0.8],
+        SM: ['3vw',0.8],
+        MED: ['6vw',1],
+        LG: ['10vw',1],
+        XL: ['11.5vw',1],
+        XXL: ['16vw',0.8],
       },
       gridTemplateRows: {
         layout: '2vw 1fr 1fr 10vw 10vw 1fr',
-        mobileLayout: '1fr 1fr 1fr 12vw 12vw 1fr',
+        mobileLayout: 'auto 1fr 1fr 11.5vw 11.5vw 1fr',
       },
       width: {
-        ampMobile: '12vw',
+        ampMobile: '11.5vw',
         ampMd: '9vw',
       },
       lineHeight: {
