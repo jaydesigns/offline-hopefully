@@ -31,9 +31,9 @@ const PWAFeatures = () => {
     return (
         <div className="snap-start flex flex-col featureSection w-screen h-screen p-4 pb-32 text-white">
             <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4">
-                <span className="">Installability</span>
-                <span className="">Component-based</span>
-                <span className="">Works Offline</span>
+                <span className="text-red">Installability</span>
+                <span className="text-red">Component-based</span>
+                <span className="text-red">Works Offline</span>
             </div>
             <div className="relative w-full h-5/6">
                 <div className="featureCover w-full h-full overflow-hidden">

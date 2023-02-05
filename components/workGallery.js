@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { useState, useRef } from "react";
 import Image from "next/image"
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 const Card = ({title,coverImg,category,imgWidth}) => {
     return(
@@ -70,6 +71,13 @@ const Accordion = ({title,skills}) => {
 }
 
 const WorkGallery = () => {
+    const images = useRef();
+    useIsomorphicLayoutEffect(()=>{
+        gsap.registerPlugin(ScrollTrigger)
+        gsap.set(images.current.querySelectorAll("img"),{clipPath:"inset(100% 0 0 0)"})
+        gsap.to(images.current.querySelectorAll("img"),{clipPath:"inset(0% 0 0 0)",stagger: 0.2, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
+    },[])
+
     return(
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between">
             <div className="flex flex-col gap-4 md:flex-row">
@@ -78,7 +86,7 @@ const WorkGallery = () => {
                 <Accordion title={'Technology Used'} skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']}/>
             </div>
             <div className="flex overflow-x-auto w-screen h-4/6">
-                <div className="flex flex-row gap-8 flex-nowrap">
+                <div ref={images} className="flex flex-row gap-8 flex-nowrap">
                     <Card title={"Hukilau Marketplace"} coverImg={'/images/aloha.jpg'} category={['Environmental Design','Branding']} imgWidth={368}/>
                     <Card title={"Color Max Fencing"} coverImg={'/images/ColorMaxFence.jpg'} category={['UI Design']} imgWidth={512}/>
                     <Card title={"United Way"} coverImg={'/images/united-way.png'} category={['Branding','Publication Design']} imgWidth={368}/>

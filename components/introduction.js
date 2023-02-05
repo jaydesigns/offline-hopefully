@@ -65,7 +65,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
             .set(heading1container.current,{translateY:0})
             .set(heading2container.current,{translateY:"-66.66%"})
             marquee.current = gsap.timeline({repeat:-1})
-            .to(heading1container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2,delay:8})
+            .to(heading1container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2,delay:8.5})
             .to(heading2container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2},"-=1.05")
             .to(ampersandContainer.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2},"-=1.05")
             .to(heading1container.current,{translateY:"-66.66%",ease:"power3.inOut",duration:1.2},"+=6")
@@ -90,7 +90,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
             <div className="funFact flex leading-tight text-msm md:text-sm row-start-6 md:row-start-5 md:col-start-2 col-span-2">
                 <div className="flex flex-col justify-center md:justify-end pb-4">
                 <div className="text-black overflow-hidden"><h6 className="entra">This is NOT a website</h6></div>
-                <div className="overflow-hidden">
+                <div className="overflow-hidden cursor-pointer">
                     <LinkText str={'Wait... what?'}/>
                 </div>
                 </div>

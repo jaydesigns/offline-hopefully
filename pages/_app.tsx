@@ -39,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
       smooth: true,
       mouseMultiplier: 0.5,
       smoothTouch: false,
-      touchMultiplier: 2,
+      touchMultiplier: 1,
       infinite: false,
     })
     
@@ -54,18 +54,6 @@ export default function App({ Component, pageProps }: AppProps) {
     }
     
     requestAnimationFrame(raf)
-  })
-
-  useIsomorphicLayoutEffect(()=>{
-    gsap.registerPlugin(ScrollTrigger)
-    const ctx = gsap.context(()=>{
-      //@ts-ignore
-      gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
-      //@ts-ignore
-      gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:"body",trigger:".interactiveContact",scrub:true , start:"top 50%", end:"top top", pinSpacing:false}})
-      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top 75%", pinSpacing:false}})
-    })
-    return () => ctx.revert()
   },[])
 
   
