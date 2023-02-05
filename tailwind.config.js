@@ -17,7 +17,7 @@ module.exports = {
         xxl: '6vw',
         xxxl: '10vw',
         msm: '3vw',
-        mxxxl: '11.5vw',
+        mxxxl: '12.5vw',
         bio: ['16vw',0.8],
         SM: ['3vw',0.8],
         MED: ['6vw',1],
