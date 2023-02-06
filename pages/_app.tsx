@@ -12,7 +12,10 @@ import Lenis from '@studio-freight/lenis'
 import SplitType from 'split-type'
 import Video from '../components/splashScreen'
 
-const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
+const switzer = localFont({
+  src:'./font/Switzer-Variable.ttf',
+  variable: '--font-switzer'
+})
 
 export default function App({ Component, pageProps }: AppProps) {
   const smoothWrapper = useRef();
@@ -126,7 +129,7 @@ export default function App({ Component, pageProps }: AppProps) {
       {/* @ts-ignore */}
       <div ref={smoothWrapper} id="smooth-wrapper">
         {/* @ts-ignore */}
-        <div ref={smoothContent} id="smooth-content" className={`${switzer.className} changeBG`}>
+        <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG`}>
           <Component {...pageProps} heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
         </div>
       </div>

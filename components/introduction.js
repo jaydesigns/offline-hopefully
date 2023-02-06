@@ -5,6 +5,8 @@ import gsap from "gsap";
 import MotionReel from "./heroCarousel";
 import Link from "next/link";
 import LinkText from './linkText'
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
 
 const Ampersand = ({wrapper,container,glyph}) => {
     return (
@@ -75,6 +77,11 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
         return ()=>ctx.revert();
     },[])
 
+    useIsomorphicLayoutEffect(()=>{
+        gsap.registerPlugin(ScrollTrigger)
+        gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:introductionContent.current,start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})
+    })
+
     return (
         <div ref={introductionContent} className="snap-start introBody p-4 grid gap-2 grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Graphic Designer & Creative Developer</h1>
@@ -91,7 +98,9 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
                 <div className="flex flex-col justify-center md:justify-end pb-4">
                 <div className="text-black overflow-hidden"><h6 className="entra">This is NOT a website</h6></div>
                 <div className="overflow-hidden cursor-pointer">
-                    <LinkText str={'Wait... what?'}/>
+                    <div className="entra">
+                        <LinkText str={'Wait... what?'}/>
+                    </div>
                 </div>
                 </div>
             </div>
