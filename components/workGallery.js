@@ -1,22 +1,46 @@
 // import ArrowRight from "./arrowRight";
 import gsap from "gsap";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image"
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import SplitType from "split-type";
 
 const Card = ({title,coverImg,category,imgWidth}) => {
+    const cardTL = useRef(gsap.timeline())
+    const cardUI = useRef()
+
+    useEffect(()=>{
+        let cardLines;
+        const runLineSplit = () =>{
+            cardLines = new SplitType(".cardText",{type:"lines"})
+        }
+        runLineSplit()
+        window.addEventListener("resize",()=>{
+            cardLines.revert();
+            runLineSplit()
+        })
+    })
+
+    useEffect(()=>{
+        gsap.registerPlugin(ScrollTrigger)
+        //cardTL.current.fromTo(".word",{translateY:"120%"},{translateY:"0%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"70% bottom",end:"70% top",scrub:true,pinSpacing:false}})
+        cardTL.current.fromTo(".word",{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})
+    })
+
     return(
         <div className="card flex gap-4 flex-col justify-start h-full" style={{width:`${imgWidth}px`}}>
             <div className="relative h-5/6 overflow-hidden w-full">
                 <Image src={coverImg} alt="image" fill style={{objectFit:"cover"}}></Image>
             </div>
-            <div className="flex h-1/6">
-                <h6 className="w-1/2 font-semibold">{title}</h6>
+            <div ref={cardUI} className="flex h-1/6">
+                <div className="w-1/2">
+                    <h6 className="cardText font-semibold">{title}</h6>
+                </div>
                 <div className="grow text-xs flex flex-col font-thin">
                     {category.map((el,i)=>{
                         return (
-                        <h6 key={i}>{el}</h6>
+                        <h6 className="cardText" key={i}>{el}</h6>
                         )
                     })}
                 </div>
@@ -83,7 +107,7 @@ const WorkGallery = () => {
 
     return(
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between">
-            <div className="flex flex-col border-grey border-t border-b md:border-black md:flex-row">
+            <div className="flex flex-col border-grey border-t border-b md:border-b-0 md:flex-row">
                 <h1 className="flex-1 tracking-tight leading-suis text-4xl font-smibold py-2">Selected Work</h1>
                 <div className="flex flex-col md:grow md:flex-row">
                     <Accordion title={'Type of Work'} skills={['Branding', 'UI Design', 'Environmental Design', 'Publication Design']}/>
