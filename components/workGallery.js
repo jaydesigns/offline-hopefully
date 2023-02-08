@@ -25,7 +25,7 @@ const Card = ({title,coverImg,category,imgWidth}) => {
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
         //cardTL.current.fromTo(".word",{translateY:"120%"},{translateY:"0%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"70% bottom",end:"70% top",scrub:true,pinSpacing:false}})
-        cardTL.current.fromTo(".word",{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})
+        cardTL.current.fromTo(".word",{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 15%",scrub:true,pinSpacing:false}})
     })
 
     return(
