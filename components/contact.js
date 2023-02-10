@@ -5,7 +5,7 @@ const Name = (props) => {
     return (
         <form className="w-full">
             <div className="flex bg-black p-4 gap-8 w-full">
-                <input className=" bg-black text-white border-white border-b w-full" placeholder="Type your name here" value={props.firstName} onChange={props.handleChange}></input>
+                <input className=" bg-black text-white border-white border-b w-full" placeholder="What's your name?" value={props.firstName} onChange={props.handleChange}></input>
                 <button onClick={props.handleNameResponse}><NegativeArrow/></button>
             </div>
         </form>
@@ -45,7 +45,7 @@ const Contact = () => {
 
     return(
         <div className="interactiveContact snap-start w-screen h-screen text-white p-4 pt-28 grid md:grid-rows-layout grid-cols-4 md:grid-cols-12">
-            <h3 ref={headingText} className="text-2xl md:text-6xl font-semibold indent-48 col-span-4 md:col-span-12 mix-blend-exclusion">Hi! Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
+            <h3 ref={headingText} className="text-2xl md:text-6xl font-semibold col-span-4 md:col-span-12 mix-blend-exclusion">Hi! Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
             <div className="col-span-4 col-start-5 row-start-4">
                 {step==="name"&&<Name handleNameResponse={handleNameResponse} handleChange={handleChange}/>}
                 {step==="needs"&&<Needs handleChange={handleChange} handleNameResponse={handleNameResponse}/>}
