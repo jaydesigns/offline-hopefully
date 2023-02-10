@@ -3,20 +3,11 @@ import { useEffect, useState, useRef } from "react"
 import LinkText from './linkText'
 import gsap from "gsap"
 import SplitType from "split-type"
+import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
+import ScrollTrigger from "gsap/dist/ScrollTrigger"
 
 //on mobile the top half could be the selection and image while the lower half is the text
 const FeatureDescription = ({featureText}) => {
-    useEffect(()=>{
-        let cardLines;
-        const runLineSplit = () =>{
-            cardLines = new SplitType(".featureDescription",{type:"lines"})
-        }
-        runLineSplit()
-        window.addEventListener("resize",()=>{
-            cardLines.revert();
-            runLineSplit()
-        })
-    })
     return (
         <div ref={featureText} className="realtive md:absolute bottom-32 w-full md:w-1/3 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2">
             <div className="overflow-y-hidden">
@@ -44,6 +35,12 @@ const PWAFeatures = () => {
     const [imageSource, setImageSource] = useState("/images/guggenheim.jpg")
     const featureImage = useRef()
     const featureText = useRef()
+    const featureTL = useRef(gsap.timeline())
+
+    useEffect(()=>{
+        gsap.registerPlugin(ScrollTrigger)
+        featureTL.current.fromTo("rect",{transform:"matrix(1,0,0,1,0,0)"},{transform:"matrix(1,0,0,1.2,0,0)",scrollTrigger:{scroller:"body",trigger:".featureSection",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
+    })
 
     useEffect(()=>{
         const SVGObj = window.getComputedStyle(document.querySelector("#clippingCanvas"))
@@ -69,7 +66,7 @@ const PWAFeatures = () => {
             .set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
             .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 100%)",duration:1.2,ease:"power4.inOut",stagger:0.1})
             .to(featureText.current.querySelectorAll(".featureText"),{translateY:"-120%"})
-            .to(featureText.current.querySelectorAll(".word"),{translateY:"-120%",stagger:0.02,duration:1})
+            .to(featureText.current.querySelectorAll(".word"),{translateY:"-120%",stagger:0.02,duration:1,ease:"power3.inOut"})
             .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 100% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.2,ease:"power4.inOut",stagger:0.1})
             setTimeout(()=>{setImageSource(str)},1200)
         }
