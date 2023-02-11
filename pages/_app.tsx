@@ -37,13 +37,13 @@ export default function App({ Component, pageProps }: AppProps) {
       // wrapper:smoothWrapper.current,
       // content:smoothContent.current,
       duration: 2.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+      easing: (t) => Math.min(1, 1.001 - Math.pow(1.5, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
       direction: 'vertical', // vertical, horizontal
       gestureDirection: 'vertical', // vertical, horizontal, both
       smooth: true,
-      mouseMultiplier: 0.5,
-      smoothTouch: false,
-      touchMultiplier: 1,
+      mouseMultiplier: 0.35,
+      smoothTouch: true,
+      touchMultiplier: 0.25,
       infinite: false,
     })
     
