@@ -43,7 +43,7 @@ export default function App({ Component, pageProps }: AppProps) {
       smooth: true,
       mouseMultiplier: 0.35,
       smoothTouch: true,
-      touchMultiplier: 0.25,
+      touchMultiplier: 0.75,
       infinite: false,
     })
     
