@@ -77,7 +77,7 @@ const PWAFeatures = () => {
         <div className="snap-start relative flex flex-col featureSection w-screen h-screen p-4 pb-32 text-white">
             <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4">
                 <span onClick={handleImageSwitch("/images/guggenheim.jpg")} className="text-white cursor-pointer">Installability</span>
-                <span onClick={handleImageSwitch("/images/arizona-memorial.jpg")} className="text-white cursor-pointer">Works Offline</span>
+                <span onClick={handleImageSwitch("/images/arizona-memorial.JPG")} className="text-white cursor-pointer">Works Offline</span>
                 <span onClick={handleImageSwitch("/images/ocean.jpg")} className="text-white cursor-pointer">Flexible</span>
             </div>
             <div className="relative w-full h-1/2 md:h-5/6">

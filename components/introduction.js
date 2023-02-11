@@ -78,10 +78,10 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
         return ()=>ctx.revert();
     },[])
 
-    useIsomorphicLayoutEffect(()=>{
+    /* useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
         mm.current.add("(min-width: 768px)",()=>{gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:introductionContent.current,start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})})
-    })
+    }) */
 
     return (
         <div ref={introductionContent} className="snap-start introBody p-4 grid gap-2 grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
