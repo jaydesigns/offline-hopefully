@@ -54,6 +54,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
     let marquee = useRef();
     let heading1container = useRef();
     let heading2container = useRef();
+    const mm = useRef(gsap.matchMedia())
 
     useEffect(()=>{
         let jobTitles = document.querySelector("#jobTitles")
@@ -79,7 +80,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
 
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
-        gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:introductionContent.current,start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})
+        mm.current.add("(min-width: 768px)",()=>{gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:introductionContent.current,start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})})
     })
 
     return (

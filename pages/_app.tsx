@@ -25,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
   //const app = useRef<HTMLDivElement>(null);
   //@ts-ignore
   const introtl = useRef();
+  const mm = useRef(gsap.matchMedia())
 
   let titleTimeline = useRef<HTMLDivElement>();
   let ampersandWrapper = useRef<HTMLDivElement>();
@@ -65,7 +66,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const runSplit = () => {
       //@ts-ignore
       lines = new SplitType(".paragraph",{type:'lines'})
-      // @ts-ignore
+      //@ts-ignore
       lines = new SplitType(".featureDescription",{type:'lines'})
     }
     runSplit()
@@ -110,7 +111,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useIsomorphicLayoutEffect(()=>{
     gsap.registerPlugin(ScrollTrigger)
     const ctx = gsap.context(()=>{
-      gsap.to(".heroImage",{translateY:"32.5%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})
+      mm.current.add("(min-width: 768px)",()=>{gsap.to(".heroImage",{translateY:"32.5%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})})
     })
     return () => ctx.revert()
   },[])
