@@ -108,13 +108,13 @@ export default function App({ Component, pageProps }: AppProps) {
     return ()=>ctx.revert();
   },[])
 
-  useIsomorphicLayoutEffect(()=>{
+  /* useIsomorphicLayoutEffect(()=>{
     gsap.registerPlugin(ScrollTrigger)
     const ctx = gsap.context(()=>{
       mm.current.add("(min-width: 768px)",()=>{gsap.to(".heroImage",{translateY:"32.5%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})})
     })
     return () => ctx.revert()
-  },[])
+  },[]) */
 
   useIsomorphicLayoutEffect(()=>{
     const ctx = gsap.context(()=>{
