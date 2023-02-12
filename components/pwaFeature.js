@@ -39,7 +39,7 @@ const PWAFeatures = () => {
 
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
-        featureTL.current.fromTo("rect",{transform:"matrix(1,0,0,1,0,0)"},{transform:"matrix(1,0,0,1.2,0,0)",scrollTrigger:{scroller:"body",trigger:".featureSection",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
+        featureTL.current.fromTo("rect",{transform:"matrix(1,0,0,1,0,0)"},{transform:"matrix(1,0,0,1,0,0)",scrollTrigger:{scroller:"body",trigger:".featureSection",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
     })
 
     useEffect(()=>{
@@ -64,10 +64,10 @@ const PWAFeatures = () => {
         const handler = () =>{
             const tl = gsap.timeline()
             .set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
-            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 100%)",duration:1.2,ease:"power4.inOut",stagger:0.1})
+            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 100%)",duration:1.2,ease:"power4.inOut"})
             .to(featureText.current.querySelectorAll(".featureText"),{translateY:"-120%"})
             .to(featureText.current.querySelectorAll(".word"),{translateY:"-120%",stagger:0.02,duration:1,ease:"power3.inOut"})
-            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 100% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.2,ease:"power4.inOut",stagger:0.1})
+            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 100% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.2,ease:"power4.inOut"})
             setTimeout(()=>{setImageSource(str)},1200)
         }
         return handler
