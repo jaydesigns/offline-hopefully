@@ -40,7 +40,7 @@ const Card = ({images,title,coverImg,category,imgWidth}) => {
                 <div className="w-1/2">
                     <h6 className="cardText font-semibold">{title}</h6>
                 </div>
-                <div className="grow text-xs flex flex-col font-thin">
+                <div className="grow text-xs flex flex-col font-extralight">
                     {category.map((el,i)=>{
                         return (
                         <h6 className="cardText" key={i}>{el}</h6>
@@ -56,38 +56,40 @@ const Accordion = ({order,title,skills}) => {
     const dropdownItems = useRef()
     const plusSign = useRef()
     const [isOpen,setIsOpen] = useState(true)
-    const plustl = useRef(gsap.timeline())
+    const tl = useRef(gsap.timeline())
 
     const handleExpand = () => {
         setIsOpen(!isOpen)
     }
 
     useIsomorphicLayoutEffect(()=>{
-        plustl.current.fromTo(plusSign.current,{rotate:"0deg"},{rotate:"135deg"})
-        plustl.current.fromTo(dropdownItems.current.querySelectorAll(".skills"),{width:0,height:"0em"},{width:"100%",height:"1.5em",stagger:0.1,ease:"power3.inOut",duration:1.2},"<")
-        plustl.current.fromTo(dropdownItems.current.querySelectorAll(".workSelector"),{translateY:"-120%"},{translateY:"0%",stagger:0.05,duration:1.2,ease:"power3.inOut"},"<")
+        tl.current.fromTo(plusSign.current,{rotate:"0deg"},{rotate:"135deg"})
+        tl.current.fromTo(dropdownItems.current.querySelectorAll(".skills"),{width:0,height:"0em"},{width:"100%",height:"1.7em",stagger:0.1,ease:"power3.inOut",duration:1.2},"<")
+        tl.current.fromTo(dropdownItems.current.querySelectorAll(".workSelector"),{translateY:"-120%"},{translateY:"0%",stagger:0.05,duration:1.2,ease:"power3.inOut"},"<")        
     },[])
 
     useIsomorphicLayoutEffect(()=>{
-        isOpen?plustl.current.reverse():plustl.current.play()
+        isOpen?tl.current.reverse():tl.current.play()
     },[isOpen])
-
+ 
     return (
-        <div className={`${order} flex-1`}>
-            <div className="flex flex-col border-b border-white py-2">
+        <div className="accordion flex-1" data-classification={order}>
+            <div className="flex flex-col gap-2 border-b border-white pb-2 pt-4">
                 <div onClick={handleExpand} className="cursor-pointer flex gap-4 justify-start">
                     <div className="relative w-5 h-5">
-                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-2xl">+</span></div>
+                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-4xl">+</span></div>
                     </div>
-                    <h6 className="text-sm font-bold">{title}</h6>
+                    <h6 className="font-semibold">{title}</h6>
                 </div>
                 <div ref={dropdownItems} className="flex flex-col">
                     {skills.map((el,i)=>{
                         return (
                         <div key={i} onClick={()=>console.log(i)} className="relative overflow-hidden skills border-grey border-t">
-                            <div className="absolute flex place-items-center text-sm cursor-pointer workSelector">
-                                <NegativeArrow />
-                                <span>{el}</span>
+                            <div className="absolute flex gap-4 h-full text-sm font-extralight cursor-pointer workSelector">
+                                <div className="flex flex-col justify-center">
+                                    <NegativeArrow />
+                                </div>
+                                <div className="flex flex-col justify-center"><span>{el}</span></div>
                             </div>
                         </div>
                         )
@@ -132,7 +134,7 @@ const WorkGallery = () => {
     return(
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between">
             <div className="flex flex-col border-grey border-t border-b md:border-b-0 md:flex-row">
-                <h1 className="flex-1 tracking-tight leading-suis text-4xl font-smibold py-2">Selected Work</h1>
+                <h1 className="flex-1 tracking-tight leading-suis text-MED py-4">Selected Work</h1>
                 <div className="flex flex-col md:grow md:flex-row">
                     <Accordion order={"accordion1"} title={'Type of Work'} skills={['Branding', 'UI Design', 'Environmental Design', 'Publication Design']}/>
                     <Accordion order={"accordion2"} title={'Technology Used'} skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']}/>

@@ -26,7 +26,7 @@ const Ampersand = ({wrapper,container,glyph}) => {
 
 const TextSlider = ({wrap,refr,heading,gridPos,firstWord,secondWord}) => {
     let classList = 'overflow-hidden overflow-y-hidden relative align-baseline'
-    let headingList = `${heading} text-mxxxl md:text-xxxl font-semibold text-black tracking-tighter uppercase leading-none`
+    let headingList = `${heading} text-XL md:text-xxxl font-semibold text-black tracking-tighter uppercase leading-none`
     return (
         <div className={`${gridPos} overflow-hidden realtive`}>
             <div ref={wrap} className={classList}>

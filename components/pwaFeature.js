@@ -14,7 +14,7 @@ const FeatureDescription = ({featureText}) => {
                 <h4 className="featureText text-XL md:text-MED tracking-tighter">Installability</h4>
             </div>
             <div className="overflow-y-hidden">
-                <p className="featureDescription text-XS">This web app utilizes new technology which enables you to install this web app on whatever device you&apos;re using. If you&apos;re using a smartphone, the app will be installed on your homescreen. If you are using a desktop device, it will be added to your app list.</p>
+                <p className="featureDescription">This web app utilizes new technology which enables you to install this web app on whatever device you&apos;re using. If you&apos;re using a smartphone, the app will be installed on your homescreen. If you are using a desktop device, it will be added to your app list.</p>
             </div>
             <LinkText str={"Try it out"}/>
         </div>
@@ -36,10 +36,11 @@ const PWAFeatures = () => {
     const featureImage = useRef()
     const featureText = useRef()
     const featureTL = useRef(gsap.timeline())
+    const mm = useRef(gsap.matchMedia())
 
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
-        featureTL.current.fromTo("rect",{transform:"matrix(1,0,0,1,0,0)"},{transform:"matrix(1,0,0,1,0,0)",scrollTrigger:{scroller:"body",trigger:".featureSection",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
+        mm.current.add("(min-width:768px)",()=>{featureTL.current.fromTo("rect",{transform:"matrix(1,0,0,1,0,0)"},{transform:"matrix(1,0,0,1,200,0)",scrollTrigger:{scroller:"body",trigger:".featureSection",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})})
     })
 
     useEffect(()=>{
@@ -64,11 +65,13 @@ const PWAFeatures = () => {
         const handler = () =>{
             const tl = gsap.timeline()
             .set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
-            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 100%)",duration:1.2,ease:"power4.inOut"})
-            .to(featureText.current.querySelectorAll(".featureText"),{translateY:"-120%"})
-            .to(featureText.current.querySelectorAll(".word"),{translateY:"-120%",stagger:0.02,duration:1,ease:"power3.inOut"})
-            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 100% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.2,ease:"power4.inOut"})
-            setTimeout(()=>{setImageSource(str)},1200)
+            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"})
+            .to(featureText.current.querySelectorAll(".featureText"),{translateY:"120%",duration:1.5,ease:"power3."},"<")
+            .to(featureText.current.querySelectorAll(".word"),{translateY:"120%",stagger:0.02,duration:0.3,ease:"power3.in"},"<")
+            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"})
+            .to(featureText.current.querySelectorAll(".featureText"),{translateY:"0%",duration:1.5,ease:"power3.out"})
+            .to(featureText.current.querySelectorAll(".word"),{translateY:"0%",stagger:0.02,duration:0.3,ease:"power3.out"},"<")
+            setTimeout(()=>{setImageSource(str)},2000)
         }
         return handler
     }
