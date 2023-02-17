@@ -7,14 +7,14 @@ import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
 
 //on mobile the top half could be the selection and image while the lower half is the text
-const FeatureDescription = ({featureText,title,body}) => {
+const FeatureDescription = ({featureText,title,desc}) => {
     return (
         <div ref={featureText} className="realtive md:absolute bottom-32 w-full md:w-1/3 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2">
             <div className="overflow-y-hidden">
                 <h4 className="featureText text-XL md:text-MED tracking-tighter">{title}</h4>
             </div>
             <div className="overflow-y-hidden">
-                <p className="featureDescription">{body}</p>
+                <p className="featureDescription pl-25pct md:pl-0">{desc}</p>
             </div>
             <LinkText str={"Try it out"}/>
         </div>
@@ -22,6 +22,21 @@ const FeatureDescription = ({featureText,title,body}) => {
 }
 
 const PWAFeatures = () => {
+    const installable = {
+        cover: "/images/guggenheim.jpg",
+        title: "Installability",
+        desc: "This web app utilizes new technology which enables you to install this web app on whatever device you're using."
+    }
+    const offline = {
+        cover: "/images/arizona-memorial.JPG",
+        title: "Offline",
+        desc: "Using the local machine storage API, after installing the web application, the app should work even without internet connection."
+    }
+    const flexible = {
+        cover: "/images/ocean.jpg",
+        title: "Flexible",
+        desc: "Whether mobile, laptop, or desktop screens, the layout is optimized for both small and large viewport."
+    }
     //const [featureSVG,setFeatureSVG] = useState()
     //
     //Set window width here
@@ -32,16 +47,31 @@ const PWAFeatures = () => {
     const [lgRectWidth,setLgRectWidth] = useState(0)
     const [smRectWidth,setSmRectWidth] = useState(0)
     const [lgRectHeight,setLgRectHeight] = useState(0)
-    const [imageSource, setImageSource] = useState("/images/guggenheim.jpg")
     const featureImage = useRef()
     const featureText = useRef()
     const rect2 = useRef()
     const rect5 = useRef()
     const featureTL = useRef(gsap.timeline())
+    const changeTL = useRef(gsap.timeline())
     const mm = useRef(gsap.matchMedia())
-    const [ title,setTitle ] = useState("Installability")
-    const [ body,setBody ] = useState("This web app utilizes new technology which enables you to install this web app on whatever device you're using. If you're using a smartphone, the app will be installed on your homescreen. If you're using a desktop device, it will be added to your app list.")
+    const [imageSource, setImageSource] = useState("")
+    const [ title,setTitle ] = useState("")
+    const [ desc,setDesc ] = useState("")
+    
+    /* let runSplit
+    useIsomorphicLayoutEffect(()=>{
+        let lines;
+        runSplit = () => {
+          //@ts-ignore
+          lines = new SplitType(".featureDescription",{type:'lines'})
+        }
+        runSplit()
 
+        window.addEventListener("resize",()=>{
+            lines.revert();
+            runSplit()
+        })
+      },[desc]) */
     
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
@@ -66,33 +96,43 @@ const PWAFeatures = () => {
         }
     },[windowWidth])
 
-    const handleImageSwitch = (str) => {
-        const handler = () =>{
-            const tl = gsap.timeline()
-            .set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
-            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"})
-            .to(featureText.current.querySelectorAll(".featureText"),{translateY:"120%",duration:1.5,ease:"power3."},"<")
-            .to(featureText.current.querySelectorAll(".word"),{translateY:"120%",stagger:0.02,duration:0.3,ease:"power3.in"},"<")
-            .fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"})
-            .to(featureText.current.querySelectorAll(".featureText"),{translateY:"0%",duration:1.5,ease:"power3.out"})
-            .to(featureText.current.querySelectorAll(".word"),{translateY:"0%",stagger:0.02,duration:0.3,ease:"power3.out"},"<")
-            setTimeout(()=>{
-                //
-                //CHANGE THE TEXT HERE setTitle & setBody
-                //
-                setImageSource(str)
-            },2000)
+    const handleImageSwitch = (obj) => {
+        
+        const handleChangeText = () => {
+            setImageSource(obj.cover)
+            setTitle(obj.title)
+            setDesc(obj.desc)
+            console.log("timeout")
         }
+
+        const handler = () =>{
+            changeTL.current.set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
+            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"})
+            changeTL.current.to(featureText.current.querySelectorAll(".featureText"),{translateY:"120%",duration:1.5,ease:"power3."},"<")
+            changeTL.current.to(".featureDescription",{opacity:0,duration:1,ease:"power3.in"},"<")
+            changeTL.current.add(handleChangeText)
+            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"})
+            changeTL.current.to(featureText.current.querySelectorAll(".featureText"),{translateY:"0%",duration:1.5,ease:"power3.out"},"-=0.3")
+            changeTL.current.to(".featureDescription",{opacity:1,duration:1,ease:"power3.out"},"-=1")
+        }
+        
         return handler
     }
+
+    useIsomorphicLayoutEffect(()=>{
+        setImageSource(installable.cover)
+        setTitle(installable.title)
+        setDesc(installable.desc)
+    },[])
+
 
     return (
         <div className="snap-start relative flex flex-col featureSection w-screen h-screen p-4 pb-32 text-white">
             <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
-                <span onClick={handleImageSwitch("/images/guggenheim.jpg")} className="text-white cursor-pointer">Installability</span>
-                <span onClick={handleImageSwitch("/images/arizona-memorial.JPG")} className="text-white cursor-pointer">Works Offline</span>
-                <span onClick={handleImageSwitch("/images/ocean.jpg")} className="text-white cursor-pointer">Flexible</span>
+                <span onClick={handleImageSwitch(installable)} className="text-white cursor-pointer">Installability</span>
+                <span onClick={handleImageSwitch(offline)} className="text-white cursor-pointer">Works Offline</span>
+                <span onClick={handleImageSwitch(flexible)} className="text-white cursor-pointer">Flexible</span>
             </div>
             <div className="relative w-full h-1/2 md:h-5/6">
                 <div className="featureCover w-full h-1/2 md:h-full overflow-hidden">
@@ -110,7 +150,7 @@ const PWAFeatures = () => {
                     </defs>
                 </svg>
             </div>
-            <FeatureDescription featureText={featureText} title={title} body={body}/>
+            <FeatureDescription featureText={featureText} title={title} desc={desc}/>
         </div>
     )
 }

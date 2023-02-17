@@ -67,7 +67,7 @@ export default function App({ Component, pageProps }: AppProps) {
       //@ts-ignore
       lines = new SplitType(".paragraph",{type:'lines'})
       //@ts-ignore
-      lines = new SplitType(".featureDescription",{type:'lines'})
+      //lines = new SplitType(".featureDescription",{type:'lines'})
     }
     runSplit()
     window.addEventListener("resize",()=>{

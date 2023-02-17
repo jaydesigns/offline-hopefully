@@ -33,14 +33,17 @@ module.exports = {
       },
       gridTemplateRows: {
         layout: '2vw 1fr 1fr 10vw 10vw 1fr',
-        mobileLayout: 'auto 1fr 1fr 11.5vw 11.5vw 1fr',
+        mobileLayout: 'auto 1fr 1fr 11vw 11vw 1fr',
       },
       width: {
-        ampMobile: '11.5vw',
+        ampMobile: '10.5vw',
         ampMd: '9vw',
       },
       lineHeight: {
         suis: '0.85em',
+      },
+      padding: {
+        '25pct': '25%',
       },
     },
   },
