@@ -33,10 +33,10 @@ export default function App({ Component, pageProps }: AppProps) {
   let heading2Wrapper = useRef<HTMLDivElement>();
 
   useIsomorphicLayoutEffect(()=>{
-    const lenis = new Lenis({
+    let lenis = new Lenis({
       // wrapper:smoothWrapper.current,
       // content:smoothContent.current,
-      duration: 2.5,
+      duration: 2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(1.5, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
       direction: 'vertical', // vertical, horizontal
       gestureDirection: 'vertical', // vertical, horizontal, both

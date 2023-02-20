@@ -1,4 +1,4 @@
-import { useEffect,useRef,useState} from "react";
+import { useCallback, useEffect,useRef,useState} from "react";
 //import img from "../assets/DSC_0120_2.JPG";
 import ArrowRight from "./arrowRight";
 import gsap from "gsap";
@@ -7,6 +7,7 @@ import Link from "next/link";
 import LinkText from './linkText'
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
+import ScrollToPlugin from "gsap/dist/ScrollToPlugin";
 
 const Ampersand = ({wrapper,container,glyph}) => {
     return (
@@ -78,6 +79,13 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
         return ()=>ctx.revert();
     },[])
 
+    const scrollToFeature = useCallback(()=>{
+        gsap.registerPlugin(ScrollToPlugin)
+        return(
+            gsap.to(window,{duration:2,scrollTo:".featureSection",ease:"power3.inOut"})
+        )
+    },[])
+
     /* useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
         mm.current.add("(min-width: 768px)",()=>{gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:introductionContent.current,start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})})
@@ -99,7 +107,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
                 <div className="flex flex-col justify-center md:justify-end pb-4">
                 <div className="text-black overflow-hidden"><h6 className="entra">This is NOT a website</h6></div>
                 <div className="overflow-hidden cursor-pointer">
-                    <div className="entra">
+                    <div onClick={scrollToFeature} className="entra">
                         <LinkText str={'Wait... what?'}/>
                     </div>
                 </div>
