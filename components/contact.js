@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
 import NegativeArrow from './negativeArrow'
 import SplitType from "split-type";
@@ -31,17 +31,20 @@ const Contact = () => {
     const [step,setStep] = useState("name")
     const submitBtn = useRef()
 
-    useIsomorphicLayoutEffect(()=>{
+    useEffect(()=>{
         let lines;
         const runSplit = () => {
           //@ts-ignore
-          lines = new SplitType(headingText.current,{type:'lines'})
+          lines = new SplitType(".greet",{type:'lines'})
         }
         runSplit()
         window.addEventListener("resize",()=>{
             lines.revert();
             runSplit()
         })
+    },[])
+
+    /* useIsomorphicLayoutEffect(()=>{
         console.log(submitBtn.current);
         submitBtn.current.addEventListener("click",(e)=>{
             e.preventDefault()
@@ -51,7 +54,7 @@ const Contact = () => {
             runSplit()
             tl.to(headingText.current.querySelectorAll(".word"),{translateY:"0%",duration:1,ease:"power3.in"})
         })
-    },[])
+    },[]) */
 
     const handleChange = (e) => {
         setFirstName(e.target.value);
@@ -60,18 +63,31 @@ const Contact = () => {
 
     const handleNameResponse = (event) =>{
         event.preventDefault()
-        if(firstName.length>0){
+        
+        
+        /* if(firstName.length>0){
             const ngan = firstName.split(" ")
             headingText.current.innerText = `Hi ${ngan[0]}! It's nice to have you here! Is there anything I can help you with?`
             setStep("needs")
         } else {
             headingText.current.innerText = `It seems like you didn't put down your name below.`
-        }
+        } */
+
+        
     }
+
+    useEffect(()=>{
+        let tl = gsap.timeline()
+        tl.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
+        tl.to(headingText.current.querySelectorAll(".word"),{translateY:"0%",duration:1,ease:"power3.out"})
+        setTimeout(()=>{
+            //
+        },1000)
+    })
 
     return(
         <div className="interactiveContact snap-start w-screen h-screen text-white p-4 pt-28 grid md:grid-rows-layout grid-cols-4 md:grid-cols-12">
-            <h3 ref={headingText} className="text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12 mix-blend-exclusion">Hi! Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
+            <h3 ref={headingText} className="greet text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12 mix-blend-exclusion">Hi! Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
             <div className="col-span-4 col-start-1 md:col-start-5 row-start-2 md:row-start-4">
                 {step==="name"&&<Name handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
                 {step==="needs"&&<Needs handleChange={handleChange} handleNameResponse={handleNameResponse}/>}

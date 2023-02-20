@@ -12,20 +12,20 @@ const FeatureDescription = (props) => {
     //render every feature description just hidden and they just pop up when selected
     //
     return (
-        <div ref={props.featureText} className="relative md:absolute bottom-32 w-full md:w-1/3 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2">
+        <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/3 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2">
             <div className="absolute" data-name="installable">
                 <h4 className="featureText lined text-XL md:text-MED tracking-tighter">{props.obj.installable.title}</h4>
-                <p className="featureDescription lined pl-25pct md:pl-0">{props.obj.installable.desc}</p>
+                <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
                 <LinkText str={"Try it out"}/>
             </div>
             <div className="absolute" data-name="offline">
                 <h4 className="featureText lined text-XL md:text-MED tracking-tighter">{props.obj.offline.title}</h4>
-                <p className="featureDescription lined pl-25pct md:pl-0">{props.obj.offline.desc}</p>
+                <p className="featureDescription lined md:pl-0">{props.obj.offline.desc}</p>
                 
             </div>
             <div className="absolute" data-name="flexible">
                 <h4 className="featureText lined text-XL md:text-MED tracking-tighter">{props.obj.flexible.title}</h4>
-                <p className="featureDescription lined pl-25pct md:pl-0">{props.obj.flexible.desc}</p>
+                <p className="featureDescription lined md:pl-0">{props.obj.flexible.desc}</p>
                 
             </div>
         </div>
@@ -130,7 +130,7 @@ const PWAFeatures = () => {
         setTimeout(()=>{
             setImageSource(obj[`${selectedFeature}`].cover)
         },1000)
-    },[selectedFeature,obj])
+    })
 
 
     return (
@@ -141,7 +141,7 @@ const PWAFeatures = () => {
                 <span onClick={handleImageSwitch("offline")} data-index="offline" className="text-white cursor-pointer">Works Offline</span>
                 <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="text-white cursor-pointer">Flexible</span>
             </div>
-            <div className="relative w-full h-1/2 md:h-5/6">
+            <div className="relative w-full h-2/3 md:h-5/6">
                 <div className="featureCover w-full h-1/2 md:h-full overflow-hidden">
                     <Image src={imageSource} alt="image" fill style={{objectFit:"cover"}} placeholder="blur" blurDataURL="/images/guggenheim.jpg"></Image>
                 </div>
