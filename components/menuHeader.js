@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useCallback } from "react"
 import gsap from "gsap"
 import Link from "next/link"
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
@@ -7,9 +7,10 @@ import localFont from "@next/font/local"
 const MenuItem = ({str}) => {
     return <div className="flex flex-row gap-2 content-center menuEntra">
                 <div className="bg-red w-6 h-6 flex justify-around items-center rounded-full"></div>
-                <div className="linkName overflow-hidden relative h-6 changeBG"><span className="linkText cursor-pointer text-white mix-blend-exclusion">{str}</span></div>
-        </div>
-}
+                <Link href={str}><div className="linkName overflow-hidden relative h-6 changeBG">
+                    <span className="linkText cursor-pointer text-white mix-blend-exclusion">{str}</span>
+                </div></Link>
+        </div>}
 
 const switzer = localFont({src:'../pages/font/switzer-variable-webfont.woff2'})
 
@@ -45,7 +46,7 @@ const HeaderMenu = () => {
                     <div className="text-xs relative overflow-hidden max-h-6 text-white"><h6 className="menuEntra">Designer/Developer</h6></div>
                 </div>
                 <div className="navigationMenu flex gap-1 grow md:basis-1/3 justify-end h-full overflow-hidden" onTouchStart={state !== true ? menuExpand : menuShrink} onMouseEnter={menuExpand} onMouseLeave={menuShrink}>
-                    <Link href={"bio"}><MenuItem str="bio" /></Link>
+                    <MenuItem link="bio" str="bio" />
                     <MenuItem str="socials" />
                     <MenuItem str="say hi" />
                 </div>

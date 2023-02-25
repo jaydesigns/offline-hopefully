@@ -82,7 +82,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
     const scrollToFeature = useCallback(()=>{
         gsap.registerPlugin(ScrollToPlugin)
         return(
-            gsap.to(window,{duration:2,scrollTo:".featureSection",ease:"power3.inOut"})
+            gsap.to(window,{duration:2,scrollTo:".featureSection",duration:3,ease:"power3.inOut"})
         )
     },[])
 
