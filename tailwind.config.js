@@ -26,7 +26,7 @@ module.exports = {
         bio: ['16vw',0.8],
         XS: ['2vw',1],
         SM: ['3vw',0.8],
-        MED: ['6vw',1],
+        MED: ['6vw',0.8],
         LG: ['10vw',1],
         XL: ['11.5vw',1],
         XXL: ['16vw',0.8],

@@ -12,7 +12,7 @@ const Greeting = (props) =>{
         <>
             <div ref={props.headingText} className="relative col-span-12">
                 <div className="absolute" data-name="name">
-                    <h3 className="greet text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12 mix-blend-exclusion">Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
+                    <h3 className="greet leading-suis text-2xl md:text-MED font-semibold col-span-8 md:col-span-12">Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
                 </div>
             </div>
         </>
@@ -20,6 +20,7 @@ const Greeting = (props) =>{
 }
 
 const Meet = (props) =>{
+    const meetText = useRef()
     let una = props.firstName.split(" ")
     useIsomorphicLayoutEffect(()=>{
         let lines;
@@ -32,14 +33,41 @@ const Meet = (props) =>{
             lines.revert();
             runSplit()
         })
-        gsap.set(".word",{translateY:"120%"})
-        gsap.to(".word",{translateY:"0%",duration:1,ease:"power3.out"})
+        gsap.set(meetText.current.querySelectorAll(".word"),{translateY:"120%"})
+        gsap.to(meetText.current.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.02,ease:"power3.out"})
     },[])
     return (
         <>
-            <div className="relative col-span-12">
+            <div ref={props.headingText} className="relative col-span-12">
                 <div className="absolute" data-name="needs">
-                    <h3 className="greet text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12 mix-blend-exclusion">Hi {una[0]}! It&apos;s great to have you here. Can I help you with something?</h3>
+                    <h3 ref={meetText} className="greet text-2xl md:text-6xl tracking-tight leading-suis font-semibold col-span-8 md:col-span-12"><span style={{color:"#F45844"}}>Hi {una[0]}!</span> It&apos;s great to have you here. Can I help you with something?</h3>
+                </div>
+            </div>
+        </>
+    )
+}
+
+const Looking = (props) =>{
+    const justLookingText = useRef()
+    useIsomorphicLayoutEffect(()=>{
+        let lines;
+        const runSplit = () => {
+          //@ts-ignore
+          lines = new SplitType(".greet",{type:'lines'})
+        }
+        runSplit()
+        window.addEventListener("resize",()=>{
+            lines.revert();
+            runSplit()
+        })
+        gsap.set(justLookingText.current.querySelectorAll(".word"),{translateY:"120%"})
+        gsap.to(justLookingText.current.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.02,ease:"power3.out"})
+    },[])
+    return (
+        <>
+            <div ref={props.headingText} className="relative col-span-12">
+                <div className="absolute" data-name="looking">
+                    <h3 ref={justLookingText} className="greet text-2xl md:text-6xl tracking-tight leading-suis font-semibold col-span-8 md:col-span-12">Hey, feel free to look around. If you feel inspired or just want to chat, you can always find my contact info on those three dots on the bottom-right.</h3>
                 </div>
             </div>
         </>
@@ -65,7 +93,7 @@ const Error = (props) =>{
         <>
             <div ref={props.headingText} className="relative col-span-12">
                 <div className="absolute" data-name="error">
-                    <h3 className="greet text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12 mix-blend-exclusion">I&apos;m sorry, I didn&apos;t get your name.</h3>
+                    <h3 className="greet text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12">I&apos;m sorry, I didn&apos;t get your name.</h3>
                 </div>
             </div>
         </>
@@ -79,8 +107,8 @@ const Name = (props) => {
     return (
         <form className="w-full">
             <div className="flex bg-black p-4 gap-8 w-full">
-                <input className=" bg-black text-white border-white border-b w-full" placeholder="What's your name?" value={props.firstName} onChange={props.handleChange}></input>
-                <button ref={props.submitBtn} onClick={props.handleNameResponse}><NegativeArrow/></button>
+                <input type="text" className=" bg-black text-white border-white border-b w-full" placeholder="Replace this with your name" value={props.firstName} onChange={props.handleChange}></input>
+                <input type="submit" data-name="needs" ref={props.submitBtn} onClick={props.handleNameResponse} value="Enter" className="bg-red text-white px-2"></input>
             </div>
         </form>
     )
@@ -89,10 +117,9 @@ const Name = (props) => {
 const Needs = (props) => {
     return (
         <div className="text-black">
-            <button className="block w-full bg-black text-white text-left p-2">Just Looking</button>
-            <button className="block w-full bg-black text-white text-left p-2">I want to learn more about branding.</button>
-            <button className="block w-full bg-black text-white text-left p-2">What can I do with the modern web?</button>
-            <button className="block w-full bg-black text-white text-left p-2">Social media platforms</button>
+            <button data-name="looking" onClick={props.handleNameResponse} className="block w-full bg-black text-white text-left px-8 py-4 text-sm border-b border-white hover:bg-red">Just Looking</button>
+            <button className="block w-full bg-black text-white text-left px-8 py-4 text-sm border-b border-white hover:bg-red">Send Jay an email</button>
+            <button className="block w-full bg-black text-white text-left px-8 py-4 text-sm border-b border-white hover:bg-red">Follow Jay&apos;s social media</button>
         </div>
     )
 }
@@ -104,12 +131,6 @@ const Contact = () => {
     const [step,setStep] = useState("name")
     const submitBtn = useRef()
     const tl = useRef(gsap.timeline())
-
-    const contactResponsObject = {
-        name:"",
-        needs:"",
-        branding:"",
-    }
 
     useIsomorphicLayoutEffect(()=>{
         console.log("contact");
@@ -125,18 +146,6 @@ const Contact = () => {
         })
     },[])
 
-    /* useIsomorphicLayoutEffect(()=>{
-        console.log(submitBtn.current);
-        submitBtn.current.addEventListener("click",(e)=>{
-            e.preventDefault()
-            lines.revert();
-            let tl = gsap.timeline()
-            tl.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
-            runSplit()
-            tl.to(headingText.current.querySelectorAll(".word"),{translateY:"0%",duration:1,ease:"power3.in"})
-        })
-    },[]) */
-
     const handleChange = (e) => {
         setFirstName(e.target.value);
     };
@@ -144,10 +153,11 @@ const Contact = () => {
 
     const handleNameResponse = (event) =>{
         event.preventDefault()
+        console.log(event.currentTarget);
         // setStep("needs")
         if(firstName.length>0){
             tl.current.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
-            tl.current.play().then(()=>setStep("needs"))
+            tl.current.play().then(()=>setStep(event.target.getAttribute("data-name")))
         } else {
             tl.current.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
             tl.current.play().then(()=>setStep("error"))
@@ -166,10 +176,11 @@ const Contact = () => {
     },[step]) */
 
     return(
-        <div className="interactiveContact snap-start w-screen h-screen text-white p-4 pt-28 grid md:grid-rows-layout grid-cols-4 md:grid-cols-12">
+        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-28 grid md:grid-rows-layout grid-cols-4 md:grid-cols-12">
             {step==="name"&&<Greeting handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} headingText={headingText}/>}
-            {step==="needs"&&<Meet handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} firstName={firstName}/>}
+            {step==="needs"&&<Meet handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} firstName={firstName} headingText={headingText}/>}
             {step==="error"&&<Error headingText={headingText}/>}
+            {step==="looking"&&<Looking headingText={headingText}/>}
             
             <div className="col-span-4 col-start-1 md:col-start-5 row-start-4 md:row-start-4">
                 {(step==="name"||step==="error")&&<Name handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}

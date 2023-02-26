@@ -71,6 +71,7 @@ const Bio = () => {/*
                                     &mdash; I also like to play chess at Chess.com. If you want to play against me, I&apos;ll have to warn you tho I have a 687 ELO rating.
                                     &mdash; When I was in Hawaii, I like to go surfing.
                                     &mdash; I also find landscape photography and riding a bike very amusing.
+                                    &mdash; Learning about dinosaurs, geology, and astrophysics also take a huge chunk of my time.
                                 </li>
                             </ul>
                         </div>
