@@ -12,7 +12,7 @@ const FeatureDescription = (props) => {
     //render every feature description just hidden and they just pop up when selected
     //
     return (
-        <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2">
+        <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2 mix-blend-exclusion">
             <div className="absolute" data-name="installable">
                 <h4 className="featureText lined text-XL md:text-MED tracking-tighter">{props.obj.installable.title}</h4>
                 <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
@@ -135,7 +135,7 @@ const PWAFeatures = () => {
 
     return (
         <div className="snap-start relative flex flex-col featureSection w-screen h-screen p-4 pb-32 text-white">
-            <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4">
+            <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
                 <span onClick={handleImageSwitch("installable")} data-index="installable" className="text-white cursor-pointer">Installability</span>
                 <span onClick={handleImageSwitch("offline")} data-index="offline" className="text-white cursor-pointer">Works Offline</span>

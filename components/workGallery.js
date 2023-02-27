@@ -132,7 +132,7 @@ const WorkGallery = () => {
     })
 
     return(
-        <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between">
+        <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
             <div className="flex flex-col border-grey border-t border-b md:border-b-0 md:flex-row">
                 <h1 className="flex-1 tracking-tight leading-suis text-MED py-4">Selected Work</h1>
                 <div className="flex flex-col md:grow md:flex-row">
