@@ -32,10 +32,10 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper})=> {
       //@ts-ignore
       gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
       //@ts-ignore
-      gsap.to(".changeBG",{scrollTrigger:{scroller:"body",trigger:".introBody", onLeave:()=>{gsap.to(".changeBG",{backgroundColor:"#141011"})},onEnterBack:()=>{gsap.to(".changeBG",{backgroundColor:"#DFE0E2"})}}})
-      gsap.to(".changeBG",{scrollTrigger:{scroller:"body",trigger:".interactiveContact",onEnter:()=>{gsap.to(".changeBG",{backgroundColor:"#DFE0E2"})},onLeaveBack:()=>{gsap.to(".changeBG",{backgroundColor:"#141011"})}}})
-      // gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:"body",trigger:".interactiveContact",scrub:true , start:"top 50%", end:"top top", pinSpacing:false}})
-      // gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top center", pinSpacing:false}})
+      // gsap.to(".changeBG",{scrollTrigger:{scroller:"body",trigger:".introBody", onLeave:()=>{gsap.to(".changeBG",{backgroundColor:"#141011"})},onEnterBack:()=>{gsap.to(".changeBG",{backgroundColor:"#DFE0E2"})}}})
+      // gsap.to(".changeBG",{scrollTrigger:{scroller:"body",trigger:".featureSection",onLeave:()=>{gsap.to(".changeBG",{backgroundColor:"#DFE0E2"})},onEnterBack:()=>{gsap.to(".changeBG",{backgroundColor:"#141011"})}}})
+      gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:"body",trigger:".interactiveContact",scrub:true , start:"top 50%", end:"top top", pinSpacing:false}})
+      gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top center", pinSpacing:false}})
       gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:".introBody",start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})
       mm.current.add("(min-width: 768px)",()=>{gsap.to(".heroImage",{translateY:"32.5%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})})
     })
