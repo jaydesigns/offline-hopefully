@@ -12,7 +12,7 @@ const Greeting = (props) =>{
         <>
             <div ref={props.headingText} className="relative col-span-12">
                 <div className="absolute" data-name="name">
-                    <h3 className="greet leading-suis text-2xl md:text-MED font-semibold col-span-8 md:col-span-12">Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
+                    <h3 className="greet leading-suis text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12">Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
                 </div>
             </div>
         </>
@@ -40,7 +40,7 @@ const Meet = (props) =>{
         <>
             <div ref={props.headingText} className="relative col-span-12">
                 <div className="absolute" data-name="needs">
-                    <h3 ref={meetText} className="greet text-2xl md:text-6xl tracking-tight leading-suis font-semibold col-span-8 md:col-span-12"><span style={{color:"#F45844"}}>Hi {una[0]}!</span> It&apos;s great to have you here. Can I help you with something?</h3>
+                    <h3 ref={meetText} className="greet text-2xl md:text-6xl tracking-tight leading-suis font-semibold col-span-8 md:col-span-12">Hi <span style={{color:"#F45844"}}>{una[0]}!</span> It&apos;s great to have you here. Can I help you with something?</h3>
                 </div>
             </div>
         </>
@@ -186,6 +186,7 @@ const Contact = () => {
                 {(step==="name"||step==="error")&&<Name handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
                 {/* {step==="error"&&<Name handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>} */}
                 {step==="needs"&&<Needs handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
+                {(step==="looking"||step==="socials")&&<Needs handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
             </div>
             <div className="row-start-6">
                 <h6 className="text-red text-xs font-bold leading-tight">Don&apos;t worry, your name won&apos;t be saved anywhere.</h6>
