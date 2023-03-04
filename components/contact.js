@@ -6,7 +6,7 @@ import gsap from "gsap";
 
 const Greeting = (props) =>{
     useEffect(()=>{
-        console.log("greet");
+        // console.log("greet");
     })
     return (
         <>
@@ -102,7 +102,7 @@ const Error = (props) =>{
 
 const Name = (props) => {
     useEffect(()=>{
-        console.log("name");
+        // console.log("name");
     })
     return (
         <form className="w-full">
@@ -133,7 +133,7 @@ const Contact = () => {
     const tl = useRef(gsap.timeline())
 
     useIsomorphicLayoutEffect(()=>{
-        console.log("contact");
+        // console.log("contact");
         let lines;
         const runSplit = () => {
           //@ts-ignore
@@ -153,7 +153,7 @@ const Contact = () => {
 
     const handleNameResponse = (event) =>{
         event.preventDefault()
-        console.log(event.currentTarget);
+        // console.log(event.currentTarget);
         // setStep("needs")
         if(firstName.length>0){
             tl.current.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
@@ -176,8 +176,11 @@ const Contact = () => {
     },[step]) */
 
     return(
-        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-28 grid md:grid-rows-layout grid-cols-4 md:grid-cols-12">
-            <div className="col-span-6 md:col-start-4">
+        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid md:grid-rows-layout grid-cols-4 md:grid-cols-12">
+            <div className="border-b border-black py-2 col-span-4 md:col-span-12">
+                <h4>Connect</h4>
+            </div>
+            <div className="col-span-6 md:col-start-4 row-start-2">
                 {step==="name"&&<Greeting handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} headingText={headingText}/>}
                 {step==="needs"&&<Meet handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} firstName={firstName} headingText={headingText}/>}
                 {step==="error"&&<Error headingText={headingText}/>}

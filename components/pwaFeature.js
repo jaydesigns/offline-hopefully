@@ -14,17 +14,17 @@ const FeatureDescription = (props) => {
     return (
         <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2 mix-blend-exclusion">
             <div className="absolute" data-name="installable">
-                <h4 className="featureText lined text-XL md:text-MED tracking-tighter">{props.obj.installable.title}</h4>
+                <h2 className="featureText lined text-XL md:text-5xl tracking-tighter">{props.obj.installable.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
                 {/* <LinkText str={"Try it out"}/> */}
             </div>
             <div className="absolute" data-name="offline">
-                <h4 className="featureText lined text-XL md:text-MED tracking-tighter">{props.obj.offline.title}</h4>
+                <h2 className="featureText lined text-XL md:text-5xl tracking-tighter">{props.obj.offline.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.offline.desc}</p>
                 
             </div>
             <div className="absolute" data-name="flexible">
-                <h4 className="featureText lined text-XL md:text-MED tracking-tighter">{props.obj.flexible.title}</h4>
+                <h2 className="featureText lined text-XL md:text-5xl tracking-tighter">{props.obj.flexible.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.flexible.desc}</p>
                 
             </div>
@@ -135,11 +135,14 @@ const PWAFeatures = () => {
 
     return (
         <div className="snap-start relative flex flex-col featureSection w-screen h-screen p-4 pb-32 text-white">
-            <div className="grid grid-cols-3 w-full h-1/6 border-t-2 border-white pt-4 mix-blend-exclusion">
+            <div className="flex flex-row w-full h-1/6 border-t-2 border-white pt-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
-                <span onClick={handleImageSwitch("installable")} data-index="installable" className="text-white cursor-pointer">Installability</span>
-                <span onClick={handleImageSwitch("offline")} data-index="offline" className="text-white cursor-pointer">Works Offline</span>
-                <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="text-white cursor-pointer">API-based</span>
+                <h4 className="w-1/4">The Difference</h4>
+                <div className="flex flex-auto">
+                    <span onClick={handleImageSwitch("installable")} data-index="installable" className="text-white cursor-pointer grow">Installability</span>
+                    <span onClick={handleImageSwitch("offline")} data-index="offline" className="text-white cursor-pointer grow">Works Offline</span>
+                    <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="text-white cursor-pointer grow">API-based</span>
+                </div>
             </div>
             <div className="relative w-full h-2/3 md:h-5/6">
                 <div className="featureCover w-full h-1/2 md:h-full overflow-hidden">

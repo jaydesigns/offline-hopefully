@@ -67,7 +67,7 @@ const Bio = () => {/*
                             <h4 className="hidden md:block">04</h4>
                             <h2 className="font-semibold text-lg md:text-3xl col-start-1 md:col-start-5">Interests/Hobbies</h2>
                             <ul className="text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
-                                <li>&mdash; When I&apos;m not learning web programming, I&apos;ll be out in the gym playing basketball.
+                                <li>&mdash; When I&apos;m not learning programming, I&apos;ll be out in the gym playing basketball.
                                     &mdash; I also like to play chess at Chess.com. If you want to play against me, I&apos;ll have to warn you tho I have a 687 ELO rating.
                                     &mdash; When I was in Hawaii, I like to go surfing.
                                     &mdash; I also find landscape photography and riding a bike very amusing.
