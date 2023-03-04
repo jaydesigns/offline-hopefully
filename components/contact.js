@@ -10,9 +10,9 @@ const Greeting = (props) =>{
     })
     return (
         <>
-            <div ref={props.headingText} className="relative col-span-12">
+            <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="name">
-                    <h3 className="greet leading-suis text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12">Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
+                    <h3 className="greet leading-suis text-2xl md:text-4xl font-semibold col-span-4 md:col-span-6">Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
                 </div>
             </div>
         </>
@@ -38,9 +38,9 @@ const Meet = (props) =>{
     },[])
     return (
         <>
-            <div ref={props.headingText} className="relative col-span-12">
+            <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="needs">
-                    <h3 ref={meetText} className="greet text-2xl md:text-6xl tracking-tight leading-suis font-semibold col-span-8 md:col-span-12">Hi <span style={{color:"#F45844"}}>{una[0]}!</span> It&apos;s great to have you here. Can I help you with something?</h3>
+                    <h3 ref={meetText} className="greet text-2xl md:text-4xl tracking-tight leading-suis font-semibold col-span-4 md:col-span-6">Hi <span style={{color:"#F45844"}}>{una[0]}!</span> It&apos;s great to have you here. Can I help you with something?</h3>
                 </div>
             </div>
         </>
@@ -65,9 +65,9 @@ const Looking = (props) =>{
     },[])
     return (
         <>
-            <div ref={props.headingText} className="relative col-span-12">
+            <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="looking">
-                    <h3 ref={justLookingText} className="greet text-2xl md:text-6xl tracking-tight leading-suis font-semibold col-span-8 md:col-span-12">Hey, feel free to look around. If you feel inspired or just want to chat, you can always find my contact info on those three dots on the bottom-right.</h3>
+                    <h3 ref={justLookingText} className="greet text-2xl md:text-4xl tracking-tight leading-suis font-semibold col-span-4 md:col-span-6">Hey, feel free to look around. If you feel inspired or just want to chat, you can always find my contact info on those three dots on the bottom-right.</h3>
                 </div>
             </div>
         </>
@@ -91,9 +91,9 @@ const Error = (props) =>{
     },[])
     return (
         <>
-            <div ref={props.headingText} className="relative col-span-12">
+            <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="error">
-                    <h3 className="greet text-2xl md:text-6xl font-semibold col-span-8 md:col-span-12">I&apos;m sorry, I didn&apos;t get your name.</h3>
+                    <h3 className="greet text-2xl md:text-6xl font-semibold col-span-4 md:col-span-6">I&apos;m sorry, I didn&apos;t get your name.</h3>
                 </div>
             </div>
         </>
@@ -177,18 +177,20 @@ const Contact = () => {
 
     return(
         <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-28 grid md:grid-rows-layout grid-cols-4 md:grid-cols-12">
-            {step==="name"&&<Greeting handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} headingText={headingText}/>}
-            {step==="needs"&&<Meet handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} firstName={firstName} headingText={headingText}/>}
-            {step==="error"&&<Error headingText={headingText}/>}
-            {step==="looking"&&<Looking headingText={headingText}/>}
+            <div className="col-span-6 md:col-start-4">
+                {step==="name"&&<Greeting handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} headingText={headingText}/>}
+                {step==="needs"&&<Meet handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} firstName={firstName} headingText={headingText}/>}
+                {step==="error"&&<Error headingText={headingText}/>}
+                {step==="looking"&&<Looking headingText={headingText}/>}
+            </div>
             
-            <div className="col-span-4 col-start-1 md:col-start-5 row-start-4 md:row-start-4">
+            <div className="col-span-4 md:col-span-6 col-start-1 md:col-start-4 row-start-4">
                 {(step==="name"||step==="error")&&<Name handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
                 {/* {step==="error"&&<Name handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>} */}
                 {step==="needs"&&<Needs handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
                 {(step==="looking"||step==="socials")&&<Needs handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
             </div>
-            <div className="row-start-6">
+            <div className="row-start-6 col-span-1">
                 <h6 className="text-red text-xs font-bold leading-tight">Don&apos;t worry, your name won&apos;t be saved anywhere.</h6>
             </div>
         </div>

@@ -74,17 +74,17 @@ const Accordion = ({order,title,skills}) => {
  
     return (
         <div className="accordion flex-1" data-classification={order}>
-            <div className="flex flex-col gap-2 border-b border-white pb-2 pt-4">
-                <div onClick={handleExpand} className="cursor-pointer flex gap-4 justify-start">
+            <div className="flex flex-col gap-2 justify-between h-full">
+                <div onClick={handleExpand} className="cursor-pointer flex gap-4 justify-start border-b border-white">
                     <div className="relative w-5 h-5">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-4xl">+</span></div>
                     </div>
-                    <h6 className="font-semibold">{title}</h6>
+                    <h6 className="font-medium">{title}</h6>
                 </div>
                 <div ref={dropdownItems} className="flex flex-col">
                     {skills.map((el,i)=>{
                         return (
-                        <div key={i} onClick={()=>console.log(i)} className="relative overflow-hidden skills border-grey border-t">
+                        <div key={i} onClick={()=>console.log(i)} className="relative overflow-hidden skills border-32 border-b">
                             <div className="absolute flex gap-4 h-full text-sm font-extralight cursor-pointer workSelector">
                                 <div className="flex flex-col justify-center">
                                     <NegativeArrow />
@@ -133,8 +133,10 @@ const WorkGallery = () => {
 
     return(
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
-            <div className="flex flex-col border-grey border-t border-b md:border-b-0 md:flex-row">
-                <h1 className="flex-1 tracking-tight leading-suis text-MED py-4">Selected Work</h1>
+            <div className="flex flex-col md:border-b-0 md:flex-row md:h-1/4">
+                <div className="flex md:w-1/3 flex-col justify-end">
+                    <h1 className="tracking-tight leading-suis text-2xl md:text-6xl">Selected Work</h1>
+                </div>
                 <div className="flex flex-col md:grow md:flex-row">
                     <Accordion order={"accordion1"} title={'Type of Work'} skills={['Branding', 'UI Design', 'Environmental Design', 'Publication Design']}/>
                     <Accordion order={"accordion2"} title={'Technology Used'} skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']}/>

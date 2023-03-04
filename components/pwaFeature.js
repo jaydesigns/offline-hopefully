@@ -46,8 +46,8 @@ const PWAFeatures = () => {
         },
         flexible: {
             cover: "/images/ocean.jpg",
-            title: "Flexible",
-            desc: "Whether mobile, laptop, or desktop screens, the layout is optimized for both small and large viewport."
+            title: "API-based",
+            desc: "The architecture of this app makes use of decentralized microservices that communicate through API (Application Programming Interface)."
         }
     }
     //const [featureSVG,setFeatureSVG] = useState()
@@ -139,7 +139,7 @@ const PWAFeatures = () => {
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
                 <span onClick={handleImageSwitch("installable")} data-index="installable" className="text-white cursor-pointer">Installability</span>
                 <span onClick={handleImageSwitch("offline")} data-index="offline" className="text-white cursor-pointer">Works Offline</span>
-                <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="text-white cursor-pointer">Flexible</span>
+                <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="text-white cursor-pointer">API-based</span>
             </div>
             <div className="relative w-full h-2/3 md:h-5/6">
                 <div className="featureCover w-full h-1/2 md:h-full overflow-hidden">
