@@ -34,7 +34,7 @@ const Card = ({images,title,coverImg,category,imgWidth}) => {
     return(
         <div className="card flex gap-4 flex-col justify-start h-full" style={{width:`${imgWidth}px`}}>
             <div className="relative h-5/6 overflow-hidden w-full">
-                <Image src={coverImg} alt="image" fill style={{objectFit:"cover"}}></Image>
+                <Image src={coverImg} alt="image" fill style={{objectFit:"cover"}} sizes="100vw"></Image>
             </div>
             <div ref={cardUI} className="flex h-1/6">
                 <div className="w-1/2">
@@ -81,13 +81,15 @@ const Accordion = ({order,title,skills}) => {
                     </div>
                     <h6 className="font-medium">{title}</h6>
                 </div>
-                <div ref={dropdownItems} className="flex flex-col">
+                <div ref={dropdownItems} className="flex flex-col border-32 border-b">
                     {skills.map((el,i)=>{
                         return (
                         <div key={i} onClick={()=>console.log(i)} className="relative overflow-hidden skills border-32 border-b">
                             <div className="absolute flex gap-4 h-full text-sm font-extralight cursor-pointer workSelector">
                                 <div className="flex flex-col justify-center">
-                                    <NegativeArrow />
+                                    <div className="skillArrow">
+                                        <NegativeArrow />
+                                    </div>
                                 </div>
                                 <div className="flex flex-col justify-center"><span>{el}</span></div>
                             </div>
@@ -133,8 +135,8 @@ const WorkGallery = () => {
 
     return(
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
-            <div className="flex flex-col md:border-b-0 md:flex-row md:h-1/4">
-                <div className="flex md:w-1/3 flex-col justify-end">
+            <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
+                <div className="flex md:w-1/2 flex-col justify-end">
                     <h1 className="tracking-tight leading-suis text-2xl md:text-6xl">Selected Work</h1>
                 </div>
                 <div className="flex flex-col md:grow md:flex-row">

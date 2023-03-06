@@ -69,7 +69,7 @@ const MotionReel = ({classList}) => {
 
     return (
         <div  ref={reel} className={classList}>
-            <Image src={imageArray[index]} alt="motion reel" fill style={{objectFit:"cover"}}/>
+            <Image src={imageArray[index]} alt="motion reel" fill style={{objectFit:"cover"}} sizes="100vw"/>
         </div>
     )
 }

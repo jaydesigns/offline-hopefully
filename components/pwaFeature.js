@@ -35,17 +35,17 @@ const FeatureDescription = (props) => {
 const PWAFeatures = () => {
     const obj = {
         installable:{
-            cover: "/images/guggenheim.jpg",
+            cover: "https://res.cloudinary.com/dwupnysam/image/upload/c_scale,w_1440/v1678038166/guggenheim_2a69e09015.jpg",
             title: "Installable",
             desc: "This web app utilizes new technology which enables you to install this web app on whatever device you're using."
         },
         offline: {
-            cover: "/images/arizona-memorial.JPG",
+            cover: "https://res.cloudinary.com/dwupnysam/image/upload/c_scale,w_1440/v1678038089/DSC_0120_b_and_w_1_89db2d6034.jpg",
             title: "Offline",
             desc: "Using the local machine storage API, after installing the web application, the app should work even without internet connection."
         },
         flexible: {
-            cover: "/images/ocean.jpg",
+            cover: "https://res.cloudinary.com/dwupnysam/image/upload/c_scale,w_1440/v1678031668/PXL_20221224_211305839_b_and_w_626a979fe1.jpg",
             title: "API-based",
             desc: "The architecture of this app makes use of decentralized microservices that communicate through API (Application Programming Interface)."
         }
@@ -134,8 +134,8 @@ const PWAFeatures = () => {
 
 
     return (
-        <div className="snap-start relative flex flex-col featureSection w-screen h-screen p-4 pb-32 text-white">
-            <div className="flex flex-row w-full h-1/6 border-t-2 border-white pt-4 mix-blend-exclusion">
+        <div className="snap-start relative flex flex-col justify-between featureSection w-screen h-screen p-4 pb-32 text-white">
+            <div className="flex flex-row w-full border-b border-white pt-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
                 <h4 className="w-1/4">The Difference</h4>
                 <div className="flex flex-auto">
@@ -146,7 +146,7 @@ const PWAFeatures = () => {
             </div>
             <div className="relative w-full h-2/3 md:h-5/6">
                 <div className="featureCover w-full h-1/2 md:h-full overflow-hidden">
-                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover"}} placeholder="blur" blurDataURL="/images/guggenheim.jpg"></Image>
+                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover"}} placeholder="blur" blurDataURL="data:..." sizes="100vw"></Image>
                 </div>
                 <svg ref={featureImage} id="clippingCanvas" className="absolute top-0 flex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
                     <defs>
