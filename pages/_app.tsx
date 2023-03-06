@@ -84,7 +84,7 @@ export default function App({ Component, pageProps }: AppProps) {
       .set(".reel",{clipPath:"inset(0 0 100% 0)"})
       .set(".entra",{translateY:"2em"})
       // @ts-ignore
-      .set(splash.current,{clipPath:"inset(0 0 0 0"})
+      // .set(splash.current,{clipPath:"inset(0 0 0 0"})
       //@ts-ignore
       .set(heading1Wrapper.current,{translateY:"33.33%"})
       //@ts-ignore
@@ -92,9 +92,9 @@ export default function App({ Component, pageProps }: AppProps) {
       //@ts-ignore
       .set(ampersandWrapper.current,{translateY:"-110%"})
       // @ts-ignore
-      .to(splash.current,{clipPath:"inset(0 0 0 100%)",delay:3,ease:"power4.inOut",duration:3})
+      // .to(splash.current,{clipPath:"inset(0 0 0 100%)",delay:3,ease:"power4.inOut",duration:3})
       // @ts-ignore
-      .to(splash.current,{display:"none"},"-=0.5")
+      // .to(splash.current,{display:"none"},"-=0.5")
       //@ts-ignore
       .to(heading1Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"})
       //@ts-ignore
@@ -132,14 +132,14 @@ export default function App({ Component, pageProps }: AppProps) {
       {/* @ts-ignore */}
       <div ref={smoothWrapper} id="smooth-wrapper">
         {/* @ts-ignore */}
-        <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG`}>
+        <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG bg-grey`}>
           <Component {...pageProps} heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
         </div>
       </div>
       {/* @ts-ignore */}
-      <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
+      {/* <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
         <Video />
-      </div>
+      </div> */}
       <HeaderMenu />
     </div>
   )

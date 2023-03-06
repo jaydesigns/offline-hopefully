@@ -28,7 +28,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper})=> {
   useIsomorphicLayoutEffect(()=>{
     //maybe we can use the change backgeound where it's not scrubbed
     gsap.registerPlugin(ScrollTrigger)
-    ScrollTrigger.create({snap:0.3333})
+    // ScrollTrigger.create({snap:0.3333})
     const ctx = gsap.context(()=>{
       //@ts-ignore
       gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
