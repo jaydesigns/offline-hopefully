@@ -8,6 +8,47 @@ import SplitType from "split-type";
 import Draggable from "gsap/dist/Draggable";
 import NegativeArrow from "./negativeArrow";
 
+const Categories = () => {
+    const plusSign = useRef()
+    const [category,setCategory] = useState("type")
+    const type = {'branding':'Branding', 'ui design':'UI Design', 'environmental design':'Environmental Design', 'publication design':'Publication Design'}
+    const tech = {'adobe illustrator':'Adobe Illustrator', 'figma':'Figma', 'reactjs':'ReactJS', 'adobe after effects':'Adobe After Effects'}
+    return(
+        <div className="flex flex-col grow border-t border-grey gap-12 md:justify-between">
+            <div className="flex grow">
+                <div onClick={()=>setCategory("type")} className="cursor-pointer flex gap-4 justify-start grow">
+                    <div className="relative w-5 h-5">
+                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-4xl">+</span></div>
+                    </div>
+                    <h6 className="font-medium">Type of Work</h6>
+                </div>
+                <div onClick={()=>setCategory("tech")} className="cursor-pointer flex gap-4 justify-start grow">
+                    <div className="relative w-5 h-5">
+                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-4xl">+</span></div>
+                    </div>
+                    <h6 className="font-medium">Technology Used</h6>
+                </div>
+            </div>
+            <ul className="flex flex-col">
+            {category==="type"&&Object.keys(type).map((el)=>{
+                return(
+                    <li onClick={()=>console.log(el)} key={el} className="relative border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                        <span>{type[el]}</span>
+                    </li>
+                )}
+            )}
+            {category==="tech"&&Object.keys(tech).map((el)=>{
+                return(
+                    <li onClick={()=>console.log(el)} key={el} className="relative border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                        <span>{tech[el]}</span>
+                    </li>
+                )}
+            )}
+            </ul>
+        </div>
+    )
+}
+
 const Card = ({images,title,coverImg,category,imgWidth}) => {
     const cardTL = useRef(gsap.timeline())
     const cardUI = useRef()
@@ -137,11 +178,17 @@ const WorkGallery = () => {
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex md:w-1/2 flex-col justify-end">
-                    <h1 className="tracking-tight leading-suis text-2xl md:text-6xl">Selected Work</h1>
+                    <div className="flex gap-2">
+                        <h1 className="tracking-tight leading-suis text-2xl md:text-4xl grow">Selected Work</h1>
+                        <div className="flex flex-col justify-end grow py-1">
+                            <h4 className="align-baseline">Catalogue</h4>
+                        </div>
+                    </div>
                 </div>
                 <div className="flex flex-col md:grow md:flex-row">
-                    <Accordion order={"accordion1"} title={'Type of Work'} skills={['Branding', 'UI Design', 'Environmental Design', 'Publication Design']}/>
-                    <Accordion order={"accordion2"} title={'Technology Used'} skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']}/>
+                    {/* <Accordion order={"accordion1"} title={'Type of Work'} skills={['Branding', 'UI Design', 'Environmental Design', 'Publication Design']}/> */}
+                    {/* <Accordion order={"accordion2"} title={'Technology Used'} skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']}/> */}
+                    <Categories skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']}/>
                 </div>
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">

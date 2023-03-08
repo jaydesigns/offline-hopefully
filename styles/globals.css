@@ -135,6 +135,11 @@ a {
   line-height: 1.2;
 }
 
+/* .word {
+  transform: translateY(2em);
+  visibility: hidden;
+} */
+
 img {
   object-fit: cover;
 }

@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
@@ -84,7 +84,7 @@ export default function App({ Component, pageProps }: AppProps) {
       .set(".reel",{clipPath:"inset(0 0 100% 0)"})
       .set(".entra",{translateY:"2em"})
       // @ts-ignore
-      // .set(splash.current,{clipPath:"inset(0 0 0 0"})
+      .set(splash.current,{clipPath:"inset(0 0 0 0"})
       //@ts-ignore
       .set(heading1Wrapper.current,{translateY:"33.33%"})
       //@ts-ignore
@@ -92,16 +92,16 @@ export default function App({ Component, pageProps }: AppProps) {
       //@ts-ignore
       .set(ampersandWrapper.current,{translateY:"-110%"})
       // @ts-ignore
-      // .to(splash.current,{clipPath:"inset(0 0 0 100%)",delay:3,ease:"power4.inOut",duration:3})
+      .to(splash.current,{clipPath:"inset(0 0 0 100%)",delay:3,ease:"power4.inOut",duration:3})
       // @ts-ignore
-      // .to(splash.current,{display:"none"},"-=0.5")
+      .to(splash.current,{display:"none"},"-=0.5")
       //@ts-ignore
       .to(heading1Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"})
       //@ts-ignore
       .to(heading2Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.85")
       //@ts-ignore
       .to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
-      .to(".word",{translateY:0,duration:1,stagger:0.02},"<")
+      .fromTo(".word",{translateY:"2em"},{visibility:"visible",translateY:0,duration:1,stagger:0.02},"<")
       .to(".reel",{clipPath:"inset(0 0 0% 0)", duration:2, ease:"power4.inOut"},"<")
       .to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
     },smoothContent);
@@ -137,9 +137,9 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
       </div>
       {/* @ts-ignore */}
-      {/* <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
+      <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
         <Video />
-      </div> */}
+      </div>
       <HeaderMenu />
     </div>
   )

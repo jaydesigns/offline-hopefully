@@ -93,12 +93,12 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
 
     return (
         <div ref={introductionContent} className="snap-start introBody p-4 grid gap-2 grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
-            <h1 className="hidden" id="jobTitles">Graphic Designer & Creative Developer</h1>
+            <h1 className="hidden" id="jobTitles">Visual Designer & Creative Developer</h1>
             <p className="paragraph row-start-1 col-start-2 col-span-3 leading-tight text-msm text-black md:text-sm md:leading-4 md:col-start-2 md:col-end-6 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
-            <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-2 col-start-1 col-span-4 md:col-start-7 md:col-span-3 md:row-start-2 md:row-span-3">
+            <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-2 col-start-1 col-span-4 lg:col-start-8 lg:col-span-3 md:col-start-7 md:row-start-2 md:row-span-3">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>
-            <TextSlider wrap={heading1Wrapper} refr={heading1container} heading={"heading1"} gridPos="row-start-4 col-span-3 md:row-start-4 md:col-span-6" firstWord={myTitle[0]} secondWord={myTitle[3]}/>
+            <TextSlider wrap={heading1Wrapper} refr={heading1container} heading={"heading1"} gridPos="row-start-4 col-span-3 md:row-start-4 md:col-span-6 col-start-1" firstWord={myTitle[0]} secondWord={myTitle[3]}/>
             <TextSlider wrap={heading2Wrapper} refr={heading2container} heading={"heading2"} gridPos="row-start-5 col-start-2 col-span-3 md:row-start-5 md:col-start-5 md:col-span-8" firstWord={myTitle[1]} secondWord={myTitle[4]}/>
             <div className="overflow-hidden flex flex-col justify-center row-start-4 col-start-4 md:col-start-11 md:col-span-2 md:row-start-4">
                 <Ampersand wrapper={ampersandWrapper} container={ampersandContainer} glyph={myTitle[2]}/>
