@@ -13,34 +13,50 @@ const Categories = () => {
     const [category,setCategory] = useState("type")
     const type = {'branding':'Branding', 'ui design':'UI Design', 'environmental design':'Environmental Design', 'publication design':'Publication Design'}
     const tech = {'adobe illustrator':'Adobe Illustrator', 'figma':'Figma', 'reactjs':'ReactJS', 'adobe after effects':'Adobe After Effects'}
+    const tl = useRef(gsap.timeline())
+    const selection = useRef()
+
+    const handleChangeCategory = (str) => {
+        const handleSwitch = () => {
+            tl.current.to(selection.current.querySelectorAll("span"),{translateY:"2em", duration:0.5, ease:"power3.in"})
+            tl.current.play().then(()=>setCategory(str))
+        }
+        return handleSwitch
+    }
+
+    useEffect(()=>{
+        tl.current.set(selection.current.querySelectorAll("span"),{translateY:"2em"})
+        tl.current.to(selection.current.querySelectorAll("span"),{translateY:0,stagger:0.1, duration:1, ease:"power3.out"})
+    },[category])
+
     return(
         <div className="flex flex-col grow border-t border-grey gap-12 md:justify-between">
             <div className="flex grow">
-                <div onClick={()=>setCategory("type")} className="cursor-pointer flex gap-4 justify-start grow">
+                <div onClick={handleChangeCategory("type")} className="cursor-pointer flex gap-4 justify-start grow">
                     <div className="relative w-5 h-5">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-4xl">+</span></div>
                     </div>
                     <h6 className="font-medium">Type of Work</h6>
                 </div>
-                <div onClick={()=>setCategory("tech")} className="cursor-pointer flex gap-4 justify-start grow">
+                <div onClick={handleChangeCategory("tech")} className="cursor-pointer flex gap-4 justify-start grow">
                     <div className="relative w-5 h-5">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-4xl">+</span></div>
                     </div>
                     <h6 className="font-medium">Technology Used</h6>
                 </div>
             </div>
-            <ul className="flex flex-col">
+            <ul ref={selection} className="flex flex-col">
             {category==="type"&&Object.keys(type).map((el)=>{
                 return(
-                    <li onClick={()=>console.log(el)} key={el} className="relative border-b border-32 overflow-hidden cursor-pointer hover:text-red">
-                        <span>{type[el]}</span>
+                    <li onClick={()=>console.log(el)} key={el} className="block border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                        <span className="inline-block">{type[el]}</span>
                     </li>
                 )}
             )}
             {category==="tech"&&Object.keys(tech).map((el)=>{
                 return(
-                    <li onClick={()=>console.log(el)} key={el} className="relative border-b border-32 overflow-hidden cursor-pointer hover:text-red">
-                        <span>{tech[el]}</span>
+                    <li onClick={()=>console.log(el)} key={el} className="block border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                        <span className="inline-block">{tech[el]}</span>
                     </li>
                 )}
             )}

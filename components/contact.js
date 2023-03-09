@@ -40,7 +40,7 @@ const Meet = (props) =>{
         <>
             <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="needs">
-                    <h3 ref={meetText} className="greet text-2xl md:text-4xl tracking-tight leading-suis font-semibold col-span-4 md:col-span-6">Hi <span style={{color:"#F45844"}}>{una[0]}!</span> It&apos;s great to have you here. Can I help you with something?</h3>
+                    <h3 ref={meetText} className="greet text-2xl md:text-4xl tracking-tight leading-suis font-semibold col-span-4 md:col-span-6">Hi <span style={{color:"#F45844"}}>{una[0]}</span>! It&apos;s great to have you here. Can I help you with something?</h3>
                 </div>
             </div>
         </>

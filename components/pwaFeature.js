@@ -5,6 +5,7 @@ import gsap from "gsap"
 import SplitType from "split-type"
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
+import InstallPWA from "./installPWA"
 
 //on mobile the top half could be the selection and image while the lower half is the text
 const FeatureDescription = (props) => {
@@ -16,7 +17,8 @@ const FeatureDescription = (props) => {
             <div className="absolute" data-name="installable">
                 <h2 className="featureText lined text-XL md:text-5xl tracking-tighter">{props.obj.installable.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
-                {/* <LinkText str={"Try it out"}/> */}
+                
+                <InstallPWA />
             </div>
             <div className="absolute" data-name="offline">
                 <h2 className="featureText lined text-XL md:text-5xl tracking-tighter">{props.obj.offline.title}</h2>
@@ -71,6 +73,7 @@ const PWAFeatures = () => {
     // const [ title,setTitle ] = useState("")
     // const [ desc,setDesc ] = useState("")
     const [selectedFeature,setSelectedFeature] = useState("installable")
+    
 
     useEffect(()=>{
         let lines;
@@ -113,8 +116,8 @@ const PWAFeatures = () => {
             
             changeTL.current.set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
             
-            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"})
-            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"+=1")
+            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,stagger:0.1,ease:"power4.inOut"})
+            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,stagger:0.1,ease:"power4.inOut"},"+=1")
         }
         
         return handler
