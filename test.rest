@@ -1,0 +1,5 @@
+GET https://salty-waters-71699.herokuapp.com/api/posts/
+
+###
+
+GET http://localhost:1337/api/posts

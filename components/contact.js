@@ -12,7 +12,7 @@ const Greeting = (props) =>{
         <>
             <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="name">
-                    <h3 className="greet leading-suis text-2xl md:text-4xl font-semibold col-span-4 md:col-span-6">Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
+                    <h3 className="greet leading-suis text-2xl md:text-3xl font-semibold col-span-4 md:col-span-6">Thanks for taking interest in my work. I&apos;d like to know your name.</h3>
                 </div>
             </div>
         </>
@@ -40,7 +40,7 @@ const Meet = (props) =>{
         <>
             <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="needs">
-                    <h3 ref={meetText} className="greet text-2xl md:text-4xl tracking-tight leading-suis font-semibold col-span-4 md:col-span-6">Hi <span style={{color:"#F45844"}}>{una[0]}</span>! It&apos;s great to have you here. Can I help you with something?</h3>
+                    <h3 ref={meetText} className="greet text-2xl md:text-3xl tracking-tight leading-suis font-semibold col-span-4 md:col-span-6">Hi <span style={{color:"#F45844"}}>{una[0]}</span>! It&apos;s great to have you here. Can I help you with something?</h3>
                 </div>
             </div>
         </>
@@ -67,7 +67,7 @@ const Looking = (props) =>{
         <>
             <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="looking">
-                    <h3 ref={justLookingText} className="greet text-2xl md:text-4xl tracking-tight leading-suis font-semibold col-span-4 md:col-span-6">Hey, feel free to look around. If you feel inspired or just want to chat, you can always find my contact info on those three dots on the bottom-right.</h3>
+                    <h3 ref={justLookingText} className="greet text-2xl md:text-3xl tracking-tight leading-suis font-semibold col-span-4 md:col-span-6">Hey, feel free to look around. If you feel inspired or just want to chat, you can always find my contact info on those three dots on the bottom-right.</h3>
                 </div>
             </div>
         </>
@@ -93,7 +93,7 @@ const Error = (props) =>{
         <>
             <div ref={props.headingText} className="relative w-full">
                 <div className="absolute" data-name="error">
-                    <h3 className="greet text-2xl md:text-6xl font-semibold col-span-4 md:col-span-6">I&apos;m sorry, I didn&apos;t get your name.</h3>
+                    <h3 className="greet text-2xl md:text-3xl font-semibold col-span-4 md:col-span-6">I&apos;m sorry, I didn&apos;t get your name.</h3>
                 </div>
             </div>
         </>
@@ -176,11 +176,13 @@ const Contact = () => {
     },[step]) */
 
     return(
-        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid md:grid-rows-layout grid-cols-4 md:grid-cols-12">
-            <div className="border-b border-black py-2 col-span-4 md:col-span-12">
-                <h4>Connect</h4>
+        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid md:grid-rows-6 grid-cols-4 md:grid-cols-12">
+            <div className="flex flex-col justify-start md:col-span-12">
+                <div className="border-b border-black py-2 col-span-4">
+                    <h4>Connect</h4>
+                </div>
             </div>
-            <div className="col-span-6 md:col-start-4 row-start-2">
+            <div className="col-span-6 md:col-start-4 row-start-3">
                 {step==="name"&&<Greeting handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} headingText={headingText}/>}
                 {step==="needs"&&<Meet handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn} firstName={firstName} headingText={headingText}/>}
                 {step==="error"&&<Error headingText={headingText}/>}

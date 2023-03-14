@@ -44,12 +44,12 @@ const PWAFeatures = () => {
         offline: {
             cover: "https://res.cloudinary.com/dwupnysam/image/upload/c_scale,w_1440/v1678038089/DSC_0120_b_and_w_1_89db2d6034.jpg",
             title: "Offline",
-            desc: "Using the local machine storage API, after installing the web application, the app should work even without internet connection."
+            desc: "Using the local machine storage API, after installing the web application, this app should work even without internet connection."
         },
         flexible: {
             cover: "https://res.cloudinary.com/dwupnysam/image/upload/c_scale,w_1440/v1678031668/PXL_20221224_211305839_b_and_w_626a979fe1.jpg",
             title: "API-based",
-            desc: "The architecture of this app makes use of decentralized microservices that communicate through API (Application Programming Interface)."
+            desc: "The architecture of this app makes use of decentralized microservices that communicate through API (Application Programming Interface), which makes it faster than traditional websites."
         }
     }
     //const [featureSVG,setFeatureSVG] = useState()
@@ -116,8 +116,8 @@ const PWAFeatures = () => {
             
             changeTL.current.set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
             
-            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,stagger:0.1,ease:"power4.inOut"})
-            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,stagger:0.1,ease:"power4.inOut"},"+=1")
+            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"})
+            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"+=1")
         }
         
         return handler

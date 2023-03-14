@@ -7,6 +7,7 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import SplitType from "split-type";
 import Draggable from "gsap/dist/Draggable";
 import NegativeArrow from "./negativeArrow";
+import getAll from "../service/posts";
 
 const Categories = () => {
     const plusSign = useRef()
@@ -65,7 +66,7 @@ const Categories = () => {
     )
 }
 
-const Card = ({images,title,coverImg,category,imgWidth}) => {
+const Cards = ({selectedWorkData,images}) => {
     const cardTL = useRef(gsap.timeline())
     const cardUI = useRef()
     const mm = useRef(gsap.matchMedia())
@@ -89,27 +90,34 @@ const Card = ({images,title,coverImg,category,imgWidth}) => {
     })
 
     return(
-        <div className="card flex gap-4 flex-col justify-start h-full" style={{width:`${imgWidth}px`}}>
-            <div className="relative h-5/6 overflow-hidden w-full">
-                <Image src={coverImg} alt="image" fill style={{objectFit:"cover"}} sizes="100vw"></Image>
-            </div>
-            <div ref={cardUI} className="flex h-1/6">
-                <div className="w-1/2">
-                    <h6 className="cardText font-semibold">{title}</h6>
+        <div ref={images} className="flex flex-row gap-8 flex-nowrap">
+            {Object.keys(selectedWorkData).map(el=>{
+                console.log(selectedWorkData[el]);
+                return (
+                <div key={el} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}}>
+                    <div className="relative h-5/6 overflow-hidden w-full">
+                        <Image src={selectedWorkData[el].attributes.Cover.data.attributes.url} alt="image" fill style={{objectFit:"cover"}} sizes="100vw"></Image>
+                    </div>
+                    <div ref={cardUI} className="flex h-1/6">
+                        <div className="w-1/2">
+                            <h6 className="cardText font-semibold">{selectedWorkData[el].attributes.Title}</h6>
+                        </div>
+                        <div className="grow text-xs flex flex-col font-extralight">
+                            {Object.keys(selectedWorkData[el].attributes.categories.data).map((x)=>{
+                                return (
+                                <h6 className="cardText" key={x}>{selectedWorkData[el].attributes.categories.data[x].attributes.category}</h6>
+                                )
+                            })}
+                        </div>
+                    </div>
                 </div>
-                <div className="grow text-xs flex flex-col font-extralight">
-                    {category.map((el,i)=>{
-                        return (
-                        <h6 className="cardText" key={i}>{el}</h6>
-                        )
-                    })}
-                </div>
-            </div>
+            )})
+}
         </div>
     )
 }
 
-const Accordion = ({order,title,skills}) => {
+/* const Accordion = ({order,title,skills}) => {
     const dropdownItems = useRef()
     const plusSign = useRef()
     const [isOpen,setIsOpen] = useState(true)
@@ -157,10 +165,16 @@ const Accordion = ({order,title,skills}) => {
             </div>
         </div>
     )
-}
+} */
 
 const WorkGallery = () => {
     const images = useRef();
+    const [selectedWorkData,setSelectedWorkData] = useState([])
+
+    useEffect(()=>{
+        const dat = getAll().then(el=>setSelectedWorkData(el.data))
+    },[])
+    console.log(selectedWorkData);
 
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
@@ -193,8 +207,8 @@ const WorkGallery = () => {
     return(
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
-                <div className="flex md:w-1/2 flex-col justify-end">
-                    <div className="flex gap-2">
+                <div className="flex md:w-1/2">
+                    <div className="flex flex-col justify-between">
                         <h1 className="tracking-tight leading-suis text-2xl md:text-4xl grow">Selected Work</h1>
                         <div className="flex flex-col justify-end grow py-1">
                             <h4 className="align-baseline">Catalogue</h4>
@@ -209,10 +223,11 @@ const WorkGallery = () => {
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    <Card images={images} title={"Hukilau Marketplace"} coverImg={'/images/aloha.jpg'} category={['Environmental Design','Branding']} imgWidth={246}/>
+                    <Cards selectedWorkData={selectedWorkData} images={images}/>
+                    {/* <Card images={images} title={"Hukilau Marketplace"} coverImg={'/images/aloha.jpg'} category={['Environmental Design','Branding']} imgWidth={246}/>
                     <Card images={images} title={"Color Max Fencing"} coverImg={'/images/ColorMaxFence.jpg'} category={['UI Design']} imgWidth={512}/>
                     <Card images={images} title={"United Way"} coverImg={'/images/united-way.png'} category={['Branding','Publication Design']} imgWidth={368}/>
-                    <Card images={images} title={"English Connect"} coverImg={'/images/stack-esp-por.jpg'} category={['Graphic Design','Identity System']} imgWidth={512}/>
+                    <Card images={images} title={"English Connect"} coverImg={'/images/stack-esp-por.jpg'} category={['Graphic Design','Identity System']} imgWidth={512}/> */}
                 </div>
             </div>
         </div>
