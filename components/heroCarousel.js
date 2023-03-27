@@ -1,11 +1,6 @@
 import gsap from "gsap";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-// import { heroCarouselObj } from "../assets/heroImageList";
-// import image1 from "../assets/stack-esp-por.jpg"
-// import image2 from "../assets/aloha.jpg"
-// import image3 from "../assets/cover-closeup.jpg"
-// import image4 from "../assets/hanging-sign.jpg"
 
 const image1 = '/images/ColorMaxFence.jpg'
 const image2 = '/images/food-map-opt.jpg'
@@ -69,7 +64,9 @@ const MotionReel = ({classList}) => {
 
     return (
         <div  ref={reel} className={classList}>
-            <Image src={imageArray[index]} alt="motion reel" fill style={{objectFit:"cover"}} sizes="100vw"/>
+            <Image src={imageArray[index]} alt="motion reel" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"/>
         </div>
     )
 }

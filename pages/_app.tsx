@@ -1,33 +1,32 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-// import {ScrollSmoother} from 'gsap-trial/dist/ScrollSmoother'
-// import {SmootherContext} from '../SmootherContext'
 import HeaderMenu from '../components/menuHeader'
 import localFont from '@next/font/local'
 import Lenis from '@studio-freight/lenis'
 import SplitType from 'split-type'
 import Video from '../components/splashScreen'
+import getAll from '../service/posts'
 
 const switzer = localFont({
   src:'./font/Switzer-Variable.ttf',
   variable: '--font-switzer'
 })
 
+//@ts-ignore
+export const ProjectDataContext = React.createContext()
+
 export default function App({ Component, pageProps }: AppProps) {
   const smoothWrapper = useRef();
   const smoothContent = useRef();
-  const [smoother,setSmoother] = useState()
   const splash = useRef()
-  //const app = useRef<HTMLDivElement>(null);
   //@ts-ignore
   const introtl = useRef();
-  const mm = useRef(gsap.matchMedia())
+  const [ selectedProject, setSelectedProject ] = useState()
+  const [ allProjectObject, setAllProjectObject] = useState()
 
-  let titleTimeline = useRef<HTMLDivElement>();
   let ampersandWrapper = useRef<HTMLDivElement>();
   let heading1Wrapper = useRef<HTMLDivElement>();
   let heading2Wrapper = useRef<HTMLDivElement>();
@@ -65,9 +64,7 @@ export default function App({ Component, pageProps }: AppProps) {
     let lines;
     const runSplit = () => {
       //@ts-ignore
-      lines = new SplitType(".paragraph",{type:'lines'})
-      //@ts-ignore
-      //lines = new SplitType(".featureDescription",{type:'lines'})
+      lines = new SplitType(".paragraph",{types:'lines,words'})
     }
     runSplit()
     window.addEventListener("resize",()=>{
@@ -108,14 +105,6 @@ export default function App({ Component, pageProps }: AppProps) {
     return ()=>ctx.revert();
   },[])
 
-  /* useIsomorphicLayoutEffect(()=>{
-    gsap.registerPlugin(ScrollTrigger)
-    const ctx = gsap.context(()=>{
-      mm.current.add("(min-width: 768px)",()=>{gsap.to(".heroImage",{translateY:"32.5%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})})
-    })
-    return () => ctx.revert()
-  },[]) */
-
   useIsomorphicLayoutEffect(()=>{
     const ctx = gsap.context(()=>{
       //@ts-ignore
@@ -126,21 +115,31 @@ export default function App({ Component, pageProps }: AppProps) {
     return ()=>ctx.revert()
   },[])
 
+  const handleProjectSelection = () => {
+    const handleClick = (e) => {
+      setSelectedProject(e.target.closest(".card").getAttribute("projectid"))
+      console.log(e.target.closest(".card").getAttribute("projectid"))
+    }
+    return handleClick
+  }
+
   return (
     // @ts-ignore
     <div>
-      {/* @ts-ignore */}
-      <div ref={smoothWrapper} id="smooth-wrapper">
+      <ProjectDataContext.Provider value={selectedProject}>
         {/* @ts-ignore */}
-        <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG bg-grey`}>
-          <Component {...pageProps} heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
+        <div ref={smoothWrapper} id="smooth-wrapper">
+          {/* @ts-ignore */}
+          <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG bg-grey`}>
+            <Component {...pageProps} handleProjectSelection={handleProjectSelection} heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
+          </div>
         </div>
-      </div>
-      {/* @ts-ignore */}
-      <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
-        <Video />
-      </div>
-      <HeaderMenu />
+        {/* @ts-ignore */}
+        <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
+          <Video />
+        </div>
+        <HeaderMenu />
+      </ProjectDataContext.Provider>
     </div>
   )
 }

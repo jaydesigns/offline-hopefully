@@ -57,11 +57,11 @@ const PWAFeatures = () => {
     //Set window width here
     //
     const [windowWidth,setWindowWidth] = useState()
-    const [svgWidth,setSVGWidth] = useState(0)
-    const [svgHeight,setSVGHeight] = useState(0)
-    const [lgRectWidth,setLgRectWidth] = useState(0)
-    const [smRectWidth,setSmRectWidth] = useState(0)
-    const [lgRectHeight,setLgRectHeight] = useState(0)
+    const [svgWidth,setSVGWidth] = useState(10)
+    const [svgHeight,setSVGHeight] = useState(10)
+    const [lgRectWidth,setLgRectWidth] = useState(10)
+    const [smRectWidth,setSmRectWidth] = useState(10)
+    const [lgRectHeight,setLgRectHeight] = useState(10)
     const featureImage = useRef()
     const featureText = useRef()
     const rect2 = useRef()
@@ -91,8 +91,8 @@ const PWAFeatures = () => {
         gsap.registerPlugin(ScrollTrigger)
         const SVGObj = window.getComputedStyle(document.querySelector("#clippingCanvas"))
 
-        mm.current.add("(min-width:768px)",()=>{featureTL.current.fromTo(rect5.current,{transform:"matrix(1,0,0,1,0,0)"},{transform:`matrix(1,0,0,1,${(parseInt(SVGObj.width))/6},0)`,scrollTrigger:{scroller:"body",trigger:".featureSection",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})})
-        mm.current.add("(min-width:768px)",()=>{featureTL.current.fromTo(rect2.current,{transform:`matrix(1,0,0,1,-${(parseInt(SVGObj.width))/6},0)`},{transform:"matrix(1,0,0,1,0,0)",scrollTrigger:{scroller:"body",trigger:".featureSection",start:"top center",end:"top top",scrub:true,pinSpacing:false}})})
+        mm.current.add("(min-width:768px)",()=>{featureTL.current.fromTo(rect5.current,{style:"matrix(1,0,0,1,0,0)"},{style:`matrix(1,0,0,1,${(parseInt(SVGObj.width))/6},0)`,scrollTrigger:{scroller:"body",trigger:".featureSection",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})})
+        mm.current.add("(min-width:768px)",()=>{featureTL.current.fromTo(rect2.current,{style:`matrix(1,0,0,1,-${(parseInt(SVGObj.width))/6},0)`},{style:"matrix(1,0,0,1,0,0)",scrollTrigger:{scroller:"body",trigger:".featureSection",start:"top center",end:"top top",scrub:true,pinSpacing:false}})})
 
         setSVGWidth(parseInt(SVGObj.width))
         setSVGHeight(parseInt(SVGObj.height))
@@ -148,8 +148,10 @@ const PWAFeatures = () => {
                 </div>
             </div>
             <div className="relative w-full h-2/3 md:h-5/6">
-                <div className="featureCover w-full h-1/2 md:h-full overflow-hidden">
-                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover"}} placeholder="blur" blurDataURL="data:..." sizes="100vw"></Image>
+                <div className="relative featureCover w-full h-1/2 md:h-full overflow-hidden">
+                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"></Image>
                 </div>
                 <svg ref={featureImage} id="clippingCanvas" className="absolute top-0 flex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
                     <defs>

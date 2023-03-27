@@ -4,10 +4,10 @@ import Link from "next/link"
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import localFont from "@next/font/local"
 
-const MenuItem = ({str}) => {
+const MenuItem = ({link,str}) => {
     return <div className="flex flex-row gap-2 content-center menuEntra">
-                <div className="bg-red w-6 h-6 flex justify-around items-center rounded-full"></div>
-                <Link href={str}><div className="linkName overflow-hidden relative h-6 changeBG">
+                <div className="bg-red w-6 h-6 flex justify-around items-center rounded-full mix-blend-normal"></div>
+                <Link href={link}><div className="linkName overflow-hidden relative h-6">
                     <span className="linkText cursor-pointer text-white mix-blend-exclusion">{str}</span>
                 </div></Link>
         </div>}
@@ -34,7 +34,7 @@ const HeaderMenu = () => {
 
     return(
         <>
-        <div className={`${switzer.className} changeBG w-full px-4 fixed bottom-0 bg-grey`}>
+        <div className={`${switzer.className} w-full px-4 fixed bottom-0 changeBG bg-grey`}>
             <div className="flex h-16 py-4 place-content-between border-t-2 border-darkGrey md:h-20">
                 <div className="relative flex-auto md:basis-1/3 mix-blend-exclusion overflow-hidden">
                     <Link href={"/"} className="menuEntra absolute" >
@@ -47,8 +47,8 @@ const HeaderMenu = () => {
                 </div>
                 <div className="navigationMenu flex gap-1 grow md:basis-1/3 justify-end h-full overflow-hidden" onTouchStart={state !== true ? menuExpand : menuShrink} onMouseEnter={menuExpand} onMouseLeave={menuShrink}>
                     <MenuItem link="bio" str="bio" />
-                    <MenuItem str="work" />
-                    <MenuItem str="socials" />
+                    <MenuItem link="project" str="work" />
+                    <MenuItem link="socials" str="socials" />
                 </div>
             </div>
         </div>

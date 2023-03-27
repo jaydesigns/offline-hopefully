@@ -15,7 +15,7 @@ import Contact from '../components/contact'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper})=> {
+const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSelection})=> {
   const mm = useRef(gsap.matchMedia())
   //const smoother = useContext(SmootherContext)
   //Register GSAP Plugin - ScrollTrigger
@@ -37,7 +37,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper})=> {
       // gsap.to(".changeBG",{scrollTrigger:{scroller:"body",trigger:".featureSection",onLeave:()=>{gsap.to(".changeBG",{backgroundColor:"#DFE0E2"})},onEnterBack:()=>{gsap.to(".changeBG",{backgroundColor:"#141011"})}}})
       gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:"body",trigger:".interactiveContact",scrub:true , start:"top 50%", end:"top top", pinSpacing:false}})
       gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top center", pinSpacing:false}})
-      gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:".introBody",start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})
+      mm.current.add("(min-width: 768px)",()=>{gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:".introBody",start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})})
       mm.current.add("(min-width: 768px)",()=>{gsap.to(".heroImage",{translateY:"32.5%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})})
     })
     return () => ctx.revert()
@@ -54,7 +54,8 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper})=> {
       </Head>
       {/* @ts-ignore */}
       <Intro heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
-      <WorkGallery />
+      {/* @ts-ignore */}
+      <WorkGallery handleProjectSelection={handleProjectSelection} />
       <PWAFeatures />
       <Contact />
     </>

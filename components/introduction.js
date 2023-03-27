@@ -85,12 +85,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
             gsap.to(window,{duration:2,scrollTo:".featureSection",duration:3,ease:"power3.inOut"})
         )
     },[])
-
-    /* useIsomorphicLayoutEffect(()=>{
-        gsap.registerPlugin(ScrollTrigger)
-        mm.current.add("(min-width: 768px)",()=>{gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:introductionContent.current,start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})})
-    }) */
-
+    
     return (
         <div ref={introductionContent} className="snap-start introBody p-4 grid gap-2 grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Visual Designer & Creative Developer</h1>
