@@ -7,12 +7,13 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import SplitType from "split-type";
 import Draggable from "gsap/dist/Draggable";
 import NegativeArrow from "./negativeArrow";
+import ArrowRight from "./arrowRight";
 import getAll from "../service/posts";
 import Link from "next/link";
 import {FetchAPIContext} from "../pages/_app";
 import axios from "axios";
 
-const Categories = () => {
+const Categories = ({handleCategoryFilter}) => {
     const plusSign = useRef()
     const [category,setCategory] = useState("type")
     const type = {'branding':'Branding', 'ui design':'UI Design', 'environmental design':'Environmental Design', 'publication design':'Publication Design'}
@@ -36,15 +37,15 @@ const Categories = () => {
     return(
         <div className="flex flex-col grow border-t border-grey gap-12 md:justify-between">
             <div className="flex grow">
-                <div onClick={handleChangeCategory("type")} className="cursor-pointer flex gap-4 justify-start grow">
+                <div onClick={handleChangeCategory("type")} className="cursor-pointer flex gap-10 justify-start grow">
                     <div className="relative w-5 h-5">
-                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-4xl">+</span></div>
+                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
                     <h6 className="font-medium">Type of Work</h6>
                 </div>
-                <div onClick={handleChangeCategory("tech")} className="cursor-pointer flex gap-4 justify-start grow">
+                <div onClick={handleChangeCategory("tech")} className="cursor-pointer flex gap-10 justify-start grow">
                     <div className="relative w-5 h-5">
-                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-4xl">+</span></div>
+                        <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
                     <h6 className="font-medium">Technology Used</h6>
                 </div>
@@ -52,14 +53,16 @@ const Categories = () => {
             <ul ref={selection} className="flex flex-col">
             {category==="type"&&Object.keys(type).map((el)=>{
                 return(
-                    <li onClick={()=>console.log(el)} key={el} className="block border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                    <li onClick={()=>handleCategoryFilter(el)} key={el} className="flex gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{type[el][0]}</h6></div>
                         <span className="inline-block">{type[el]}</span>
                     </li>
                 )}
             )}
             {category==="tech"&&Object.keys(tech).map((el)=>{
                 return(
-                    <li onClick={()=>console.log(el)} key={el} className="block border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                    <li onClick={()=>handleCategoryFilter(el)} key={el} className="flex gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{tech[el][0]}</h6></div>
                         <span className="inline-block">{tech[el]}</span>
                     </li>
                 )}
@@ -69,7 +72,7 @@ const Categories = () => {
     )
 }
 
-const Cards = ({handleProjectSelection,responseData}) => {
+const Cards = (props) => {
     const mm = useRef(gsap.matchMedia())
     const cover = useRef()
 
@@ -94,10 +97,11 @@ const Cards = ({handleProjectSelection,responseData}) => {
         gsap.fromTo(cover.current.querySelectorAll(".cover"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
     },[]) */
 
+    console.log(props.responseData);
     return(
-        <div onClick={handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
+        <div onClick={props.handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
-            {responseData.map(el=>{
+            {props.responseData.map(el=>{
             return(
             <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
                     <Link className="h-full" href="project">
@@ -153,18 +157,18 @@ const WorkGallery = ({handleProjectSelection}) => {
         })
     })
     
-    // useEffect(()=>{
-    //     gsap.registerPlugin(ScrollTrigger)
-    //     //cardTL.current.fromTo(".word",{translateY:"120%"},{translateY:"0%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"70% bottom",end:"70% top",scrub:true,pinSpacing:false}})
-    //     //console.log(images.current.querySelectorAll(".cover"))
-    //     cardTL.current.fromTo(images.current.querySelectorAll(".word"),{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
+    useEffect(()=>{
+        gsap.registerPlugin(ScrollTrigger)
+        //cardTL.current.fromTo(".word",{translateY:"120%"},{translateY:"0%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"70% bottom",end:"70% top",scrub:true,pinSpacing:false}})
+        //console.log(images.current.querySelectorAll(".cover"))
+        cardTL.current.fromTo(images.current.querySelectorAll(".word"),{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
 
-    //     const tl = gsap.timeline()
-    //     tl.set(images.current.querySelectorAll(".cover"),{clipPath:"inset(100% 0% 0% 0%)"})
-    //     tl.fromTo(images.current.querySelectorAll(".cover"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
+        const tl = gsap.timeline()
+        tl.set(images.current.querySelectorAll(".cover"),{clipPath:"inset(100% 0% 0% 0%)"})
+        tl.fromTo(images.current.querySelectorAll(".cover"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
 
-    //     gsap.fromTo(images.current.querySelectorAll(".cover"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
-    // })
+        gsap.fromTo(images.current.querySelectorAll(".cover"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
+    })
 
     useEffect(()=>{
         const getAll = async() => {
@@ -180,24 +184,32 @@ const WorkGallery = ({handleProjectSelection}) => {
 
     console.log(responseData)
 
+    const handleCategoryFilter = (el) => {
+        const handleFiltration = () => {
+            setResponseData(responseData.filter(project=>project.attributes.categories.data.map(x=>x.attributes.category).includes(el)))
+        }
+        console.log(responseData.filter(project=>project.attributes.categories.data.map(x=>x.attributes.category).includes(el)))
+        return handleFiltration
+    }
+
     return(
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
-                <div className="flex md:w-1/2">
-                    <div className="flex flex-col justify-between">
-                        <h1 className="tracking-tight leading-suis text-2xl md:text-4xl grow">Selected Work</h1>
-                        <div className="flex flex-col justify-end grow py-1">
+                <div className="flex flex-col justify-end md:w-1/2">
+                    <div className="flex flex-row justify-between">
+                        <h1 className="tracking-tight leading-suis text-2xl md:text-3xl grow font-medium">Selected <br></br>Work</h1>
+                        <div className="flex flex-col justify-end grow py-1 uppercase font-light">
                             <h4 className="align-baseline">Catalogue</h4>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col md:grow md:flex-row">
-                    <Categories skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']}/>
+                    <Categories skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']} handleCategoryFilter={handleCategoryFilter}/>
                 </div>
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    {responseData.length>0?<Cards handleProjectSelection={handleProjectSelection} responseData={responseData}/>:<p>There&apos;s something wrong with your connection.</p>}
+                    <Cards handleProjectSelection={handleProjectSelection} responseData={responseData}/>
                 </div>
             </div>
         </div>

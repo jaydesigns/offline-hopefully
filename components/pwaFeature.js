@@ -138,13 +138,22 @@ const PWAFeatures = () => {
 
     return (
         <div className="snap-start relative flex flex-col justify-between featureSection w-screen h-screen p-4 pb-32 text-white">
-            <div className="flex flex-row w-full border-b border-white pt-4 mix-blend-exclusion">
+            <div className="flex w-full border-b border-white pt-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
-                <h4 className="w-1/4">The Difference</h4>
-                <div className="flex flex-auto">
-                    <span onClick={handleImageSwitch("installable")} data-index="installable" className="text-white cursor-pointer grow">Installability</span>
-                    <span onClick={handleImageSwitch("offline")} data-index="offline" className="text-white cursor-pointer grow">Works Offline</span>
-                    <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="text-white cursor-pointer grow">API-based</span>
+                <h4 className="w-1/2 md:w-1/4 text-2xl md:text-3xl font-medium tracking-tight leading-suis">The <br></br>Difference</h4>
+                <div className="flex flex-col md:flex-row flex-auto">
+                    <div className="flex gap-4 grow hover:text-red text-white">
+                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">I</h6></div>
+                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="cursor-pointer grow">Installability</span>
+                    </div>
+                    <div className="flex gap-4 grow hover:text-red text-white">
+                    <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">O</h6></div>
+                        <span onClick={handleImageSwitch("offline")} data-index="offline" className="cursor-pointer grow">Works Offline</span>
+                    </div>
+                    <div className="flex gap-4 grow hover:text-red text-white">
+                    <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">A</h6></div>
+                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="cursor-pointer grow">API-based</span>
+                    </div>
                 </div>
             </div>
             <div className="relative w-full h-2/3 md:h-5/6">

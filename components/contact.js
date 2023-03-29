@@ -179,7 +179,7 @@ const Contact = () => {
         <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid md:grid-rows-6 grid-cols-4 md:grid-cols-12">
             <div className="flex flex-col justify-start md:col-span-12">
                 <div className="border-b border-black py-2 col-span-4">
-                    <h4>Connect</h4>
+                    <h4 className="text-2xl md:text-3xl tracking-tight leading-suis font-semibold">Connect</h4>
                 </div>
             </div>
             <div className="col-span-6 md:col-start-4 row-start-3">
