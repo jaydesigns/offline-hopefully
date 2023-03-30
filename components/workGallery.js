@@ -72,7 +72,7 @@ const Categories = ({handleCategoryFilter}) => {
     )
 }
 
-const Cards = (props) => {
+const Cards = ({handleProjectSelection,dataToDisplay}) => {
     const mm = useRef(gsap.matchMedia())
     const cover = useRef()
 
@@ -97,11 +97,11 @@ const Cards = (props) => {
         gsap.fromTo(cover.current.querySelectorAll(".cover"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
     },[]) */
 
-    console.log(props.responseData);
+    console.log(dataToDisplay);
     return(
-        <div onClick={props.handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
+        <div onClick={handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
-            {props.responseData.map(el=>{
+            {dataToDisplay.map(el=>{
             return(
             <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
                     <Link className="h-full" href="project">
@@ -134,12 +134,11 @@ const WorkGallery = ({handleProjectSelection}) => {
     const [selectedWorkData,setSelectedWorkData] = useState([])
     const images = useRef()
     const cardTL = useRef(gsap.timeline())
+    const [ responseData,setResponseData ] = useState([])
+    const [ dataToDisplay,setDataToDisplay ] = useState([])
 
-    //useContext to pass down state from App to Project
-    const [responseData,setResponseData] = useState([])
-
-    // const baseURL = 'http://localhost:1337/api/posts?populate=*'
-    const baseURL = 'https://salty-waters-71699.herokuapp.com/api/posts?populate=*'
+    // const baseURL = "http://localhost:1337/api/posts/?populate=*"
+    const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
 
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(Draggable)
@@ -175,6 +174,7 @@ const WorkGallery = ({handleProjectSelection}) => {
             try{
                 const request = await axios(baseURL).then(res=>res.data)
                 setResponseData(request.data)
+                setDataToDisplay(request.data)
             } catch(err){
                 console.log(err);
             }
@@ -185,11 +185,7 @@ const WorkGallery = ({handleProjectSelection}) => {
     console.log(responseData)
 
     const handleCategoryFilter = (el) => {
-        const handleFiltration = () => {
-            setResponseData(responseData.filter(project=>project.attributes.categories.data.map(x=>x.attributes.category).includes(el)))
-        }
-        console.log(responseData.filter(project=>project.attributes.categories.data.map(x=>x.attributes.category).includes(el)))
-        return handleFiltration
+        setDataToDisplay(responseData.filter(project=>project.attributes.categories.data.map(x=>x.attributes.category).includes(el)))
     }
 
     return(
@@ -209,7 +205,7 @@ const WorkGallery = ({handleProjectSelection}) => {
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    <Cards handleProjectSelection={handleProjectSelection} responseData={responseData}/>
+                    {responseData.length>0?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops!</p>}
                 </div>
             </div>
         </div>
