@@ -18,6 +18,10 @@ const switzer = localFont({
 //@ts-ignore
 export const ProjectDataContext = React.createContext()
 
+const myLoader = ({ src, width, quality }) => {
+  return `https://res.cloudinary.com/${src}?w=${width}&q=${quality || 75}`
+}
+
 export default function App({ Component, pageProps }: AppProps) {
   const smoothWrapper = useRef();
   const smoothContent = useRef();
@@ -40,7 +44,7 @@ export default function App({ Component, pageProps }: AppProps) {
       direction: 'vertical', // vertical, horizontal
       gestureDirection: 'vertical', // vertical, horizontal, both
       smooth: true,
-      mouseMultiplier: 0.65,
+      mouseMultiplier: 0.55,
       smoothTouch: false,
       touchMultiplier: 1,
       infinite: false,

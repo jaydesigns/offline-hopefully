@@ -2,11 +2,12 @@ import gsap from "gsap";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 
-const image1 = '/images/ColorMaxFence.jpg'
-const image2 = '/images/food-map-opt.jpg'
-const image3 = '/images/details-03.jpg'
-const image4 = '/images/united-way.png'
-const image5 = '/images/RiversideLavenderRanch.jpg'
+const reelSource = '/images/reel/'
+const image1 = 'ColorMaxFence.jpg'
+const image2 = 'food-map-opt.jpg'
+const image3 = 'details-03.jpg'
+const image4 = 'united-way.png'
+const image5 = 'RiversideLavenderRanch.jpg'
 
 const imageArray = [image1,image2,image3,image4,image5]
 const MotionReel = ({classList}) => {
@@ -64,9 +65,13 @@ const MotionReel = ({classList}) => {
 
     return (
         <div  ref={reel} className={classList}>
-            <Image src={imageArray[index]} alt="motion reel" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"/>
+            {
+                imageArray.map((el,i)=>{
+                    return(
+                        <Image key={i} src={`${reelSource}${el}`} alt="motion reel" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 33vw,100vw"/>
+                    )
+                })
+            }
         </div>
     )
 }

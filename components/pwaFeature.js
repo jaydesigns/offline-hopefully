@@ -14,10 +14,11 @@ const FeatureDescription = (props) => {
     //
     return (
         <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2 mix-blend-exclusion">
-            <div className="absolute" data-name="installable">
-                <h2 className="featureText lined text-XL md:text-5xl tracking-tighter">{props.obj.installable.title}</h2>
-                <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
-                
+            <div className="absolute flex flex-col h-full justify-between" data-name="installable">
+                <div>
+                    <h2 className="featureText lined text-XL md:text-5xl tracking-tighter">{props.obj.installable.title}</h2>
+                    <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
+                </div>
                 <InstallPWA />
             </div>
             <div className="absolute" data-name="offline">
@@ -137,7 +138,7 @@ const PWAFeatures = () => {
 
 
     return (
-        <div className="snap-start relative flex flex-col justify-between featureSection w-screen h-screen p-4 pb-32 text-white">
+        <div className="snap-start relative flex flex-col gap-4 justify-between featureSection w-screen h-screen p-4 pb-32 text-white">
             <div className="flex w-full border-b border-white pt-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
                 <h4 className="w-1/2 md:w-1/4 text-2xl md:text-3xl font-medium tracking-tight leading-suis">The <br></br>Difference</h4>
@@ -158,9 +159,7 @@ const PWAFeatures = () => {
             </div>
             <div className="relative w-full h-2/3 md:h-5/6">
                 <div className="relative featureCover w-full h-1/2 md:h-full overflow-hidden">
-                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"></Image>
+                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 600px) 33vw,100vw"></Image>
                 </div>
                 <svg ref={featureImage} id="clippingCanvas" className="absolute top-0 flex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
                     <defs>

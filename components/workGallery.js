@@ -37,13 +37,13 @@ const Categories = ({handleCategoryFilter}) => {
     return(
         <div className="flex flex-col grow border-t border-grey gap-12 md:justify-between">
             <div className="flex grow">
-                <div onClick={handleChangeCategory("type")} className="cursor-pointer flex gap-10 justify-start grow">
+                <div onClick={handleChangeCategory("type")} className="cursor-pointer flex gap-4 md:gap-10 justify-start grow">
                     <div className="relative w-5 h-5">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
                     <h6 className="font-medium">Type of Work</h6>
                 </div>
-                <div onClick={handleChangeCategory("tech")} className="cursor-pointer flex gap-10 justify-start grow">
+                <div onClick={handleChangeCategory("tech")} className="cursor-pointer flex gap-4 md:gap-10 justify-start grow">
                     <div className="relative w-5 h-5">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
@@ -53,7 +53,7 @@ const Categories = ({handleCategoryFilter}) => {
             <ul ref={selection} className="flex flex-col">
             {category==="type"&&Object.keys(type).map((el)=>{
                 return(
-                    <li onClick={()=>handleCategoryFilter(el)} key={el} className="flex gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                    <li onClick={()=>handleCategoryFilter(el)} key={el} className="flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{type[el][0]}</h6></div>
                         <span className="inline-block">{type[el]}</span>
                     </li>
@@ -106,9 +106,7 @@ const Cards = ({handleProjectSelection,dataToDisplay}) => {
             <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
                     <Link className="h-full" href="project">
                         <div className="cover relative h-full overflow-hidden w-full">
-                            <Image src={el.attributes.Cover.data.attributes.url} alt="image" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 100vw,
-                (max-width: 1200px) 50vw,
-                33vw"></Image>
+                            <Image src={el.attributes.Cover.data.attributes.url} alt="image" loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 33vw,100vw"></Image>
                         </div>
                     </Link>
                     <div className="flex h-1/6">
@@ -192,9 +190,9 @@ const WorkGallery = ({handleProjectSelection}) => {
         <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
-                    <div className="flex flex-row justify-between">
-                        <h1 className="tracking-tight leading-suis text-2xl md:text-3xl grow font-medium">Selected <br></br>Work</h1>
-                        <div className="flex flex-col justify-end grow py-1 uppercase font-light">
+                    <div className="flex flex-row md:flex-col justify-between h-full">
+                        <h1 className="tracking-tight leading-suis text-2xl md:text-3xl font-medium">Selected <br></br>Work</h1>
+                        <div className="flex flex-col justify-end grow md:py-1 uppercase font-light">
                             <h4 className="align-baseline">Catalogue</h4>
                         </div>
                     </div>
