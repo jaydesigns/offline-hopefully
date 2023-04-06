@@ -21,7 +21,7 @@ module.exports = {
       },
       fontSize: {
         xxl: '6vw',
-        xxxl: '10vw',
+        xxxl: '10.5vw',
         msm: '3vw',
         mxxxl: '13vw',
         bio: ['16vw',0.8],
@@ -34,7 +34,7 @@ module.exports = {
       },
       gridTemplateRows: {
         layout: 'auto 1fr 1fr 10vw 10vw 1fr',
-        mobileLayout: 'auto 1fr 1fr 11vw 11vw 1fr',
+        mobileLayout: 'auto 1fr 1fr 10vw 10vw 1fr',
       },
       width: {
         ampMobile: '10.5vw',
