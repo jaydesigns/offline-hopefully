@@ -16,24 +16,58 @@ const MotionReel = ({classList}) => {
     const reel = useRef()
 
     const randomAnimation = () => {
-        const rand = Math.floor(Math.random()*5)
-        //console.log(rand);
-        gsap.set(reel.current,{scale:1.3,left:0,rotate:0})
+        const rand = Math.floor(Math.random()*6)
+        const motionReelTimeline = gsap.timeline()
+        // console.log(index,rand);
+        // gsap.set(['#motionReel0','#motionReel1','#motionReel2','#motionReel3','#motionReel4'],{scale:1.3,rotate:0,opacity:0})
         
         if (rand===0){
-            return gsap.to(reel.current,{scale:1.4,duration:6, ease:"linear"})
+            return (
+                motionReelTimeline
+                .set(['#motionReel0','#motionReel1','#motionReel2','#motionReel3','#motionReel4'],{scale:1.2,translateX:0,rotate:0,opacity:0})
+                .to(`#motionReel${index}`,{opacity:1,duration:0.01})
+                .to(`#motionReel${index}`,{scale:1.5,duration:6, ease:"linear"},'<')
+            )
         }
         if (rand===1){
-            return gsap.to(reel.current,{left:"7%",duration:6, ease:"linear"})
+            return (
+                motionReelTimeline
+                .set(['#motionReel0','#motionReel1','#motionReel2','#motionReel3','#motionReel4'],{scale:1.2,translateX:0,rotate:0,opacity:0})
+                .to(`#motionReel${index}`,{opacity:1,duration:0.01})
+                .to(`#motionReel${index}`,{translateX:"20.0px",duration:6, ease:"linear"},'<')
+            )
         }
         if (rand===2){
-            return gsap.to(reel.current,{rotate:"3deg",scale:1.2,duration:6, ease:"linear"})
+            return (
+                motionReelTimeline
+                .set(['#motionReel0','#motionReel1','#motionReel2','#motionReel3','#motionReel4'],{scale:1.2,translateX:0,rotate:0,opacity:0})
+                .to(`#motionReel${index}`,{opacity:1,duration:0.01})
+                .to(`#motionReel${index}`,{rotate:"6deg",scale:1.5,duration:6, ease:"linear"},'<')
+            )
         }
         if (rand===3){
-            return gsap.to(reel.current,{left:"7%",scale:1.4,duration:6, ease:"linear"})
+            return (
+                motionReelTimeline
+                .set(['#motionReel0','#motionReel1','#motionReel2','#motionReel3','#motionReel4'],{scale:1.2,translateX:0,rotate:0,opacity:0})
+                .to(`#motionReel${index}`,{opacity:1,duration:0.01})
+                .to(`#motionReel${index}`,{translateX:"20.0px",scale:1.5,duration:6, ease:"linear"},'<')
+            )
         }
         if (rand===4){
-            return gsap.to(reel.current,{left:"-7%",scale:1.2,duration:6, ease:"linear"})
+            return (
+                motionReelTimeline
+                .set(['#motionReel0','#motionReel1','#motionReel2','#motionReel3','#motionReel4'],{scale:1.2,translateX:0,rotate:0,opacity:0})
+                .to(`#motionReel${index}`,{opacity:1,duration:0.01})
+                .to(`#motionReel${index}`,{translateX:"-20.0px",scale:1.5,duration:6, ease:"linear"},'<')
+            )
+        }
+        if (rand===5){
+            return (
+                motionReelTimeline
+                .set(['#motionReel0','#motionReel1','#motionReel2','#motionReel3','#motionReel4'],{scale:1.2,translateX:0,rotate:0,opacity:0})
+                .to(`#motionReel${index}`,{opacity:1,duration:0.01})
+                .to(`#motionReel${index}`,{scale:1,duration:6, ease:"linear"},'<')
+            )
         }
         //zoom out
         //paralax slide
@@ -68,7 +102,7 @@ const MotionReel = ({classList}) => {
             {
                 imageArray.map((el,i)=>{
                     return(
-                        <Image key={i} src={`${reelSource}${el}`} alt="motion reel" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 33vw,100vw"/>
+                        <Image key={i} id={`motionReel${i}`} src={`${reelSource}${el}`} alt="motion reel" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 33vw,100vw"/>
                     )
                 })
             }

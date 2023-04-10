@@ -12,6 +12,7 @@ import getAll from "../service/posts";
 import Link from "next/link";
 import {FetchAPIContext} from "../pages/_app";
 import axios from "axios";
+import { AllProjectObject } from "../pages/_app";
 
 const Categories = ({handleCategoryFilter}) => {
     const plusSign = useRef()
@@ -87,17 +88,8 @@ const Cards = ({handleProjectSelection,dataToDisplay}) => {
             runLineSplit()
         })   
     },[])
-    
-    /* useEffect(()=>{
-        gsap.registerPlugin(ScrollTrigger)
-        const tl = gsap.timeline()
-        tl.set(cover.current.querySelectorAll(".cover"),{clipPath:"inset(100% 0% 0% 0%)"})
-        tl.fromTo(cover.current.querySelectorAll(".cover"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
 
-        gsap.fromTo(cover.current.querySelectorAll(".cover"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
-    },[]) */
-
-    console.log(dataToDisplay);
+    // console.log(dataToDisplay);
     return(
         <div onClick={handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
@@ -132,11 +124,8 @@ const WorkGallery = ({handleProjectSelection}) => {
     const [selectedWorkData,setSelectedWorkData] = useState([])
     const images = useRef()
     const cardTL = useRef(gsap.timeline())
-    const [ responseData,setResponseData ] = useState([])
-    const [ dataToDisplay,setDataToDisplay ] = useState([])
-
-    // const baseURL = "http://localhost:1337/api/posts/?populate=*"
-    const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
+    const responseData = useContext(AllProjectObject)
+    const dataToDisplay = useContext(AllProjectObject)
 
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(Draggable)
@@ -156,8 +145,6 @@ const WorkGallery = ({handleProjectSelection}) => {
     
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
-        //cardTL.current.fromTo(".word",{translateY:"120%"},{translateY:"0%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"70% bottom",end:"70% top",scrub:true,pinSpacing:false}})
-        //console.log(images.current.querySelectorAll(".cover"))
         cardTL.current.fromTo(images.current.querySelectorAll(".word"),{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
 
         const tl = gsap.timeline()
@@ -166,19 +153,6 @@ const WorkGallery = ({handleProjectSelection}) => {
 
         gsap.fromTo(images.current.querySelectorAll(".cover"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
     })
-
-    useEffect(()=>{
-        const getAll = async() => {
-            try{
-                const request = await axios(baseURL).then(res=>res.data)
-                setResponseData(request.data)
-                setDataToDisplay(request.data)
-            } catch(err){
-                console.log(err);
-            }
-        }
-        getAll()
-    },[])
 
     console.log(responseData)
 
@@ -203,7 +177,7 @@ const WorkGallery = ({handleProjectSelection}) => {
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    {responseData.length>0?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops!</p>}
+                    {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops!</p>}
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ import Lenis from '@studio-freight/lenis'
 import SplitType from 'split-type'
 import Video from '../components/splashScreen'
 import getAll from '../service/posts'
+import axios from 'axios'
 
 const switzer = localFont({
   src:'./font/Switzer-Variable.ttf',
@@ -17,6 +18,10 @@ const switzer = localFont({
 
 //@ts-ignore
 export const ProjectDataContext = React.createContext()
+//@ts-ignore
+export const ThemeContext = React.createContext()
+//@ts-ignore
+export const AllProjectObject = React.createContext()
 
 const myLoader = ({ src, width, quality }) => {
   return `https://res.cloudinary.com/${src}?w=${width}&q=${quality || 75}`
@@ -30,6 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const introtl = useRef();
   const [ selectedProject, setSelectedProject ] = useState()
   const [ allProjectObject, setAllProjectObject] = useState()
+  const [ theme,setTheme ] = useState()
 
   let ampersandWrapper = useRef<HTMLDivElement>();
   let heading1Wrapper = useRef<HTMLDivElement>();
@@ -127,23 +133,46 @@ export default function App({ Component, pageProps }: AppProps) {
     return handleClick
   }
 
+  //
+  // GET DATA API
+  //
+  //
+  // const baseURL = "http://localhost:1337/api/posts/?populate=*"
+  const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
+
+  useEffect(()=>{
+    const getAll = async() => {
+        try{
+            const request = await axios(baseURL).then(res=>res.data)
+            setAllProjectObject(request.data)
+        } catch(err){
+            console.log(err);
+        }
+    }
+    getAll()
+},[])
+
   return (
     // @ts-ignore
     <div>
-      <ProjectDataContext.Provider value={selectedProject}>
-        {/* @ts-ignore */}
-        <div ref={smoothWrapper} id="smooth-wrapper">
-          {/* @ts-ignore */}
-          <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG bg-grey`}>
-            <Component {...pageProps} handleProjectSelection={handleProjectSelection} heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
-          </div>
-        </div>
-        {/* @ts-ignore */}
-        <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
-          <Video />
-        </div>
-        <HeaderMenu />
-      </ProjectDataContext.Provider>
+      <ThemeContext.Provider value={theme}>
+        <AllProjectObject.Provider value={allProjectObject}>
+          <ProjectDataContext.Provider value={selectedProject}>
+            {/* @ts-ignore */}
+            <div ref={smoothWrapper} id="smooth-wrapper">
+              {/* @ts-ignore */}
+              <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG bg-grey`}>
+                <Component {...pageProps} handleProjectSelection={handleProjectSelection} heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
+              </div>
+            </div>
+            {/* @ts-ignore */}
+            <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
+              <Video />
+            </div>
+            <HeaderMenu />
+          </ProjectDataContext.Provider>
+        </AllProjectObject.Provider>
+      </ThemeContext.Provider>
     </div>
   )
 }
