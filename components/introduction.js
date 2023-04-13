@@ -89,7 +89,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
     return (
         <div ref={introductionContent} className="snap-start introBody p-4 grid gap-2 grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Visual Designer & Creative Developer</h1>
-            <p className="paragraph row-start-1 col-start-2 col-span-4 leading-tight text-msm font-semibold text-black text-justify md:text-sm md:leading-4 md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
+            <p className="paragraph row-start-1 col-start-2 col-span-4 text-msm font-semibold text-black text-justify md:text-sm md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
             <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-1 col-start-1 col-span-4 lg:col-start-9 lg:col-span-2 md:col-start-7 md:row-start-3 md:row-span-1">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>

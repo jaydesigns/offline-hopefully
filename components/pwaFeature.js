@@ -6,6 +6,7 @@ import SplitType from "split-type"
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
 import InstallPWA from "./installPWA"
+import { duration } from "moment"
 
 //on mobile the top half could be the selection and image while the lower half is the text
 const FeatureDescription = (props) => {
@@ -65,8 +66,6 @@ const PWAFeatures = () => {
     const [lgRectHeight,setLgRectHeight] = useState(10)
     const featureImage = useRef()
     const featureText = useRef()
-    const rect2 = useRef()
-    const rect5 = useRef()
     const featureTL = useRef(gsap.timeline())
     const changeTL = useRef(gsap.timeline())
     const mm = useRef(gsap.matchMedia())
@@ -74,7 +73,6 @@ const PWAFeatures = () => {
     // const [ title,setTitle ] = useState("")
     // const [ desc,setDesc ] = useState("")
     const [selectedFeature,setSelectedFeature] = useState("installable")
-    
 
     useEffect(()=>{
         let lines;
@@ -92,12 +90,33 @@ const PWAFeatures = () => {
         gsap.registerPlugin(ScrollTrigger)
         const SVGObj = window.getComputedStyle(document.querySelector("#clippingCanvas"))
 
-        mm.current.add("(min-width:768px)",()=>{featureTL.current.fromTo(rect5.current,{style:"matrix(1,0,0,1,0,0)"},{style:`matrix(1,0,0,1,${(parseInt(SVGObj.width))/6},0)`,scrollTrigger:{scroller:"body",trigger:".featureSection",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})})
-        mm.current.add("(min-width:768px)",()=>{featureTL.current.fromTo(rect2.current,{style:`matrix(1,0,0,1,-${(parseInt(SVGObj.width))/6},0)`},{style:"matrix(1,0,0,1,0,0)",scrollTrigger:{scroller:"body",trigger:".featureSection",start:"top center",end:"top top",scrub:true,pinSpacing:false}})})
+        const rects = document.querySelectorAll("rect")
+        const topHalf = [rects[0],rects[1],rects[2]]
+        const bottomHalf = [rects[3],rects[4]]
+        const resetFeatureRects = ()=>{
+            gsap.to([rects[0],rects[1],rects[2]],{clipPath:"inset(100% 0% 0% 0%)",duration:1})
+            gsap.to([rects[3],rects[4]],{clipPath:"inset(0% 0% 100% 0%)",duration:1})
+        }
+        resetFeatureRects()
+        ScrollTrigger.create({
+            trigger:".featureSection",
+            start: "top 25%",
+            onEnter: ()=>{
+                gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
+            },
+            onEnterBack: ()=>{
+                gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
+            },
+        })
+        ScrollTrigger.create({
+            trigger:".featureSection",
+            onLeave: resetFeatureRects,
+            onLeaveBack: resetFeatureRects,
+        })
 
         setSVGWidth(parseInt(SVGObj.width))
         setSVGHeight(parseInt(SVGObj.height))
-
+        
         setLgRectWidth((parseInt(SVGObj.width))/3)
         setSmRectWidth((parseInt(SVGObj.width))/6)
         setLgRectHeight((parseInt(SVGObj.height))/2)
@@ -113,12 +132,20 @@ const PWAFeatures = () => {
 
     const handleImageSwitch = (dataIndex) => {
         const handler = () =>{
+            //console.log(Object.keys(featureImage.current.querySelectorAll("rect")).map(el=>console.log(el)));
+            const rects = featureImage.current.querySelectorAll("rect")
+            const rectsArray = Object.keys(rects).map(el=>rects[el])
+            //console.log(rectsArray[0]);
+            const topHalf = [rectsArray[0],rectsArray[1],rectsArray[2]]
+            const bottomHalf = [rectsArray[3],rectsArray[4]]
             setSelectedFeature(dataIndex)
             
             changeTL.current.set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
             
-            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"})
-            changeTL.current.fromTo(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"+=1")
+            changeTL.current.fromTo(topHalf,{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(100% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"})
+            changeTL.current.fromTo(bottomHalf,{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"},"<")
+            changeTL.current.fromTo(topHalf,{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"+=1")
+            changeTL.current.fromTo(bottomHalf,{clipPath:"inset(0% 0% 100% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"<")
         }
         
         return handler
@@ -165,10 +192,10 @@ const PWAFeatures = () => {
                     <defs>
                         <clipPath id="featureClip">
                                 <rect width={`${lgRectWidth-10}px`} height={`${lgRectHeight-10}px`} x={0} y={0} fill="#fff" />
-                                <rect ref={rect2} width={`${smRectWidth-10}px`} height={`${lgRectHeight-10}px`} x={((svgWidth*3)/6)} y={0} fill="#fff" />
+                                <rect width={`${smRectWidth-10}px`} height={`${lgRectHeight-10}px`} x={((svgWidth*3)/6)} y={0} fill="#fff" />
                                 <rect width={`${lgRectWidth-10}px`} height={`${lgRectHeight-10}px`} x={((svgWidth*4)/6)} y={0} fill="#fff" />
                                 <rect width={`${smRectWidth-10}px`} height={`${lgRectHeight-10}px`} x={((svgWidth*2)/6)} y={svgHeight/2} fill="#fff" />
-                                <rect ref={rect5} width={`${lgRectWidth-10}px`} height={`${lgRectHeight-10}px`} x={((svgWidth*3)/6)} y={svgHeight/2} fill="#fff" />
+                                <rect width={`${lgRectWidth-10}px`} height={`${lgRectHeight-10}px`} x={((svgWidth*3)/6)} y={svgHeight/2} fill="#fff" />
                         </clipPath>
                     </defs>
                 </svg>

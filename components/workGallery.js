@@ -36,7 +36,7 @@ const Categories = ({handleCategoryFilter}) => {
     },[category])
 
     return(
-        <div className="flex flex-col grow border-t border-grey gap-12 md:justify-between">
+        <div className="flex flex-col grow border-t border-grey gap-12 md:justify-between pt-2">
             <div className="flex grow">
                 <div onClick={handleChangeCategory("type")} className="cursor-pointer flex gap-4 md:gap-10 justify-start grow">
                     <div className="relative w-5 h-5">
@@ -145,13 +145,13 @@ const WorkGallery = ({handleProjectSelection}) => {
     
     useEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
-        cardTL.current.fromTo(images.current.querySelectorAll(".word"),{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
+        // cardTL.current.fromTo(images.current.querySelectorAll(".word"),{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
 
         const tl = gsap.timeline()
-        tl.set(images.current.querySelectorAll(".cover"),{clipPath:"inset(100% 0% 0% 0%)"})
-        tl.fromTo(images.current.querySelectorAll(".cover"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
+        tl.set(images.current.querySelectorAll(".card"),{clipPath:"inset(100% 0% 0% 0%)"})
+        tl.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
 
-        gsap.fromTo(images.current.querySelectorAll(".cover"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
+        gsap.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
     })
 
     console.log(responseData)
@@ -165,9 +165,9 @@ const WorkGallery = ({handleProjectSelection}) => {
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h1 className="tracking-tight leading-suis text-2xl md:text-3xl font-medium">Selected <br></br>Work</h1>
+                        <h1 className="tracking-tight leading-suis text-2xl md:text-3xl font-medium grow">Selected <br></br>Work</h1>
                         <div className="flex flex-col justify-end grow md:py-1 uppercase font-light">
-                            <h4 className="align-baseline">Catalogue</h4>
+                            <h4 className="align-baseline leading-suis">Catalogue</h4>
                         </div>
                     </div>
                 </div>
