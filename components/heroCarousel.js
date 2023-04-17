@@ -102,7 +102,7 @@ const MotionReel = ({classList}) => {
             {
                 imageArray.map((el,i)=>{
                     return(
-                        <Image key={i} id={`motionReel${i}`} src={`${reelSource}${el}`} alt="motion reel" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 33vw,100vw"/>
+                        <Image key={i} id={`motionReel${i}`} src={`${reelSource}${el}`} alt="motion reel" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,50vw"/>
                     )
                 })
             }

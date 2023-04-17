@@ -28,13 +28,14 @@ module.exports = {
         XS: ['2vw',1],
         SM: ['3vw',0.8],
         MED: ['6vw',0.8],
-        LG: ['11.5vw',1],
+        LG: ['12vw',1],
         XL: ['12vw',1],
         XXL: ['16vw',0.8],
       },
       gridTemplateRows: {
         layout: 'auto 1fr 1fr 10vw 10vw 1fr',
-        mobileLayout: 'auto 1fr 10vw 10vw 10vw 1fr',
+        mobileLayout: 'auto 1fr 10vw 10.5vw 10.5vw 1fr',
+        contact: 'fit-content(10%) 1fr 1fr 1fr fit-content(10%) 10%',
       },
       width: {
         ampMobile: '10vw',

@@ -166,7 +166,7 @@ const WorkGallery = ({handleProjectSelection}) => {
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
                         <h1 className="tracking-tight leading-suis text-2xl md:text-3xl font-medium grow">Selected <br></br>Work</h1>
-                        <div className="flex flex-col justify-end grow md:py-1 uppercase font-light">
+                        <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
                             <h4 className="align-baseline leading-suis">Catalogue</h4>
                         </div>
                     </div>

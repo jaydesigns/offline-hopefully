@@ -166,7 +166,7 @@ const PWAFeatures = () => {
 
     return (
         <div className="snap-start relative flex flex-col gap-4 justify-between featureSection w-screen h-screen p-4 pb-32 text-white">
-            <div className="flex w-full border-b border-white pt-4 mix-blend-exclusion">
+            <div className="flex w-full border-b border-white py-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
                 <h4 className="w-1/2 md:w-1/4 text-2xl md:text-3xl font-medium tracking-tight leading-suis">The <br></br>Difference</h4>
                 <div className="flex flex-col md:flex-row flex-auto">
@@ -185,8 +185,8 @@ const PWAFeatures = () => {
                 </div>
             </div>
             <div className="relative w-full h-2/3 md:h-5/6">
-                <div className="relative featureCover w-full h-1/2 md:h-full overflow-hidden">
-                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 600px) 33vw,100vw"></Image>
+                <div className="relative featureCover w-full h-full overflow-hidden">
+                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 600px) 100vw,100vw"></Image>
                 </div>
                 <svg ref={featureImage} id="clippingCanvas" className="absolute top-0 flex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
                     <defs>

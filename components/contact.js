@@ -3,6 +3,8 @@ import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
 import NegativeArrow from './negativeArrow'
 import SplitType from "split-type";
 import gsap from "gsap";
+import LinkText from "./linkText";
+import ArrowRight from "./arrowRight";
 
 const Greeting = (props) =>{
     useEffect(()=>{
@@ -26,7 +28,7 @@ const Meet = (props) =>{
         let lines;
         const runSplit = () => {
           //@ts-ignore
-          lines = new SplitType(".greet",{type:'lines'})
+          lines = new SplitType(".greet",{types:'lines,words'})
         }
         runSplit()
         window.addEventListener("resize",()=>{
@@ -105,12 +107,12 @@ const Name = (props) => {
         // console.log("name");
     })
     return (
-        <form className="w-full">
+        <div className="w-full">
             <div className="flex bg-black p-4 gap-8 w-full">
                 <input type="text" className=" bg-black text-white border-white border-b w-full" placeholder="Replace this with your name" value={props.firstName} onChange={props.handleChange}></input>
-                <input type="submit" data-name="needs" ref={props.submitBtn} onClick={props.handleNameResponse} value="Enter" className="bg-red text-white px-2"></input>
+                <div data-name="needs" ref={props.submitBtn} onClick={props.handleNameResponse} className="text-white px-2 flex gap-2 items-center"><div className="border border-white rounded-full h-[1rem] aspect-square"><ArrowRight color={"white"} classToAdd={"scale-50"}/></div><p>Enter</p></div>
             </div>
-        </form>
+        </div>
     )
 }
 
@@ -149,14 +151,15 @@ const Contact = () => {
     const handleChange = (e) => {
         setFirstName(e.target.value);
     };
-    //console.log(firstName);
+    console.log(firstName);
 
     const handleNameResponse = (event) =>{
-        event.preventDefault()
-        // console.log(event.currentTarget);
+        // event.preventDefault()
+        console.log(event.currentTarget);
         // setStep("needs")
         if(firstName.length>0){
             tl.current.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
+            console.log(event.arget.getAttribute("data-name"));
             tl.current.play().then(()=>setStep(event.target.getAttribute("data-name")))
         } else {
             tl.current.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
@@ -164,6 +167,15 @@ const Contact = () => {
         }
     }
 
+    //
+    //Enter button event listener
+    //
+    useEffect(()=>{
+        window.addEventListener("keydown",(e)=>{
+            e.key==="Enter"?handleNameResponse:console.log(e.key)
+        })
+    },[])
+    
     /* useEffect(()=>{
         //let tl = gsap.timeline()
         let selected = document.querySelector(`[data-name='${step}']`)
@@ -176,10 +188,10 @@ const Contact = () => {
     },[step]) */
 
     return(
-        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid md:grid-rows-6 grid-cols-4 md:grid-cols-12">
-            <div className="flex flex-col justify-start md:col-span-12">
+        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid grid-rows-contact md:grid-rows-6 grid-cols-4 md:grid-cols-12">
+            <div className="flex flex-col justify-start col-span-4 md:col-span-12">
                 <div className="border-b border-black py-2 col-span-4">
-                    <h4 className="text-2xl md:text-3xl tracking-tight leading-suis font-semibold">ChatJPT</h4>
+                    <h4 className="text-2xl md:text-3xl tracking-tight font-semibold">ChatJPT</h4>
                 </div>
             </div>
             <div className="col-span-6 md:col-start-4 row-start-3">
@@ -195,7 +207,7 @@ const Contact = () => {
                 {step==="needs"&&<Needs handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
                 {(step==="looking"||step==="socials")&&<Needs handleNameResponse={handleNameResponse} handleChange={handleChange} submitBtn={submitBtn}/>}
             </div>
-            <div className="row-start-6 col-span-1">
+            <div className="row-start-5 col-span-1">
                 <h6 className="text-red text-xs font-bold leading-tight">Don&apos;t worry, your name won&apos;t be saved anywhere.</h6>
             </div>
         </div>

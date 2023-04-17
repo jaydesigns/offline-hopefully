@@ -11,6 +11,7 @@ import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
 import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
 import PWAFeatures from '../components/pwaFeature'
 import Contact from '../components/contact'
+import ChatJPT from '../components/chat'
 // import { SmootherContext } from '../SmootherContext'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -55,7 +56,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
       {/* @ts-ignore */}
       <WorkGallery handleProjectSelection={handleProjectSelection} />
       <PWAFeatures />
-      <Contact />
+      <ChatJPT />
     </>
   )
 }

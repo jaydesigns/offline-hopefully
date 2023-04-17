@@ -137,8 +137,8 @@ export default function App({ Component, pageProps }: AppProps) {
   // GET DATA API
   //
   //
-  // const baseURL = "http://localhost:1337/api/posts/?populate=*"
-  const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
+  const baseURL = "http://localhost:1337/api/posts/?populate=*"
+  // const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
 
   useEffect(()=>{
     const getAll = async() => {

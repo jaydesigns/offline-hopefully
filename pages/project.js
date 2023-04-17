@@ -31,8 +31,8 @@ const Project = () => {
     const projectId = useContext(ProjectDataContext)
     const [projectObject,setProjectObject] = useState()
 
-    // const baseURL = 'http://localhost:1337/api/slides?populate=*'
-    const baseURL = 'https://salty-waters-71699.herokuapp.com/api/slides?populate=*'
+    const baseURL = 'http://localhost:1337/api/slides?populate=*'
+    // const baseURL = 'https://salty-waters-71699.herokuapp.com/api/slides?populate=*'
     
     useIsomorphicLayoutEffect(()=>{
         // setSlideData(projectObject.find(el=>el.id===parseInt(projectId)))
