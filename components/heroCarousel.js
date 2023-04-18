@@ -99,13 +99,18 @@ const MotionReel = ({classList}) => {
 
     return (
         <div  ref={reel} className={classList}>
-            {
+            {/* {
                 imageArray.map((el,i)=>{
                     return(
                         <Image key={i} id={`motionReel${i}`} src={`${reelSource}${el}`} alt="motion reel" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,50vw"/>
                     )
                 })
-            }
+            } */}
+            <Image id={`motionReel0`} src={`/images/reel/ColorMaxFence.jpg`} alt="jay indino" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,50vw"/>
+            <Image id={`motionReel1`} src={`/images/reel/food-map-opt.jpg`} alt="jay indino" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,50vw"/>
+            <Image id={`motionReel2`} src={`/images/reel/details-03.jpg`} alt="jay indino" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,50vw"/>
+            <Image id={`motionReel3`} src={`/images/reel/united-way.png`} alt="jay indino" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,50vw"/>
+            <Image id={`motionReel4`} src={`/images/reel/RiversideLavenderRanch.jpg`} alt="jay indino" fill style={{objectFit:"cover",objectPosition:"relative"}} sizes="(max-width: 768px) 100vw,50vw"/>
         </div>
     )
 }

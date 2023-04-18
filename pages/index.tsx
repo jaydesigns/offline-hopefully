@@ -46,7 +46,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
     <>
       <Head>
         <title>Jay Indino - Graphic Designer & Creative Developer</title>
-        <meta name="description" content="Graphic Designer and Creative Developer who can help with your branding and web design and development and web app development." />
+        <meta name="description" content="Graphic Designer and Creative Developer who has expertise in branding, web design and web development and specializes in digital experiences, creative development, and web app development." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <link rel='manifest' href="/manifest.json" />
