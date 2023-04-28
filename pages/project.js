@@ -3,11 +3,11 @@ import Layout from '../components/layout'
 import Image from 'next/image'
 import gsap from 'gsap'
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import {useIsomorphicLayoutEffect} from 'usehooks-ts'
+import {useIsomorphicLayoutEffect} from '../useIsomorphicLayoutEffect'
 import { ProjectDataContext } from './_app'
 import axios from 'axios'
-import Lenis from '@studio-freight/lenis'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+//import Lenis from '@studio-freight/lenis'
+//import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 
 
 const Title = ({projectObject,projectId}) => {
