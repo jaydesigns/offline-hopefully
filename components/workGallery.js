@@ -165,9 +165,9 @@ const WorkGallery = ({handleProjectSelection}) => {
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h1 className="tracking-tight leading-suis text-2xl md:text-3xl font-medium grow">Selected <br></br>Work</h1>
+                        <h1 className="tracking-tight leading-suis text-MED md:text-SM font-medium grow">Selected <br></br>Work</h1>
                         <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
-                            <h4 className="align-baseline leading-suis">Catalogue</h4>
+                            <h4 className="align-baseline leading-suis font-light">Catalogue</h4>
                         </div>
                     </div>
                 </div>
@@ -177,7 +177,7 @@ const WorkGallery = ({handleProjectSelection}) => {
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops!</p>}
+                    {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops! Something went wrong when I tried downloading the images.</p>}
                 </div>
             </div>
         </div>
