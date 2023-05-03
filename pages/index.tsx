@@ -5,7 +5,7 @@ import Video from '../components/splashScreen'
 import Intro from '../components/introduction'
 import WorkGallery from '../components/workGallery'
 import { gsap } from 'gsap'
-import { useContext, useRef, useState } from 'react'
+import { useContext, useRef, useState, useEffect } from 'react'
 import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
 import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
@@ -13,11 +13,13 @@ import PWAFeatures from '../components/pwaFeature'
 import Contact from '../components/contact'
 import ChatJPT from '../components/chat'
 // import { SmootherContext } from '../SmootherContext'
+import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
 const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSelection})=> {
   const mm = useRef(gsap.matchMedia())
+  const router = useRouter()
   //const smoother = useContext(SmootherContext)
   //Register GSAP Plugin - ScrollTrigger
   //gsap.registerPlugin(ScrollTrigger);

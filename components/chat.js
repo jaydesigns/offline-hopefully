@@ -84,7 +84,7 @@ const LinkBox = ({step,purpose})=>{
             (step===3)&&(purpose==="connect")&&<div className="flex flex-col md:flex-row justify-start gap-2 md:gap-10 w-full">
                 <a href="https://www.linkedin.com/in/jay-indino-designer/" target="_blank" rel="noreferrer" className="flex gap-2"><LinkText str={"Connect (LinkedIn)"} arrowClass={"rotate-[-45deg]"}/></a>
                 <a href="https://www.instagram.com/jay.indino" target="_blank" rel="noreferrer" className="flex gap-2"><LinkText str={"Follow (IG)"} arrowClass={"rotate-[-45deg]"}/></a>
-                <span onClick={sendEmail} className="flex gap-2"><LinkText str={"Email"} arrowClass={"rotate-[-45deg]"}/></span>
+                <span onClick={sendEmail} className="flex gap-2 cursor-pointer"><LinkText str={"Email"} arrowClass={"rotate-[-45deg]"}/></span>
             </div>
             }
             {
@@ -128,7 +128,7 @@ const ChatJPT =()=>{
         <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid grid-rows-contact grid-cols-4 md:grid-cols-12">
             <div className="flex flex-col justify-start col-span-4 md:col-span-12">
                 <div className="border-b border-black py-2 col-span-4">
-                    <h4 className="leading-suis text-MED md:text-SM tracking-tight font-semibold">Let&apos;s <br></br>Connect</h4>
+                    <h4 className="text-MED md:text-SM tracking-tight font-semibold">Let&apos;s <br></br>Connect</h4>
                 </div>
             </div>
             <div className="col-span-6 md:col-start-4 row-start-2 pt-4">

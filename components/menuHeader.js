@@ -1,15 +1,25 @@
-import { useState,useCallback } from "react"
+import { useState,useCallback,useRef } from "react"
 import gsap from "gsap"
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import Link from "next/link"
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import localFont from "@next/font/local"
+import { useRouter } from "next/router";
 
 const MenuItem = ({link,str}) => {
+    const router = useRouter()
+    const tl = useRef(gsap.timeline())
+    const handleRouteChange = (e)=>{
+        e.preventDefault()
+        const tg = e.target.closest('a').getAttribute('href')
+        tl.current.to("img",{opacity:0,duration:1})
+        tl.current.play().then(()=>router.push(tg))
+    }
+
     return (
         <div className="flex flex-row gap-2 content-center menuEntra">
                 <div className="bg-red w-6 h-6 flex justify-around items-center rounded-full"></div>
-                <Link href={link}><div className="linkName overflow-hidden relative h-6 changeBG">
+                <Link onClick={handleRouteChange} href={link}><div className="linkName overflow-hidden relative h-6 changeBG">
                     <span className="linkText cursor-pointer mix-blend-exclusion text-white">{str}</span>
                 </div></Link>
         </div>

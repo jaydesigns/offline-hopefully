@@ -13,6 +13,8 @@ import Link from "next/link";
 import {FetchAPIContext} from "../pages/_app";
 import axios from "axios";
 import { AllProjectObject } from "../pages/_app";
+import { TransitionContext } from "../pages/_app";
+import { useRouter } from "next/router";
 
 const Categories = ({handleCategoryFilter}) => {
     const plusSign = useRef()
@@ -73,7 +75,7 @@ const Categories = ({handleCategoryFilter}) => {
     )
 }
 
-const Cards = ({handleProjectSelection,dataToDisplay}) => {
+const Cards = ({handleProjectSelection,dataToDisplay,outro}) => {
     const mm = useRef(gsap.matchMedia())
     const cover = useRef()
 
@@ -96,9 +98,9 @@ const Cards = ({handleProjectSelection,dataToDisplay}) => {
             {dataToDisplay.map(el=>{
             return(
             <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
-                    <Link className="h-full" href="project">
+                    <Link onClick={outro} className="h-full" href="project" scroll={false}>
                         <div className="cover relative h-full overflow-hidden w-full">
-                            <Image src={el.attributes.Cover.data.attributes.url} alt="image" loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 33vw,100vw"></Image>
+                            <Image src={el.attributes.Cover.data.attributes.url} alt="image" priority={true} fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 33vw,100vw"></Image>
                         </div>
                     </Link>
                     <div className="flex h-1/6">
@@ -126,6 +128,10 @@ const WorkGallery = ({handleProjectSelection}) => {
     const cardTL = useRef(gsap.timeline())
     const responseData = useContext(AllProjectObject)
     const dataToDisplay = useContext(AllProjectObject)
+    
+    //const {timeline} = useContext(TransitionContext)
+    const wholeGallery = useRef()
+    const route = useRouter()
 
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(Draggable)
@@ -143,7 +149,7 @@ const WorkGallery = ({handleProjectSelection}) => {
         })
     })
     
-    useEffect(()=>{
+    useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
         // cardTL.current.fromTo(images.current.querySelectorAll(".word"),{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
 
@@ -154,18 +160,18 @@ const WorkGallery = ({handleProjectSelection}) => {
         gsap.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
     })
 
-    console.log(responseData)
+    //console.log(responseData)
 
     const handleCategoryFilter = (el) => {
         setDataToDisplay(responseData.filter(project=>project.attributes.categories.data.map(x=>x.attributes.category).includes(el)))
     }
 
     return(
-        <div id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
+        <div ref={wholeGallery} id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h1 className="tracking-tight leading-suis text-MED md:text-SM font-medium grow">Selected <br></br>Work</h1>
+                        <h1 className="tracking-tight text-MED md:text-SM font-medium grow">Selected <br></br>Work</h1>
                         <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
                             <h4 className="align-baseline leading-suis font-light">Catalogue</h4>
                         </div>
@@ -177,7 +183,7 @@ const WorkGallery = ({handleProjectSelection}) => {
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops! Something went wrong when I tried downloading the images.</p>}
+                    {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay} outro={outro}/>:<p>Oops! Something went wrong when I tried downloading the images.</p>}
                 </div>
             </div>
         </div>

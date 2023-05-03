@@ -1,15 +1,16 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
+import React, { useEffect, useState, useRef, useLayoutEffect, useContext } from 'react'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
 import gsap from 'gsap'
 import HeaderMenu from '../components/menuHeader'
 import localFont from '@next/font/local'
-import Lenis from '@studio-freight/lenis'
+import {Lenis as ReactLenis, useLenis} from '@studio-freight/react-lenis'
 import SplitType from 'split-type'
 import Video from '../components/splashScreen'
 import getAll from '../service/posts'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 const switzer = localFont({
   src:'./font/Switzer-Variable.ttf',
@@ -36,40 +37,20 @@ export default function App({ Component, pageProps }: AppProps) {
   const [ selectedProject, setSelectedProject ] = useState()
   const [ allProjectObject, setAllProjectObject] = useState()
   const [ theme,setTheme ] = useState()
+  const overArchingTimeline = useRef(gsap.timeline)
 
   let ampersandWrapper = useRef<HTMLDivElement>();
   let heading1Wrapper = useRef<HTMLDivElement>();
   let heading2Wrapper = useRef<HTMLDivElement>();
 
-  useIsomorphicLayoutEffect(()=>{
-    let lenis = new Lenis({
-      // wrapper:smoothWrapper.current,
-      // content:smoothContent.current,
-      duration: 2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(1.5, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-      direction: 'vertical', // vertical, horizontal
-      gestureDirection: 'vertical', // vertical, horizontal, both
-      smooth: true,
-      mouseMultiplier: 0.55,
-      smoothTouch: false,
-      touchMultiplier: 1,
-      infinite: false,
-    })
-    
-    //get scroll value
-    /* lenis.on('scroll', ({ scroll, limit, velocity, direction, progress }) => {
-      console.log({ scroll, limit, velocity, direction, progress })
-    }) */
-    
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-    
-    requestAnimationFrame(raf)
-  },[])
-
   
+  let lenis = useLenis(({scroll})=>{
+    //
+  })
+
+  const router = useRouter();
+
+  //Split the lines
   useIsomorphicLayoutEffect(()=>{
     let lines;
     const runSplit = () => {
@@ -128,6 +109,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const handleProjectSelection = () => {
     const handleClick = (e) => {
       setSelectedProject(e.target.closest(".card").getAttribute("projectid"))
+      localStorage.setItem('selectedProjectId',e.target.closest(".card").getAttribute("projectid"))
       console.log(e.target.closest(".card").getAttribute("projectid"))
     }
     return handleClick
@@ -137,8 +119,8 @@ export default function App({ Component, pageProps }: AppProps) {
   // GET DATA API
   //
   //
-  const baseURL = "http://localhost:1337/api/posts/?populate=*"
-  // const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
+  // const baseURL = "http://localhost:1337/api/posts/?populate=*"
+  const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
 
   useEffect(()=>{
     const getAll = async() => {
@@ -150,7 +132,7 @@ export default function App({ Component, pageProps }: AppProps) {
         }
     }
     getAll()
-},[])
+  },[])
 
   return (
     // @ts-ignore
@@ -158,18 +140,33 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeContext.Provider value={theme}>
         <AllProjectObject.Provider value={allProjectObject}>
           <ProjectDataContext.Provider value={selectedProject}>
-            {/* @ts-ignore */}
-            <div ref={smoothWrapper} id="smooth-wrapper">
+            <ReactLenis root options={{
+              // wrapper:smoothWrapper.current,
+              // content:smoothContent.current,
+              duration: 2,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(1.5, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+              orientation: 'vertical', // vertical, horizontal
+              gestureOrientation: 'vertical', // vertical, horizontal, both
+              smoothWheel: true,
+              wheelMultiplier: 0.55,
+              smoothTouch: false,
+              touchMultiplier: 1,
+              infinite: false,
+            }}>
               {/* @ts-ignore */}
-              <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG bg-grey`}>
-                <Component {...pageProps} handleProjectSelection={handleProjectSelection} heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
+              <div ref={smoothWrapper} id="smooth-wrapper" style={{backgroundColor:"rgb(223,224,226)"}}>
+                {/* @ts-ignore */}
+                <div ref={smoothContent} id="smooth-content" className={`${switzer.variable} font-sans changeBG bg-grey`}>
+                  <Component {...pageProps} handleProjectSelection={handleProjectSelection} heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
+                </div>
               </div>
-            </div>
+            </ReactLenis>
             {/* @ts-ignore */}
             <div className="absolute bg-white top-0 right-0 z-20 h-full" ref={splash}>
               <Video />
             </div>
-            <HeaderMenu />
+            {/* @ts-ignore */}
+            <HeaderMenu/>
           </ProjectDataContext.Provider>
         </AllProjectObject.Provider>
       </ThemeContext.Provider>

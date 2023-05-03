@@ -2,14 +2,23 @@
 import Layout from '../components/layout'
 import HeaderMenu from "../components/menuHeader";
 import localFont from '@next/font/local'
-import { useEffect } from "react";
-// import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
+import { useContext, useEffect, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
 import { gsap } from "gsap";
 import Image from "next/image";
 
 const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
 
-const Bio = () => {/* 
+const Bio = () => {
+    const bioContainer = useRef<HTMLDivElement>(null)
+
+    useIsomorphicLayoutEffect(()=>{
+        //@ts-ignore
+        gsap.set(bioContainer.current,{opacity:0})
+        gsap.to(bioContainer.current,{opacity: 1,duration:1})
+    },[])
+    
+    /* 
     useIsomorphicLayoutEffect(()=>{
         //const el = homeWrapper.current
         const ctx = gsap.context(()=>{
@@ -24,7 +33,7 @@ const Bio = () => {/*
 
     return(
         <Layout>
-            <main className={`${switzer.className} bg-grey`}>
+            <main ref={bioContainer} className={`${switzer.className} bg-grey bioContainer`}>
                 <div className="p-4 text-black pb-28">
                     <div className="text-bio tracking-tighter uppercase font-semibold grid grid-cols-12 border-b-2 pt-2 border-darkGrey">
                         <span>Heber</span><span className="col-start-9">Jay</span>
@@ -77,7 +86,7 @@ const Bio = () => {/*
                         </div>
                     </div>
                 </div>
-                <HeaderMenu />
+                <HeaderMenu/>
             </main>
         </Layout>
     )
