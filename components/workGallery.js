@@ -75,7 +75,7 @@ const Categories = ({handleCategoryFilter}) => {
     )
 }
 
-const Cards = ({handleProjectSelection,dataToDisplay,outro}) => {
+const Cards = ({handleProjectSelection,dataToDisplay}) => {
     const mm = useRef(gsap.matchMedia())
     const cover = useRef()
 
@@ -98,7 +98,7 @@ const Cards = ({handleProjectSelection,dataToDisplay,outro}) => {
             {dataToDisplay.map(el=>{
             return(
             <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
-                    <Link onClick={outro} className="h-full" href="project" scroll={false}>
+                    <Link className="h-full" href="project" scroll={false}>
                         <div className="cover relative h-full overflow-hidden w-full">
                             <Image src={el.attributes.Cover.data.attributes.url} alt="image" priority={true} fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 33vw,100vw"></Image>
                         </div>
@@ -183,7 +183,7 @@ const WorkGallery = ({handleProjectSelection}) => {
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay} outro={outro}/>:<p>Oops! Something went wrong when I tried downloading the images.</p>}
+                    {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops! Something went wrong when I tried downloading the images.</p>}
                 </div>
             </div>
         </div>
