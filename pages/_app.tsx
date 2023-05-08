@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const smoothContent = useRef();
   const splash = useRef()
   //@ts-ignore
-  const introtl = useRef();
+  const introtl = useRef(gsap.timeline());
   const [ selectedProject, setSelectedProject ] = useState()
   const [ allProjectObject, setAllProjectObject] = useState()
   const [ theme,setTheme ] = useState()
@@ -62,12 +62,12 @@ export default function App({ Component, pageProps }: AppProps) {
         lines.revert();
         runSplit()
     })
-  })
+  },[])
 
   useIsomorphicLayoutEffect(() => {
     const ctx = gsap.context(()=>{
       //@ts-ignore
-      introtl.current = gsap.timeline()
+      introtl.current
       .set(".word",{translateY:"2em"})
       .set(".reel",{clipPath:"inset(0 0 100% 0)"})
       .set(".entra",{translateY:"2em"})
@@ -110,7 +110,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const handleClick = (e) => {
       setSelectedProject(e.target.closest(".card").getAttribute("projectid"))
       localStorage.setItem('selectedProjectId',e.target.closest(".card").getAttribute("projectid"))
-      console.log(e.target.closest(".card").getAttribute("projectid"))
+      //console.log(e.target.closest(".card").getAttribute("projectid"))
     }
     return handleClick
   }
@@ -119,8 +119,8 @@ export default function App({ Component, pageProps }: AppProps) {
   // GET DATA API
   //
   //
-  // const baseURL = "http://localhost:1337/api/posts/?populate=*"
-  const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
+  const baseURL = "http://localhost:1337/api/posts/?populate=*"
+  // const baseURL = "https://salty-waters-71699.herokuapp.com/api/posts/?populate=*"
 
   useEffect(()=>{
     const getAll = async() => {
@@ -143,8 +143,8 @@ export default function App({ Component, pageProps }: AppProps) {
             <ReactLenis root options={{
               // wrapper:smoothWrapper.current,
               // content:smoothContent.current,
-              duration: 2,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(1.5, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+              duration: 2.5,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(1-t,4)), // https://www.desmos.com/calculator/brs54l4xou
               orientation: 'vertical', // vertical, horizontal
               gestureOrientation: 'vertical', // vertical, horizontal, both
               smoothWheel: true,

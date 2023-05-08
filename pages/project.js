@@ -9,7 +9,7 @@ import axios from 'axios'
 // import Lenis from '@studio-freight/lenis'
 import {Lenis as ReactLenis, useLenis} from '@studio-freight/react-lenis'
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
-
+import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin'
 
 const Title = ({projectObject,projectId}) => {
     const textObject = projectObject.data.find(el=>el.attributes.post.data.id===projectId)
@@ -29,7 +29,7 @@ const Body = ({projectObject,projectId}) => {
     )
 }
 
-const Slide = ({projectObject,projectId}) => {
+const Slide = ({projectObject,projectId,handleNextSlide}) => {
 
     const slideArray = projectObject.data.find(el=>el.attributes.post.data.id===projectId)
     const slideURL = slideArray.attributes.slideImages.data
@@ -38,9 +38,9 @@ const Slide = ({projectObject,projectId}) => {
         <div className='sliderContainer flex flex-nowrap h-full'>
             {slideURL.map(el=>{
                 return(
-                <div className="w-screen h-screen" key={el.id}>
+                <div className="slider w-screen h-screen" key={el.id}>
                     <div className='relative w-full h-full p-4'>
-                        <Image src={el.attributes.url} alt="project cover image" fill style={{objectFit:"cover"}} className="absolute"></Image>
+                        <Image onClick={handleNextSlide} src={el.attributes.url} alt="project cover image" fill style={{objectFit:"cover"}} className="absolute"></Image>
                     </div>
                 </div>
                 )
@@ -53,9 +53,12 @@ const Project = () => {
     const projectId = useContext(ProjectDataContext)
     const [projectObject,setProjectObject] = useState()
     let localProjectId
+    const projectContainer = useRef()
 
-    // const baseURL = 'http://localhost:1337/api/slides?populate=*'
-    const baseURL = 'https://salty-waters-71699.herokuapp.com/api/slides?populate=*'
+    gsap.registerPlugin(ScrollToPlugin)
+
+    const baseURL = 'http://localhost:1337/api/slides?populate=*'
+    // const baseURL = 'https://salty-waters-71699.herokuapp.com/api/slides?populate=*'
 
     if (typeof window!=='undefined'){
         localProjectId = localStorage.getItem('selectedProjectId')
@@ -76,7 +79,9 @@ const Project = () => {
         //const el = homeWrapper.current
         const ctx = gsap.context(()=>{
           //@ts-ignore
-          gsap.set(".changeBG",{backgroundColor:'#FFFFFF'})
+          gsap.set(".changeBG",{backgroundColor:'rgba(255,255,255,0)'})
+          gsap.set(projectContainer.current,{opacity:0})
+          gsap.to(projectContainer.current,{opacity:1,duration:1})
           })
         return () => ctx.revert()
     },[])
@@ -104,11 +109,16 @@ const Project = () => {
 
     //console.log(projectObject);
 
+    const handleNextSlide = () =>{
+        const sliders = document.querySelectorAll(".slider")
+        gsap.to(sliders,{duration:2,ease:"power3.inOut",translateX:"-100%"})
+    }
+
     return (
         <Layout>
-            <main className='changeBG w-screen h-screen relative'>
+            <main ref={projectContainer} className='changeBG w-screen h-screen relative'>
                 <div className="sliderWrapper flex h-full overflow-x-auto">
-                    {projectObject?<Slide projectObject={projectObject} projectId={projectIdNumber()}/>:<p>In order to retrieve additional resources, I need to connect to the internet.</p>}
+                    {projectObject?<Slide projectObject={projectObject} projectId={projectIdNumber()} handleNextSlide={handleNextSlide}/>:<p>In order to retrieve additional resources, I need to connect to the internet.</p>}
                 </div>
                 <div className='w-screen h-1/6 absolute z-[9999] top-0'>
                     {projectObject?<Title projectObject={projectObject} projectId={projectIdNumber()}/>:<p>Mmmm</p>}

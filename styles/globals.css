@@ -64,7 +64,6 @@ a {
 
 /* .word {
   transform: translateY(2em);
-  visibility: hidden;
 } */
 
 img {
@@ -83,10 +82,4 @@ img {
 
 ::-webkit-scrollbar{
   display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
 }

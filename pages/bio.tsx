@@ -11,11 +11,20 @@ const switzer = localFont({src:'./font/switzer-variable-webfont.woff2'})
 
 const Bio = () => {
     const bioContainer = useRef<HTMLDivElement>(null)
+    const givenName = useRef()
+    const lastName = useRef()
 
     useIsomorphicLayoutEffect(()=>{
+        let tl = gsap.timeline()
         //@ts-ignore
         gsap.set(bioContainer.current,{opacity:0})
-        gsap.to(bioContainer.current,{opacity: 1,duration:1})
+        //@ts-ignore
+        gsap.set(givenName.current.querySelectorAll("span"),{translateY:"120%"})
+        //@ts-ignore
+        gsap.set(lastName.current.querySelector("span"),{translateY:"-120%"})
+        tl.to(bioContainer.current,{opacity: 1,duration:1})
+        // @ts-ignore
+        tl.to([givenName.current.querySelectorAll("span"),lastName.current.querySelector("span")],{translateY:"0%",stagger:0.07,ease:"power3.inOut",duration:2})
     },[])
     
     /* 
@@ -35,14 +44,16 @@ const Bio = () => {
         <Layout>
             <main ref={bioContainer} className={`${switzer.className} bg-grey bioContainer`}>
                 <div className="p-4 text-black pb-28">
-                    <div className="text-bio tracking-tighter uppercase font-semibold grid grid-cols-12 border-b-2 pt-2 border-darkGrey">
+                    {/* @ts-ignore */}
+                    <div ref={givenName} className="text-bio tracking-tighter uppercase font-semibold grid grid-cols-12 border-b-2 pt-2 border-darkGrey overflow-hidden">
                         <span>Heber</span><span className="col-start-9">Jay</span>
                     </div>
-                    <div className="text-bio tracking-tighter uppercase font-semibold grid grid-cols-12 border-b-2 pt-2 pb-2 border-darkGrey">
+                    {/* @ts-ignore */}
+                    <div ref={lastName} className="text-bio tracking-tighter uppercase font-semibold grid grid-cols-12 border-b-2 pt-2 pb-2 border-darkGrey overflow-hidden">
                         <div className="relative w-24 md:w-48 h-full ">
-                        <Image src={'/images/PORTRAIT-sq.jpg'} alt="jay indino monochromatic portrait" fill style={{objectFit:"cover"}} className="col-start-1 col-span-1"></Image>
+                            <Image src={'/images/PORTRAIT-sq.jpg'} alt="jay indino monochromatic portrait" fill style={{objectFit:"cover"}} className="col-start-1 col-span-1"></Image>
                         </div>
-                        <span className="col-start-5">Indino</span>
+                        <span className="col-start-5 col-end-13">Indino</span>
                     </div>
                     <div className="bio flex flex-col gap-8 pt-28">
                         <div className="grid grid-cols-4 md:grid-cols-12">

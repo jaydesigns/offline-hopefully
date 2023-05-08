@@ -78,6 +78,7 @@ const Categories = ({handleCategoryFilter}) => {
 const Cards = ({handleProjectSelection,dataToDisplay}) => {
     const mm = useRef(gsap.matchMedia())
     const cover = useRef()
+    const router = useRouter()
 
     useEffect(()=>{
         let cardLines;
@@ -91,16 +92,24 @@ const Cards = ({handleProjectSelection,dataToDisplay}) => {
         })   
     },[])
 
+    const handlePageChange = (e)=>{
+        const tl = gsap.timeline()
+        e.preventDefault()
+        const tg = e.target.closest('a').getAttribute('href')
+        tl.to("img",{opacity:0,duration:1})
+        tl.play().then(()=>router.push(tg))
+    }
+
     // console.log(dataToDisplay);
     return(
-        <div onClick={handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
+        <div onClick={()=>handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
             {dataToDisplay.map(el=>{
             return(
             <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
-                    <Link className="h-full" href="project" scroll={false}>
+                    <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
                         <div className="cover relative h-full overflow-hidden w-full">
-                            <Image src={el.attributes.Cover.data.attributes.url} alt="image" priority={true} fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 33vw,100vw"></Image>
+                            <Image src={el.attributes.Cover.data.attributes.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
                         </div>
                     </Link>
                     <div className="flex h-1/6">
