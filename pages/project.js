@@ -57,8 +57,8 @@ const Project = () => {
 
     gsap.registerPlugin(ScrollToPlugin)
 
-    const baseURL = 'http://localhost:1337/api/slides?populate=*'
-    // const baseURL = 'https://salty-waters-71699.herokuapp.com/api/slides?populate=*'
+    // const baseURL = 'http://localhost:1337/api/slides?populate=*'
+    const baseURL = 'https://salty-waters-71699.herokuapp.com/api/slides?populate=*'
 
     if (typeof window!=='undefined'){
         localProjectId = localStorage.getItem('selectedProjectId')
