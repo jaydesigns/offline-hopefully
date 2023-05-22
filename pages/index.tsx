@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import Video from '../components/splashScreen'
@@ -33,12 +34,10 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
     gsap.registerPlugin(ScrollTrigger)
     // ScrollTrigger.create({snap:0.3333})
     const ctx = gsap.context(()=>{
-      //@ts-ignore
       gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
-      //@ts-ignore
       gsap.fromTo(".changeBG",{backgroundColor:"#141011"},{backgroundColor:"#DFE0E2",scrollTrigger:{scroller:"body",trigger:".interactiveContact",scrub:true , start:"top 50%", end:"top top", pinSpacing:false}})
       gsap.fromTo(".changeBG",{backgroundColor:"#DFE0E2"},{backgroundColor:"#141011",scrollTrigger:{scroller:"body",trigger:".selectedWork",scrub:true , start:"top bottom", end:"top center", pinSpacing:false}})
-      mm.current.add("(min-width: 768px)",()=>{gsap.to([".entra",ampersandWrapper.current],{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:".introBody",start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})})
+      mm.current.add("(min-width: 768px)",()=>{gsap.to(".entra",{translateY:"-150%",stagger:0.05,scrollTrigger:{scroller:"body",trigger:".introBody",start:"bottom bottom",end:"bottom center",scrub:true,pinSpacing:false}})})
       mm.current.add("(min-width: 768px)",()=>{gsap.to(".heroImage",{translateY:"32.5%", scrollTrigger:{scroller:"body",trigger:".introBody",scrub:true , start:"top top", end:"bottom center", pinSpacing:false}})})
     })
     return () => ctx.revert()
@@ -53,9 +52,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
         <link rel="icon" href="/favicon.ico" />
         <link rel='manifest' href="/manifest.json" />
       </Head>
-      {/* @ts-ignore */}
       <Intro heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
-      {/* @ts-ignore */}
       <WorkGallery handleProjectSelection={handleProjectSelection} />
       <PWAFeatures />
       <ChatJPT />

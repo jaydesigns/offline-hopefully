@@ -1,4 +1,4 @@
-import { useCallback, useEffect,useRef,useState} from "react";
+import { useCallback, useEffect,useRef,useState,useContext} from "react";
 //import img from "../assets/DSC_0120_2.JPG";
 import ArrowRight from "./arrowRight";
 import gsap from "gsap";
@@ -8,6 +8,9 @@ import LinkText from './linkText'
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
 import ScrollToPlugin from "gsap/dist/ScrollToPlugin";
+import SplitType from "split-type";
+import { IntroTimeline } from "./layout";
+import { SplashTimeline } from "../pages/_app";
 
 const Ampersand = ({wrapper,container,glyph}) => {
     return (
@@ -47,8 +50,13 @@ const TextSlider = ({wrap,refr,heading,gridPos,firstWord,secondWord}) => {
     )
 }
 
-const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
+const Intro = ({app}) => {
     const [ myTitle,setMyTitle ] = useState([])
+
+    let ampersandWrapper = useRef();
+    let heading1Wrapper = useRef();
+    let heading2Wrapper = useRef();
+    let introtl = useRef(gsap.timeline())
 
     let ampersandContainer = useRef();
     let introductionContent = useRef();
@@ -56,6 +64,22 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
     let heading1container = useRef();
     let heading2container = useRef();
     const mm = useRef(gsap.matchMedia())
+
+    const splashAnimate = useContext(SplashTimeline)
+
+    //Split the lines
+    useIsomorphicLayoutEffect(()=>{
+        let lines;
+        const runSplit = () => {
+        
+        lines = new SplitType(".paragraph",{types:'lines,words'})
+        }
+        runSplit()
+        window.addEventListener("resize",()=>{
+            lines.revert();
+            runSplit()
+        })
+    },[])
 
     useEffect(()=>{
         let jobTitles = document.querySelector("#jobTitles")
@@ -79,6 +103,43 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
         return ()=>ctx.revert();
     },[])
 
+    const introAnimate=()=>{
+        gsap.set(".word",{translateY:"2em"})
+        gsap.set(".entra",{translateY:"2em"})
+        gsap.set(heading1Wrapper.current,{translateY:"33.33%"})
+        gsap.set(heading2Wrapper.current,{translateY:"-33.33%"})
+        gsap.set(ampersandWrapper.current,{translateY:"-110%"})
+        let tl = gsap.timeline()
+        tl.to(introductionContent.current,{opacity:1})
+        tl.fromTo(".reel",{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",duration:2,ease:"power4.inOut"})        
+        tl.to(heading1Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"<")
+        tl.to(heading2Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.85")          
+        tl.to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
+        tl.to(".word",{translateY:0,duration:1,stagger:0.02},"<")
+        tl.to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
+        return tl
+    }
+
+    //
+    //This timeline here gets rendered everytime the intro is rendered
+    //including the splash animate
+    //
+    useEffect(()=>{
+        let master = gsap.timeline()
+        master.add(splashAnimate())
+        .add(introAnimate())
+    },[])
+
+      /* useIsomorphicLayoutEffect(()=>{
+        const ctx = gsap.context(()=>{
+          
+            gsap.timeline()
+            .set(".menuEntra",{translateY:"-100%"})
+            .to(".menuEntra",{translateY:0, stagger: 0.2, ease:"power3.out", duration: 1},"+=6")
+        })
+        return ()=>ctx.revert()
+      },[]) */
+
     const scrollToFeature = useCallback(()=>{
         gsap.registerPlugin(ScrollToPlugin)
         return(
@@ -87,9 +148,9 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
     },[])
     
     return (
-        <div ref={introductionContent} className="snap-start introBody p-4 grid grid-cols-4 h-screen grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
+        <div style={{opacity:0}} ref={introductionContent} className="snap-start introBody p-4 grid grid-cols-4 h-screen gap-2 grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Visual Designer & Creative Developer</h1>
-            <p className="paragraph row-start-1 col-start-2 col-span-4 text-base font-medium text-black md:text-sm md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
+            <p className="paragraph row-start-1 col-start-2 col-span-4 text-sm font-semibold text-black md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
             <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-1 col-start-1 col-span-4 lg:col-start-9 lg:col-span-2 md:col-start-7 md:row-start-3 md:row-span-1">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>
@@ -100,7 +161,7 @@ const Intro = ({heading1Wrapper, heading2Wrapper, ampersandWrapper,app}) => {
             </div>
             <div className="funFact flex leading-tight text-msm md:text-sm row-start-6 md:row-start-5 md:col-start-2 col-span-2">
                 <div className="flex flex-col justify-center md:justify-end pb-4">
-                <div className="text-black overflow-hidden"><h6 className="entra font-semibold">This is NOT a website</h6></div>
+                <div className="text-black overflow-hidden"><h6 className="entra text-sm font-semibold">This is NOT a website</h6></div>
                 <div className="overflow-hidden cursor-pointer">
                     <div onClick={scrollToFeature} className="entra">
                         <LinkText str={'Wait... what?'} arrowClass={"rotate-90"}/>

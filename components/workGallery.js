@@ -8,11 +8,10 @@ import SplitType from "split-type";
 import Draggable from "gsap/dist/Draggable";
 import NegativeArrow from "./negativeArrow";
 import ArrowRight from "./arrowRight";
-import getAll from "../service/posts";
 import Link from "next/link";
 import {FetchAPIContext} from "../pages/_app";
 import axios from "axios";
-import { AllProjectObject } from "../pages/_app";
+import { AllProjectObject } from "./layout";
 import { TransitionContext } from "../pages/_app";
 import { useRouter } from "next/router";
 
@@ -102,7 +101,7 @@ const Cards = ({handleProjectSelection,dataToDisplay}) => {
 
     // console.log(dataToDisplay);
     return(
-        <div onClick={()=>handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
+        <div onClick={handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
             {dataToDisplay.map(el=>{
             return(
@@ -130,6 +129,15 @@ const Cards = ({handleProjectSelection,dataToDisplay}) => {
         </div>
     )
 }
+
+//
+//
+//
+//FIX HANDLE PROJECT SELECTION
+//
+//
+//
+//
 
 const WorkGallery = ({handleProjectSelection}) => {
     const [selectedWorkData,setSelectedWorkData] = useState([])
@@ -167,7 +175,7 @@ const WorkGallery = ({handleProjectSelection}) => {
         tl.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
 
         gsap.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
-    })
+    },[])
 
     //console.log(responseData)
 
@@ -187,12 +195,12 @@ const WorkGallery = ({handleProjectSelection}) => {
                     </div>
                 </div>
                 <div className="flex flex-col md:grow md:flex-row">
-                    <Categories skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']} handleCategoryFilter={handleCategoryFilter}/>
+                    {/* <Categories skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']} handleCategoryFilter={handleCategoryFilter}/> */}
                 </div>
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops! Something went wrong when I tried downloading the images.</p>}
+                    {/* {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops! Something went wrong when I tried downloading the images.</p>} */}
                 </div>
             </div>
         </div>

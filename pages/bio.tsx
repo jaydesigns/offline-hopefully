@@ -1,3 +1,4 @@
+//@ts-nocheck
 // import Link from "next/link";
 import Layout from '../components/layout'
 import HeaderMenu from "../components/menuHeader";
@@ -16,14 +17,14 @@ const Bio = () => {
 
     useIsomorphicLayoutEffect(()=>{
         let tl = gsap.timeline()
-        //@ts-ignore
+        
         gsap.set(bioContainer.current,{opacity:0})
-        //@ts-ignore
+        
         gsap.set(givenName.current.querySelectorAll("span"),{translateY:"120%"})
-        //@ts-ignore
+        
         gsap.set(lastName.current.querySelector("span"),{translateY:"-120%"})
         tl.to(bioContainer.current,{opacity: 1,duration:1})
-        // @ts-ignore
+        
         tl.to([givenName.current.querySelectorAll("span"),lastName.current.querySelector("span")],{translateY:"0%",stagger:0.07,ease:"power3.inOut",duration:2})
     },[])
     
@@ -31,7 +32,7 @@ const Bio = () => {
     useIsomorphicLayoutEffect(()=>{
         //const el = homeWrapper.current
         const ctx = gsap.context(()=>{
-          //@ts-ignore
+          
           gsap.set(".changeBG",{backgroundColor:'#DFE0E2'})
           })
         return () => ctx.revert()
