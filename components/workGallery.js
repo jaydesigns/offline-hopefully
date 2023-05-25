@@ -14,6 +14,7 @@ import axios from "axios";
 import { AllProjectObject } from "./layout";
 import { TransitionContext } from "../pages/_app";
 import { useRouter } from "next/router";
+import { BackgroundTheme,ThemeContext } from '../components/layout';
 
 const Categories = ({handleCategoryFilter}) => {
     const plusSign = useRef()
@@ -150,6 +151,9 @@ const WorkGallery = ({handleProjectSelection}) => {
     const wholeGallery = useRef()
     const route = useRouter()
 
+    const ThemeColors = useContext(ThemeContext)
+    const themeChange = useContext(BackgroundTheme)
+
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(Draggable)
         Draggable.create(images.current,{
@@ -164,9 +168,19 @@ const WorkGallery = ({handleProjectSelection}) => {
                 console.log("drag ended");
             } */
         })
-    })
+
+        gsap.registerPlugin(ScrollTrigger)
+        ScrollTrigger.create({
+            trigger: ".darkTheme",
+            start: "top center",
+            end: "bottom 75%",
+            onToggle: (self)=>self.isActive? themeChange(`${ThemeColors.black}`) : themeChange(`${ThemeColors.grey}`)
+        })
+    },[])
+
     
-    useIsomorphicLayoutEffect(()=>{
+    
+    /* useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
         // cardTL.current.fromTo(images.current.querySelectorAll(".word"),{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
 
@@ -175,7 +189,7 @@ const WorkGallery = ({handleProjectSelection}) => {
         tl.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
 
         gsap.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
-    },[])
+    },[]) */
 
     //console.log(responseData)
 

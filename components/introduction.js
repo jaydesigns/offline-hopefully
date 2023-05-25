@@ -103,7 +103,28 @@ const Intro = ({app}) => {
         return ()=>ctx.revert();
     },[])
 
-    const introAnimate=()=>{
+    // splashAnimate.current =()=>{
+    //     gsap.set(".word",{translateY:"2em"})
+    //     gsap.set(".entra",{translateY:"2em"})
+    //     gsap.set(heading1Wrapper.current,{translateY:"33.33%"})
+    //     gsap.set(heading2Wrapper.current,{translateY:"-33.33%"})
+    //     gsap.set(ampersandWrapper.current,{translateY:"-110%"})
+    //     let tl = gsap.timeline()
+    //     tl.to(introductionContent.current,{opacity:1})
+    //     tl.fromTo(".reel",{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",duration:2,ease:"power4.inOut"})        
+    //     tl.to(heading1Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"<")
+    //     tl.to(heading2Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.85")          
+    //     tl.to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
+    //     tl.to(".word",{translateY:0,duration:1,stagger:0.02},"<")
+    //     tl.to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
+    //     return tl
+    // }
+
+    //
+    //This timeline here gets rendered everytime the intro is rendered
+    //including the splash animate
+    //
+    useEffect(()=>{
         gsap.set(".word",{translateY:"2em"})
         gsap.set(".entra",{translateY:"2em"})
         gsap.set(heading1Wrapper.current,{translateY:"33.33%"})
@@ -117,17 +138,6 @@ const Intro = ({app}) => {
         tl.to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
         tl.to(".word",{translateY:0,duration:1,stagger:0.02},"<")
         tl.to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
-        return tl
-    }
-
-    //
-    //This timeline here gets rendered everytime the intro is rendered
-    //including the splash animate
-    //
-    useEffect(()=>{
-        let master = gsap.timeline()
-        master.add(splashAnimate())
-        .add(introAnimate())
     },[])
 
       /* useIsomorphicLayoutEffect(()=>{
