@@ -10,7 +10,7 @@ import SplitType from 'split-type'
 import { useRouter } from 'next/router'
 import Layout from '../components/layout'
 import Video from '../components/splashScreen'
-import Lottie from "react-lottie"
+import Lottie from 'lottie-react'
 import animationData from "../components/data-logo-vector.json"
 
 
@@ -21,15 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const smoothContent = useRef();
   const splash = useRef()
   const [splashEnd,setSplashEnd] = useState(false);
-  const [isStopped,setIsStopped] = useState(true)
-  const lottieOptions = {
-    loop: false,
-    autoplay: false,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
-  }
+  const lottieRef = useRef()
 
   let lenis = useLenis(({scroll})=>{
     //
@@ -61,7 +53,7 @@ export default function App({ Component, pageProps }: AppProps) {
     //tl.to(splash.current,{clipPath:"inset(0 0 0 0)",delay:3,ease:"power4.inOut",duration:3})
     //tl.to(splash.current,{display:"none"},"-=0.5")
     // tl.play().then(()=>setIsStopped(!isStopped)).then(()=>gsap.to(splash.current,{clipPath:"inset(0% 0 100% 0)",duration:2,delay:3,ease:"power4.inOut"}))
-    master.add(tl.play().then(()=>setIsStopped(!isStopped)))
+    master.add(tl.play().then(()=>lottieRef.current.play()))
     .add(gsap.to(splash.current,{clipPath:"inset(0% 0 100% 0)",duration:2,delay:4,ease:"power4.inOut"}))
     }
   },[])
@@ -86,7 +78,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <div ref={smoothContent} id="smooth-content">
               {(splashEnd)?<Component {...pageProps} handleProjectSelection={handleProjectSelection}/>:<></>}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 right-0 z-20 scale-50" ref={splash}>
-                  <Lottie options={lottieOptions} isStopped={isStopped}/>
+                  <Lottie animationData={animationData} lottieRef={lottieRef} autoplay={false} loop={false}/>
               </div>
             </div>
           </div>
