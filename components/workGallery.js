@@ -140,7 +140,7 @@ const Cards = ({handleProjectSelection,dataToDisplay}) => {
 //
 //
 
-const WorkGallery = ({handleProjectSelection}) => {
+const WorkGallery = ({data}) => {
     const [selectedWorkData,setSelectedWorkData] = useState([])
     const images = useRef()
     const cardTL = useRef(gsap.timeline())
@@ -178,7 +178,7 @@ const WorkGallery = ({handleProjectSelection}) => {
         })
     },[])
 
-    
+    console.log(data);
     
     /* useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
@@ -202,7 +202,7 @@ const WorkGallery = ({handleProjectSelection}) => {
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h1 className="tracking-tight text-MED md:text-SM font-medium grow">Selected <br></br>Work</h1>
+                        <h1 className="tracking-tight text-MED md:text-SM font-medium grow">Selected {data}<br></br>Work</h1>
                         <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
                             <h4 className="align-baseline leading-suis font-light">Catalogue</h4>
                         </div>
@@ -222,3 +222,34 @@ const WorkGallery = ({handleProjectSelection}) => {
 }
 
 export default WorkGallery
+
+const getStaticProps = async() => {
+    const baseURL = 'https://api-us-west-2.hygraph.com/v2/clhk29rgq3fl601ungewp9b8b/master'
+    const reqBody = {
+      query: `query Projects {
+          posts {
+            title
+            categories {
+              categoryName
+            }
+            coverImage
+          }
+        }`
+    }
+
+    try{
+        const response = await axios({
+          method: 'post',
+          url: baseURL,
+          data: reqBody
+        })
+        const data = await response.data
+        return {
+            props: {
+                data,
+            },
+        }
+    } catch(err){
+        console.log(err);
+    }
+  }

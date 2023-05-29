@@ -35,7 +35,7 @@ const Layout = ({children}) => {
     gsap.to("#menuHeader",{backgroundColor:`${color}`,color:((color===ThemeColors.grey)?ThemeColors.black:ThemeColors.white),duration:1})
   }
 
-  useEffect(()=>{
+  /* useEffect(()=>{
       const getAll = async() => {
         const baseURL = 'https://api-us-west-2.hygraph.com/v2/clhk29rgq3fl601ungewp9b8b/master'
         const reqBody = {
@@ -61,7 +61,7 @@ const Layout = ({children}) => {
         }
       }
       getAll()
-  },[])
+  },[]) */
 
   console.log(allProjectObject);
   return (

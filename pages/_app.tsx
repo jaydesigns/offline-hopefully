@@ -49,12 +49,12 @@ export default function App({ Component, pageProps }: AppProps) {
     let master = gsap.timeline({onComplete:()=>setSplashEnd(true)})
     let tl = gsap.timeline()
     tl.set(splash.current,{clipPath:"inset(100% 0 0 0)"})
-    tl.to(splash.current,{clipPath:"inset(0% 0 0 0)",duration:2,ease:"power4.inOut"})
+    tl.to(splash.current,{clipPath:"inset(0% 0 0 0)",duration:1,ease:"power4.inOut"})
     //tl.to(splash.current,{clipPath:"inset(0 0 0 0)",delay:3,ease:"power4.inOut",duration:3})
     //tl.to(splash.current,{display:"none"},"-=0.5")
     // tl.play().then(()=>setIsStopped(!isStopped)).then(()=>gsap.to(splash.current,{clipPath:"inset(0% 0 100% 0)",duration:2,delay:3,ease:"power4.inOut"}))
     master.add(tl.play().then(()=>lottieRef.current.play()))
-    .add(gsap.to(splash.current,{clipPath:"inset(0% 0 100% 0)",duration:2,delay:4,ease:"power4.inOut"}))
+    .add(gsap.to(splash.current,{clipPath:"inset(0% 0 100% 0)",duration:1.5,delay:2.5,ease:"power4.inOut"}))
     }
   },[])
 
