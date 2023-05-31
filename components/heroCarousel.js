@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const reelSource = '/images/reel/'
 const image1 = 'ColorMaxFence.jpg'
@@ -15,7 +15,7 @@ const MotionReel = ({classList}) => {
     const timeoutRef = useRef(null)
     const reel = useRef()
 
-    const randomAnimation = () => {
+    const randomAnimation = useCallback(() => {
         const rand = Math.floor(Math.random()*6)
         const motionReelTimeline = gsap.timeline()
         // console.log(index,rand);
@@ -75,7 +75,7 @@ const MotionReel = ({classList}) => {
         //rotate and zoom out
         //or just rotate
         //instead of changing src url, pre-render initial images and then apply slide change
-    }
+    },[index])
 
     const resetTimeout = () => {
         if (timeoutRef.current) {
@@ -95,7 +95,7 @@ const MotionReel = ({classList}) => {
         },6000)
 
         return ()=>{resetTimeout()}
-    },[index])
+    },[index,randomAnimation])
 
     return (
         <div  ref={reel} className={classList}>

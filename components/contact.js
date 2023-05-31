@@ -153,7 +153,7 @@ const Contact = () => {
     };
     console.log(firstName);
 
-    const handleNameResponse = (event) =>{
+    const handleNameResponse = useCallback((event) =>{
         // event.preventDefault()
         console.log(event.currentTarget);
         // setStep("needs")
@@ -165,7 +165,7 @@ const Contact = () => {
             tl.current.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
             tl.current.play().then(()=>setStep("error"))
         }
-    }
+    },[firstName.length])
 
     //
     //Enter button event listener
@@ -174,7 +174,7 @@ const Contact = () => {
         window.addEventListener("keydown",(e)=>{
             e.key==="Enter"?handleNameResponse:console.log(e.key)
         })
-    },[])
+    },[handleNameResponse])
     
     /* useEffect(()=>{
         //let tl = gsap.timeline()
