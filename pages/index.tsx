@@ -16,10 +16,12 @@ import ChatJPT from '../components/chat'
 // import { SmootherContext } from '../SmootherContext'
 import { useRouter } from 'next/router'
 import { BackgroundTheme, ThemeContext } from '../components/layout'
+import { gql } from '@apollo/client'
+import client from '../apolloClient'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSelection})=> {
+const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSelection,data})=> {
   const mm = useRef(gsap.matchMedia())
   const router = useRouter()
   const themeChange = useContext(BackgroundTheme)
@@ -47,6 +49,9 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
     return () => ctx.revert()
   },[])
 
+  console.log(data);
+  
+
   return (
     <>
       <Head>
@@ -58,7 +63,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
       </Head>
       <Intro heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
       <div className='darkTheme'>
-        <WorkGallery handleProjectSelection={handleProjectSelection} />
+        <WorkGallery handleProjectSelection={handleProjectSelection} data={data}/>
         <PWAFeatures />
       </div>
       <ChatJPT />
@@ -67,3 +72,35 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
 }
 
 export default Home
+
+export async function getStaticProps(){
+  const {data} = await client.query({
+    query: gql`
+    {
+      posts {
+        coverImage
+        title
+        id
+        categories {
+          categoryName
+        }
+        slug
+      }
+      categories {
+        categoryName
+        classification
+        posts {
+          id
+        }
+      }
+    }
+    `
+  })
+  console.log(data);
+  return {
+    props: {
+      data
+    }
+  }
+  
+}

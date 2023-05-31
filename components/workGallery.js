@@ -15,14 +15,17 @@ import { AllProjectObject } from "./layout";
 import { TransitionContext } from "../pages/_app";
 import { useRouter } from "next/router";
 import { BackgroundTheme,ThemeContext } from '../components/layout';
+import { gql } from "@apollo/client";
+import client from "../apolloClient";
 
-const Categories = ({handleCategoryFilter}) => {
+const Categories = ({handleCategoryFilter,data}) => {
     const plusSign = useRef()
     const [category,setCategory] = useState("type")
-    const type = {'branding':'Branding', 'ui design':'UI Design', 'environmental design':'Environmental Design', 'publication design':'Publication Design'}
-    const tech = {'adobe illustrator':'Adobe Illustrator', 'figma':'Figma', 'reactjs':'ReactJS', 'adobe after effects':'Adobe After Effects'}
+    const type = data.categories.filter(el=>el.classification==='type')
+    const tech = data.categories.filter(el=>el.classification==='tech')
     const tl = useRef(gsap.timeline())
     const selection = useRef()
+    console.log(type);
 
     const handleChangeCategory = (str) => {
         const handleSwitch = () => {
@@ -54,19 +57,19 @@ const Categories = ({handleCategoryFilter}) => {
                 </div>
             </div>
             <ul ref={selection} className="flex flex-col">
-            {category==="type"&&Object.keys(type).map((el)=>{
+            {category==="type"&&type.map((el,i)=>{
                 return(
-                    <li onClick={()=>handleCategoryFilter(el)} key={el} className="flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
-                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{type[el][0]}</h6></div>
-                        <span className="inline-block">{type[el]}</span>
+                    <li onClick={()=>handleCategoryFilter(el)} key={i} className="flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
+                        <span className="inline-block">{el.categoryName}</span>
                     </li>
                 )}
             )}
-            {category==="tech"&&Object.keys(tech).map((el)=>{
+            {category==="tech"&&tech.map((el,i)=>{
                 return(
-                    <li onClick={()=>handleCategoryFilter(el)} key={el} className="flex gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
-                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{tech[el][0]}</h6></div>
-                        <span className="inline-block">{tech[el]}</span>
+                    <li onClick={()=>handleCategoryFilter(el)} key={i} className="flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
+                        <span className="inline-block">{el.categoryName}</span>
                     </li>
                 )}
             )}
@@ -177,8 +180,6 @@ const WorkGallery = ({data}) => {
             onToggle: (self)=>self.isActive? themeChange(`${ThemeColors.black}`) : themeChange(`${ThemeColors.grey}`)
         })
     },[])
-
-    console.log(data);
     
     /* useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(ScrollTrigger)
@@ -202,14 +203,14 @@ const WorkGallery = ({data}) => {
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h1 className="tracking-tight text-MED md:text-SM font-medium grow">Selected {data}<br></br>Work</h1>
+                        <h1 className="tracking-tight text-MED md:text-SM font-medium grow">Selected<br></br>Work</h1>
                         <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
                             <h4 className="align-baseline leading-suis font-light">Catalogue</h4>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col md:grow md:flex-row">
-                    {/* <Categories skills={['Adobe Illustrator', 'Figma', 'React JS', 'Adobe After Effects']} handleCategoryFilter={handleCategoryFilter}/> */}
+                    <Categories handleCategoryFilter={handleCategoryFilter} data={data}/>
                 </div>
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
@@ -222,34 +223,3 @@ const WorkGallery = ({data}) => {
 }
 
 export default WorkGallery
-
-const getStaticProps = async() => {
-    const baseURL = 'https://api-us-west-2.hygraph.com/v2/clhk29rgq3fl601ungewp9b8b/master'
-    const reqBody = {
-      query: `query Projects {
-          posts {
-            title
-            categories {
-              categoryName
-            }
-            coverImage
-          }
-        }`
-    }
-
-    try{
-        const response = await axios({
-          method: 'post',
-          url: baseURL,
-          data: reqBody
-        })
-        const data = await response.data
-        return {
-            props: {
-                data,
-            },
-        }
-    } catch(err){
-        console.log(err);
-    }
-  }

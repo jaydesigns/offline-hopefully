@@ -62,8 +62,6 @@ const Layout = ({children}) => {
       }
       getAll()
   },[]) */
-
-  console.log(allProjectObject);
   return (
       <ThemeContext.Provider value={ThemeColors}>
           <BackgroundTheme.Provider value={changeTheme}>
