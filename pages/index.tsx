@@ -48,8 +48,6 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
     })
     return () => ctx.revert()
   },[])
-
-  console.log(data);
   
 
   return (

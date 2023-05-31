@@ -25,7 +25,6 @@ const Categories = ({handleCategoryFilter,data}) => {
     const tech = data.categories.filter(el=>el.classification==='tech')
     const tl = useRef(gsap.timeline())
     const selection = useRef()
-    console.log(type);
 
     const handleChangeCategory = (str) => {
         const handleSwitch = () => {
@@ -78,7 +77,7 @@ const Categories = ({handleCategoryFilter,data}) => {
     )
 }
 
-const Cards = ({handleProjectSelection,dataToDisplay}) => {
+const Cards = ({data}) => {
     const mm = useRef(gsap.matchMedia())
     const cover = useRef()
     const router = useRouter()
@@ -105,24 +104,24 @@ const Cards = ({handleProjectSelection,dataToDisplay}) => {
 
     // console.log(dataToDisplay);
     return(
-        <div onClick={handleProjectSelection()} ref={cover} className="flex flex-row gap-8 flex-nowrap">
+        <div /* onClick={handleProjectSelection()} */ ref={cover} className="flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
-            {dataToDisplay.map(el=>{
+            {data.posts.map(el=>{
             return(
             <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
                     <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
                         <div className="cover relative h-full overflow-hidden w-full">
-                            <Image src={el.attributes.Cover.data.attributes.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
+                            <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
                         </div>
                     </Link>
                     <div className="flex h-1/6">
                         <div className="w-1/2">
-                            <h6 className="cardText font-semibold">{el.attributes.Title}</h6>
+                            <h6 className="cardText font-semibold">{el.title}</h6>
                         </div>
                         <div className="grow text-xs flex flex-col font-extralight">
-                            {Object.keys(el.attributes.categories.data).map((x)=>{
+                            {el.categories.map((x,i)=>{
                                 return (
-                                <h6 className="cardText" key={x}>{el.attributes.categories.data[x].attributes.category}</h6>
+                                <h6 className="cardText" key={i}>{x.categoryName}</h6>
                                 )
                             })}
                         </div>
@@ -215,7 +214,7 @@ const WorkGallery = ({data}) => {
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    {/* {responseData?<Cards handleProjectSelection={handleProjectSelection} dataToDisplay={dataToDisplay}/>:<p>Oops! Something went wrong when I tried downloading the images.</p>} */}
+                    <Cards data={data}/>
                 </div>
             </div>
         </div>
