@@ -5,7 +5,6 @@ import type { AppProps } from 'next/app'
 import React, { useEffect, useState, useRef, useLayoutEffect, useContext } from 'react'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
 import gsap from 'gsap'
-import {Lenis as ReactLenis, useLenis} from '@studio-freight/react-lenis'
 import SplitType from 'split-type'
 import { useRouter } from 'next/router'
 import Layout from '../components/layout'
@@ -22,10 +21,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const splash = useRef()
   const [splashEnd,setSplashEnd] = useState(false);
   const lottieRef = useRef()
-
-  let lenis = useLenis(({scroll})=>{
-    //
-  })
 
   const router = useRouter();
 
@@ -61,19 +56,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Layout>
-        <ReactLenis root options={{
-          // wrapper:smoothWrapper.current,
-          // content:smoothContent.current,
-          duration: 2.5,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(1-t,4)), // https://www.desmos.com/calculator/brs54l4xou
-          orientation: 'vertical', // vertical, horizontal
-          gestureOrientation: 'vertical', // vertical, horizontal, both
-          smoothWheel: true,
-          wheelMultiplier: 0.55,
-          smoothTouch: false,
-          touchMultiplier: 1,
-          infinite: false,
-        }}>
           <div ref={smoothWrapper} id="smooth-wrapper" className="w-screen min-h-screen" style={{backgroundColor:"rgb(223,224,226)"}}>
             <div ref={smoothContent} id="smooth-content">
               {(splashEnd)?<Component {...pageProps} handleProjectSelection={handleProjectSelection}/>:<></>}
@@ -82,7 +64,6 @@ export default function App({ Component, pageProps }: AppProps) {
               </div>
             </div>
           </div>
-        </ReactLenis>
       </Layout>
     </>
   )

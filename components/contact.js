@@ -151,9 +151,8 @@ const Contact = () => {
     const handleChange = (e) => {
         setFirstName(e.target.value);
     };
-    console.log(firstName);
 
-    const handleNameResponse = useCallback((event) =>{
+    const handleNameResponse = (event) =>{
         // event.preventDefault()
         console.log(event.currentTarget);
         // setStep("needs")
@@ -165,16 +164,14 @@ const Contact = () => {
             tl.current.to(headingText.current.querySelectorAll(".word"),{translateY:"120%",duration:1,ease:"power3.in"})
             tl.current.play().then(()=>setStep("error"))
         }
-    },[firstName.length])
+    }
 
     //
     //Enter button event listener
     //
-    useEffect(()=>{
-        window.addEventListener("keydown",(e)=>{
-            e.key==="Enter"?handleNameResponse:console.log(e.key)
-        })
-    },[handleNameResponse])
+    window.addEventListener("keydown",(e)=>{
+        e.key==="Enter"?handleNameResponse:console.log(e.key)
+    })
     
     /* useEffect(()=>{
         //let tl = gsap.timeline()
@@ -188,7 +185,7 @@ const Contact = () => {
     },[step]) */
 
     return(
-        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid grid-rows-contact md:grid-rows-6 grid-cols-4 md:grid-cols-12">
+        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid grid-rows-contact md:grid-rows-6 grid-cols-4 md:grid-cols-12 mix-blend-exclusion">
             <div className="flex flex-col justify-start col-span-4 md:col-span-12">
                 <div className="border-b border-black py-2 col-span-4">
                     <h4 className="text-2xl md:text-3xl tracking-tight font-semibold">ChatJPT</h4>

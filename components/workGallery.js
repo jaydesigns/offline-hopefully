@@ -18,47 +18,68 @@ import { BackgroundTheme,ThemeContext } from '../components/layout';
 import { gql } from "@apollo/client";
 import client from "../apolloClient";
 
-const Categories = ({handleCategoryFilter,data}) => {
+const Categories = ({data,handleCategorySelection}) => {
     const plusSign = useRef()
     const [category,setCategory] = useState("type")
     const type = data.categories.filter(el=>el.classification==='type')
     const tech = data.categories.filter(el=>el.classification==='tech')
     const tl = useRef(gsap.timeline())
     const selection = useRef()
+    const ThemeColors = useContext(ThemeContext)
 
-    const handleChangeCategory = (str) => {
-        const handleSwitch = () => {
+    const [selectedClassification,setSelectedClassification] = useState()
+
+    
+    const handleChangeClassification = (str) => {
+        const handleSwitch = (e) => {
+            setSelectedClassification(e.target.closest(".classifications"))
             tl.current.to(selection.current.querySelectorAll("span"),{translateY:"2em", duration:0.5, ease:"power3.in"})
             tl.current.play().then(()=>setCategory(str))
         }
         return handleSwitch
     }
-
+    
     useEffect(()=>{
         tl.current.set(selection.current.querySelectorAll("span"),{translateY:"2em"})
         tl.current.to(selection.current.querySelectorAll("span"),{translateY:0,stagger:0.1, duration:1, ease:"power3.out"})
     },[category])
+    
+    useEffect(()=>{
+        let classifications = document.querySelectorAll(".classifications")
+        setSelectedClassification(classifications[0])
+    },[])
+
+    useEffect(()=>{
+        let classifications = document.querySelectorAll(".classifications")
+        classifications.forEach((el)=>{
+            if(el===selectedClassification){
+                gsap.to(selectedClassification,{backgroundColor:`${ThemeColors.white}`})
+            } else {
+                gsap.to(el,{backgroundColor:"rgba(0,0,0,0)"})
+            }
+        })
+    },[selectedClassification,ThemeColors.white])
 
     return(
         <div className="flex flex-col grow border-t border-grey gap-12 md:justify-between pt-2">
-            <div className="flex grow">
-                <div onClick={handleChangeCategory("type")} className="cursor-pointer flex gap-4 md:gap-10 justify-start grow">
-                    <div className="relative w-5 h-5">
+            <div className="flex grow gap-4">
+                <div onClick={handleChangeClassification("type")} className="classifications cursor-pointer flex gap-4 md:gap-10 justify-start grow">
+                    <div className="relative w-5 h-5 mix-blend-exclusion">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
-                    <h6 className="font-medium">Type of Work</h6>
+                    <h6 className="font-medium mix-blend-exclusion">Type of Work</h6>
                 </div>
-                <div onClick={handleChangeCategory("tech")} className="cursor-pointer flex gap-4 md:gap-10 justify-start grow">
-                    <div className="relative w-5 h-5">
+                <div onClick={handleChangeClassification("tech")} className="classifications cursor-pointer flex gap-4 md:gap-10 justify-start grow">
+                    <div className="relative w-5 h-5 mix-blend-exclusion">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
-                    <h6 className="font-medium">Technology Used</h6>
+                    <h6 className="font-medium mix-blend-exclusion">Technology Used</h6>
                 </div>
             </div>
             <ul ref={selection} className="flex flex-col">
             {category==="type"&&type.map((el,i)=>{
                 return(
-                    <li onClick={()=>handleCategoryFilter(el)} key={i} className="flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="category flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
                         <span className="inline-block">{el.categoryName}</span>
                     </li>
@@ -66,7 +87,7 @@ const Categories = ({handleCategoryFilter,data}) => {
             )}
             {category==="tech"&&tech.map((el,i)=>{
                 return(
-                    <li onClick={()=>handleCategoryFilter(el)} key={i} className="flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="category flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
                         <span className="inline-block">{el.categoryName}</span>
                     </li>
@@ -81,6 +102,7 @@ const Cards = ({data}) => {
     const mm = useRef(gsap.matchMedia())
     const cover = useRef()
     const router = useRouter()
+    const [showAllPosts,setShowAllPosts] = useState(true)
 
     useEffect(()=>{
         let cardLines;
@@ -102,11 +124,11 @@ const Cards = ({data}) => {
         tl.play().then(()=>router.push(tg))
     }
 
-    // console.log(dataToDisplay);
+    // console.log(data);
     return(
         <div /* onClick={handleProjectSelection()} */ ref={cover} className="flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
-            {data.posts.map(el=>{
+            {data.map(el=>{
             return(
             <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
                     <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
@@ -148,6 +170,8 @@ const WorkGallery = ({data}) => {
     const cardTL = useRef(gsap.timeline())
     const responseData = useContext(AllProjectObject)
     const dataToDisplay = useContext(AllProjectObject)
+    const [showAllPosts,setShowAllPosts] = useState(true)
+    const [categorySelected,setCategorySelected] = useState(null)
     
     //const {timeline} = useContext(TransitionContext)
     const wholeGallery = useRef()
@@ -193,10 +217,30 @@ const WorkGallery = ({data}) => {
 
     //console.log(responseData)
 
-    const handleCategoryFilter = (el) => {
-        setDataToDisplay(responseData.filter(project=>project.attributes.categories.data.map(x=>x.attributes.category).includes(el)))
+    const handleCategorySelection =(el)=>{
+        if(el.id===categorySelected){
+            setShowAllPosts(true)
+            gsap.to(`#${el.id}`,{color:`${ThemeColors.white}`})
+        } else {
+            setCategorySelected(el.id)
+            setShowAllPosts(false)
+        }
     }
 
+    useEffect(()=>{
+        let categories = document.querySelectorAll('.category')
+        categories.forEach((el)=>{
+            if(el.getAttribute('id')===categorySelected){
+                gsap.to(`#${el.id}`,{color:`${ThemeColors.red}`})
+            } else {
+                gsap.to(el,{color:`${ThemeColors.white}`})
+            }
+        })
+    },[categorySelected,ThemeColors])
+
+    // console.log(data.posts);
+
+    // console.log(data.posts.filter(post=>post.categories.map(el=>el.id).includes(`${categorySelected}`)))
     return(
         <div ref={wholeGallery} id="selectedWork" className="snap-start flex flex-col text-white selectedWork w-full h-screen p-4 pt-8 pb-24 justify-between mix-blend-exclusion">
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
@@ -209,12 +253,12 @@ const WorkGallery = ({data}) => {
                     </div>
                 </div>
                 <div className="flex flex-col md:grow md:flex-row">
-                    <Categories handleCategoryFilter={handleCategoryFilter} data={data}/>
+                    <Categories data={data} handleCategorySelection={handleCategorySelection} categorySelected={categorySelected}/>
                 </div>
             </div>
             <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
-                    <Cards data={data}/>
+                    {showAllPosts?<Cards data={data.posts}/>:<Cards data={data.posts.filter(post=>post.categories.map(el=>el.id).includes(`${categorySelected}`))}/>}
                 </div>
             </div>
         </div>

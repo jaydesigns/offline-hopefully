@@ -81,10 +81,12 @@ export async function getStaticProps(){
         id
         categories {
           categoryName
+          id
         }
         slug
       }
       categories {
+        id
         categoryName
         classification
         posts {
@@ -94,7 +96,6 @@ export async function getStaticProps(){
     }
     `
   })
-  console.log(data);
   return {
     props: {
       data
