@@ -136,14 +136,14 @@ const Cards = ({data}) => {
                             <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
                         </div>
                     </Link>
-                    <div className="flex h-1/6">
-                        <div className="w-1/2">
-                            <h6 className="cardText font-semibold">{el.title}</h6>
+                    <div className="flex flex-col h-1/6">
+                        <div className="w-full">
+                            <h6 className="text-xl font-medium">{el.title}</h6>
                         </div>
                         <div className="grow text-xs flex flex-col font-extralight">
                             {el.categories.map((x,i)=>{
                                 return (
-                                <h6 className="cardText" key={i}>{x.categoryName}</h6>
+                                <h6 className="" key={i}>{x.categoryName}</h6>
                                 )
                             })}
                         </div>
@@ -256,7 +256,7 @@ const WorkGallery = ({data}) => {
                     <Categories data={data} handleCategorySelection={handleCategorySelection} categorySelected={categorySelected}/>
                 </div>
             </div>
-            <div className="cardContainer flex overflow-x-auto w-screen h-4/6">
+            <div className="cardContainer flex overflow-x-auto w-screen h-1/2">
                 <div ref={images} className="flex flex-row gap-8 flex-nowrap">
                     {showAllPosts?<Cards data={data.posts}/>:<Cards data={data.posts.filter(post=>post.categories.map(el=>el.id).includes(`${categorySelected}`))}/>}
                 </div>

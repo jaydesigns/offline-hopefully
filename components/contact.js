@@ -188,7 +188,7 @@ const Contact = () => {
         <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid grid-rows-contact md:grid-rows-6 grid-cols-4 md:grid-cols-12 mix-blend-exclusion">
             <div className="flex flex-col justify-start col-span-4 md:col-span-12">
                 <div className="border-b border-black py-2 col-span-4">
-                    <h4 className="text-2xl md:text-3xl tracking-tight font-semibold">ChatJPT</h4>
+                    <h6 className="text-2xl md:text-3xl tracking-tight font-semibold">Let&apos;s Connect</h6>
                 </div>
             </div>
             <div className="col-span-6 md:col-start-4 row-start-3">

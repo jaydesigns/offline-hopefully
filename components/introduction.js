@@ -30,7 +30,7 @@ const Ampersand = ({wrapper,container,glyph}) => {
 
 const TextSlider = ({wrap,refr,heading,gridPos,firstWord,secondWord}) => {
     let classList = 'overflow-hidden overflow-y-hidden relative align-baseline'
-    let headingList = `${heading} text-LG md:text-xxxl font-semibold text-black tracking-tighter uppercase leading-none`
+    let headingList = `${heading} text-[12vw] md:text-xxxl font-semibold text-black tracking-tighter uppercase leading-none`
     return (
         <div className={`${gridPos} overflow-hidden realtive`}>
             <div ref={wrap} className={classList}>
@@ -160,7 +160,7 @@ const Intro = ({app}) => {
     return (
         <div style={{opacity:0}} ref={introductionContent} className="snap-start introBody p-4 grid grid-cols-4 h-screen gap-2 grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Visual Designer & Creative Developer</h1>
-            <p className="paragraph row-start-1 col-start-2 col-span-4 text-sm font-semibold text-black md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
+            <p className="paragraph row-start-1 col-start-2 col-span-4 font-semibold text-black md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
             <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-1 col-start-1 col-span-4 lg:col-start-9 lg:col-span-2 md:col-start-7 md:row-start-3 md:row-span-1">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>

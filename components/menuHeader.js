@@ -63,9 +63,10 @@ const HeaderMenu = () => {
         <div id="menuHeader" className={`w-full px-4 fixed bottom-0`} style={{backgroundColor:`${ThemeColors.grey}`,color:`${ThemeColors.black}`}}>
             <div className="flex h-16 py-4 place-content-between border-t border-darkGrey md:h-20">
                 <div className="relative flex-auto md:basis-1/3 overflow-hidden">
-                    <Link href={"/"} className="menuEntra absolute" id="hjiLogo">
+                    <a href={"/"} className="menuEntra absolute" aria-label="Heber Jay Indino" id="hjiLogo">
                         <svg id="Layer_2" style={{height:'23px',mixBlendMode:"exclusion"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.64 60"><defs></defs><g id="Layer_1-2"><rect fill={`${ThemeColors.white}`} className="cls-1" x="69.82" y="17.51" width="17.82" height="42.49"/><polygon fill={`${ThemeColors.white}`} className="cls-1" points="17.54 18 17.54 0 0 0 0 60 17.54 60 17.54 34.03 34.08 34.03 34.08 47.22 50.81 47.22 50.81 17.65 17.54 18"/></g></svg>
-                    </Link>
+                        <span className="hidden">Home</span>
+                    </a>
                 </div>
                 <div className="basis-1/3 hidden md:flex md:basis-1/3 flex-col overflow-hidden">
                     <div className="text-xs relative overflow-hidden max-h-6"><h6 className="menuEntra">Heber Jay Indino</h6></div>
