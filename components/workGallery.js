@@ -128,27 +128,29 @@ const Cards = ({data}) => {
     return(
         <div /* onClick={handleProjectSelection()} */ ref={cover} className="flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
-            {data.map(el=>{
+            {data.map((el,i)=>{
             return(
-            <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{width:"300px"}} projectid={el.id}>
-                    <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
-                        <div className="cover relative h-full overflow-hidden w-full">
-                            <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
-                        </div>
-                    </Link>
-                    <div className="flex flex-col h-1/6">
-                        <div className="w-full">
-                            <h6 className="text-xl font-medium">{el.title}</h6>
-                        </div>
-                        <div className="grow text-xs flex flex-col font-extralight">
-                            {el.categories.map((x,i)=>{
+            <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.id}>
+                <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
+                    <div className="cover relative h-full overflow-hidden w-full">
+                        <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
+                    </div>
+                </Link>
+                <div className="flex flex-col text-sm h-1/4 md:h-1/6 leading-tight">
+                    <div className="w-full">
+                        <h6 className="font-semibold">{el.title}</h6>
+                    </div>
+                    <div className="font-light text-darkGrey">
+                        <h6>
+                            {el.categories.map(x => {
                                 return (
-                                <h6 className="" key={i}>{x.categoryName}</h6>
+                                    x.categoryName
                                 )
-                            })}
-                        </div>
+                            }).join(" — ")}
+                        </h6>
                     </div>
                 </div>
+            </div>
                 )
             })}
         </div>
@@ -246,7 +248,7 @@ const WorkGallery = ({data}) => {
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h1 className="tracking-tight text-MED md:text-SM font-medium grow">Selected<br></br>Work</h1>
+                        <h2 className="tracking-tight text-MED md:text-SM font-medium grow">Selected<br></br>Work</h2>
                         <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
                             <h4 className="align-baseline leading-suis font-light">Catalogue</h4>
                         </div>

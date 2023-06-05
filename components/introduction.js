@@ -171,7 +171,7 @@ const Intro = ({app}) => {
             </div>
             <div className="funFact flex leading-tight text-msm md:text-sm row-start-6 md:row-start-5 md:col-start-2 col-span-2">
                 <div className="flex flex-col justify-center md:justify-end pb-4">
-                <div className="text-black overflow-hidden"><h6 className="entra text-sm font-semibold">This is NOT a website</h6></div>
+                <div className="text-black overflow-hidden"><h6 className="entra text-xs font-semibold">This is NOT a website</h6></div>
                 <div className="overflow-hidden cursor-pointer">
                     <div onClick={scrollToFeature} className="entra">
                         <LinkText str={'Wait... what?'} arrowClass={"rotate-90"}/>

@@ -19,11 +19,6 @@ const switzer = localFont({
   variable: '--font-switzer'
 })
 
-export const metadata = {
-  title: 'Heber Jay Indino Graphic Designer',
-  description: 'Graphic desiner and web designer developer based in Utah'
-}
-
 const Layout = ({children}) => {    
   const [ selectedProject, setSelectedProject ] = useState()
   const [ allProjectObject, setAllProjectObject] = useState()
@@ -63,34 +58,7 @@ const Layout = ({children}) => {
     gsap.to(["#smooth-wrapper","#hjiLogo"],{backgroundColor:`${color}`,duration:1})
     gsap.to("#menuHeader",{backgroundColor:`${color}`,color:((color===ThemeColors.grey)?ThemeColors.black:ThemeColors.white),duration:1})
   }
-
-  /* useEffect(()=>{
-      const getAll = async() => {
-        const baseURL = 'https://api-us-west-2.hygraph.com/v2/clhk29rgq3fl601ungewp9b8b/master'
-        const reqBody = {
-          query: `query Projects {
-              posts {
-                title
-                categories {
-                  categoryName
-                }
-                coverImage
-              }
-            }`
-        }
   
-        try{
-            await axios({
-              method: 'post',
-              url: baseURL,
-              data: reqBody
-            }).then(res=>setAllProjectObject(res.data))
-        } catch(err){
-            console.log(err);
-        }
-      }
-      getAll()
-  },[]) */
   return (
     <ThemeContext.Provider value={ThemeColors}>
         <BackgroundTheme.Provider value={changeTheme}>

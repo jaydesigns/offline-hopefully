@@ -48,11 +48,22 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
     })
     return () => ctx.revert()
   },[])
+
+  useIsomorphicLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    ScrollTrigger.create({
+      trigger: "body",
+      onUpdate: self => console.log(self.progress),
+      snap: {
+        snapTo:[0.2,0.4,0.6,0.8],
+        directional: false
+      }
+    })
+  },[])
   
 
   return (
     <>
-      
       <Intro heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
       <div className='darkTheme'>
         <WorkGallery handleProjectSelection={handleProjectSelection} data={data}/>
