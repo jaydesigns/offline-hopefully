@@ -51,8 +51,8 @@ const PWAFeatures = () => {
         },
         flexible: {
             cover: "/images/PXL_20221224_211305839-b&w.jpg",
-            title: "API-based",
-            desc: "The architecture of this app makes use of decentralized microservices that communicate through API (Application Programming Interface), which makes it faster than traditional websites."
+            title: "Modern Web",
+            desc: "I've designed and developed this app with performance in mind. You'll probably notice that navigating to other pages is almost seamless."
         }
     }
     //const [featureSVG,setFeatureSVG] = useState()
@@ -172,7 +172,7 @@ const PWAFeatures = () => {
         setTimeout(()=>{
             setImageSource(obj[`${selectedFeature}`].cover)
         },1000)
-    },[obj,selectedFeature])
+    })
 
 
     return (
@@ -183,7 +183,7 @@ const PWAFeatures = () => {
                 <div className="flex flex-col md:flex-row flex-auto">
                     <div className="flex gap-4 grow hover:text-red text-white">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">I</h6></div>
-                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium">Installability</span>
+                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium">Installable</span>
                     </div>
                     <div className="flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">O</h6></div>
@@ -191,7 +191,7 @@ const PWAFeatures = () => {
                     </div>
                     <div className="flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">A</h6></div>
-                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium">API-based</span>
+                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium">Modern Web</span>
                     </div>
                 </div>
             </div>

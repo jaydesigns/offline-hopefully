@@ -9,7 +9,7 @@ import { gsap } from "gsap";
 import Image from "next/image";
 import { BackgroundTheme,ThemeContext } from '../components/layout';
 
-const Bio = () => {
+const Bio = ({showBackButton}) => {
     const bioContainer = useRef<HTMLDivElement>(null)
     const givenName = useRef()
     const lastName = useRef()

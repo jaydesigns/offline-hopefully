@@ -6,22 +6,22 @@ import Video from '../components/splashScreen'
 import Intro from '../components/introduction'
 import WorkGallery from '../components/workGallery'
 import { gsap } from 'gsap'
-import { useContext, useRef, useState, useEffect } from 'react'
+import React, { useContext, useRef, useState, useEffect } from 'react'
 import SplitType from 'split-type'
 import { useIsomorphicLayoutEffect } from '../useIsomorphicLayoutEffect'
 import {ScrollTrigger} from "gsap/dist/ScrollTrigger";
 import PWAFeatures from '../components/pwaFeature'
-import Contact from '../components/contact'
-import ChatJPT from '../components/chat'
 // import { SmootherContext } from '../SmootherContext'
 import { useRouter } from 'next/router'
 import { BackgroundTheme, ThemeContext } from '../components/layout'
 import { gql } from '@apollo/client'
 import client from '../apolloClient'
+import Lenis from '@studio-freight/lenis'
+import ChatJPT from '../components/chat'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSelection,data})=> {
+const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSelection,data,showBackButton})=> {
   const mm = useRef(gsap.matchMedia())
   const router = useRouter()
   const themeChange = useContext(BackgroundTheme)
@@ -51,16 +51,39 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
 
   useIsomorphicLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger)
-    ScrollTrigger.create({
-      trigger: "body",
-      onUpdate: self => console.log(self.progress),
-      snap: {
-        snapTo:[0.2,0.4,0.6,0.8],
-        directional: false
-      }
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: "body",
+        //onUpdate: self => console.log(self.progress),
+        snap: {
+          snapTo:[0.2,0.4,0.6,0.8],
+          directional: false
+        }
+      })
     })
+    return () => ctx.revert();
   },[])
   
+  useIsomorphicLayoutEffect(() => {
+    let lenis = new Lenis({
+      duration: 2.5,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(1-t,4)), // https://www.desmos.com/calculator/brs54l4xou
+      orientation: 'vertical', // vertical, horizontal
+      gestureOrientation: 'vertical', // vertical, horizontal, both
+      smoothWheel: true,
+      wheelMultiplier: 0.55,
+      smoothTouch: false,
+      touchMultiplier: 1,
+      infinite: false
+    })
+    
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+    
+    requestAnimationFrame(raf)
+  },[])
 
   return (
     <>
