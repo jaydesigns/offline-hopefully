@@ -6,16 +6,9 @@ import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import { useRouter } from "next/router";
 import ThemeColors, { ThemeContext, BackgroundTheme } from "./layout"
 import NegativeArrow from "./negativeArrow";
+import { OutroTimeline } from "../pages/_app";
 
-const MenuItem = ({link,str}) => {
-    const router = useRouter()
-    const tl = useRef(gsap.timeline())
-    const handleRouteChange = (e)=>{
-        e.preventDefault()
-        const tg = e.target.closest('a').getAttribute('href')
-        tl.current.to("img",{opacity:0,duration:1})
-        tl.current.play().then(()=>router.push(tg))
-    }
+const MenuItem = ({handleRouteChange,link,str}) => {
 
     return (
         <div className="flex flex-row gap-2 content-center menuEntra">
@@ -31,6 +24,9 @@ const HeaderMenu = () => {
     const [state,setState] = useState(false)
     const ThemeColors = useContext(ThemeContext)
     const themeChange = useContext(BackgroundTheme)
+    const router = useRouter()
+    const tl = useRef(gsap.timeline())
+    const {outro,setOutro} = useContext(OutroTimeline)
 
     const menuExpand = () => {
         let tl = gsap.timeline()
@@ -46,6 +42,19 @@ const HeaderMenu = () => {
         setState(false);
         tl.play();
     }
+    
+    const handleRouteChange = (e)=>{
+        e.preventDefault()
+        // console.log(outro);
+        const tg = e.target.closest('a').getAttribute('href')
+        // tl.current.fromTo(".clip",{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:2,stagger:0.02,ease:"power3.in"})
+        // tl.current.play().then(()=>router.push(tg))
+        outro.reverse().then(()=>router.push(tg))
+    }
+
+    useIsomorphicLayoutEffect(() => {
+        console.log(outro);
+    },[])
 
     return(
         <>
@@ -53,7 +62,7 @@ const HeaderMenu = () => {
             <div className="flex h-16 py-4 place-content-between border-t border-darkGrey md:h-20">
                 <div className="relative flex md:basis-1/3">
                     <div className="flex flex-row overflow-hidden h-8 aspect-square">
-                        <Link href="/" className="backBtn cursor-pointer" aria-label="Heber Jay Indino" id="hjiLogo">
+                        <Link href="/" onClick={handleRouteChange} className="backBtn cursor-pointer" aria-label="Heber Jay Indino" id="hjiLogo">
                             <svg id="Layer_2" style={{height:'23px',mixBlendMode:"exclusion"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.64 60"><defs></defs><g id="Layer_1-2"><rect fill={`${ThemeColors.white}`} className="cls-1" x="69.82" y="17.51" width="17.82" height="42.49"/><polygon fill={`${ThemeColors.white}`} className="cls-1" points="17.54 18 17.54 0 0 0 0 60 17.54 60 17.54 34.03 34.08 34.03 34.08 47.22 50.81 47.22 50.81 17.65 17.54 18"/></g></svg>
                             {/* <span className="hidden">Home</span> */}
                         </Link>
@@ -64,9 +73,9 @@ const HeaderMenu = () => {
                     <div className="text-xs font-semibold relative overflow-hidden max-h-6"><h6 className="menuEntra">Designer/Developer</h6></div>
                 </div>
                 <div className="navigationMenu flex gap-1 grow md:basis-1/3 justify-end h-full overflow-hidden" onTouchStart={state !== true ? menuExpand : menuShrink} onMouseEnter={menuExpand} onMouseLeave={menuShrink}>
-                    <MenuItem link="bio" str="bio" />
-                    <MenuItem link="press" str="press" />
-                    <MenuItem link="credits" str="credits" />
+                    <MenuItem handleRouteChange={handleRouteChange} link="bio" str="bio" />
+                    <MenuItem handleRouteChange={handleRouteChange} link="press" str="press" />
+                    <MenuItem handleRouteChange={handleRouteChange} link="credits" str="credits" />
                 </div>
             </div>
         </div>

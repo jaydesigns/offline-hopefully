@@ -11,6 +11,7 @@ import ScrollToPlugin from "gsap/dist/ScrollToPlugin";
 import SplitType from "split-type";
 import { IntroTimeline } from "./layout";
 import { SplashTimeline } from "../pages/_app";
+import { OutroTimeline } from "../pages/_app";
 
 const Ampersand = ({wrapper,container,glyph}) => {
     return (
@@ -32,7 +33,7 @@ const TextSlider = ({wrap,refr,heading,gridPos,firstWord,secondWord}) => {
     let classList = 'overflow-hidden overflow-y-hidden relative align-baseline'
     let headingList = `${heading} text-[12vw] md:text-xxxl font-semibold text-black tracking-tighter uppercase leading-none`
     return (
-        <div className={`${gridPos} overflow-hidden realtive`}>
+        <div className={`clip ${gridPos} overflow-hidden realtive`}>
             <div ref={wrap} className={classList}>
                 <div ref={refr} className="flex flex-col flex-nowrap">
                     <span className={headingList}>
@@ -66,6 +67,8 @@ const Intro = ({app}) => {
     const mm = useRef(gsap.matchMedia())
 
     const splashAnimate = useContext(SplashTimeline)
+
+    const {outro,setOutro} = useContext(OutroTimeline)
 
     //Split the lines
     useIsomorphicLayoutEffect(()=>{
@@ -124,12 +127,8 @@ const Intro = ({app}) => {
     //This timeline here gets rendered everytime the intro is rendered
     //including the splash animate
     //
-    useEffect(()=>{
-        gsap.set(".word",{translateY:"2em"})
-        gsap.set(".entra",{translateY:"2em"})
-        gsap.set(heading1Wrapper.current,{translateY:"33.33%"})
-        gsap.set(heading2Wrapper.current,{translateY:"-33.33%"})
-        gsap.set(ampersandWrapper.current,{translateY:"-110%"})
+    
+    const introTL = useCallback(() => {
         let tl = gsap.timeline()
         tl.to(introductionContent.current,{opacity:1})
         tl.fromTo(".reel",{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",duration:2,ease:"power4.inOut"})        
@@ -138,8 +137,17 @@ const Intro = ({app}) => {
         tl.to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
         tl.to(".word",{translateY:0,duration:1,stagger:0.02},"<")
         tl.to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
-    },[])
-
+        setOutro(tl)
+    },[setOutro])
+    
+    useEffect(()=>{
+        gsap.set(".word",{translateY:"2em"})
+        gsap.set(".entra",{translateY:"2em"})
+        gsap.set(heading1Wrapper.current,{translateY:"33.33%"})
+        gsap.set(heading2Wrapper.current,{translateY:"-33.33%"})
+        gsap.set(ampersandWrapper.current,{translateY:"-110%"})
+        introTL()
+    },[introTL])
       /* useIsomorphicLayoutEffect(()=>{
         const ctx = gsap.context(()=>{
           
@@ -160,8 +168,8 @@ const Intro = ({app}) => {
     return (
         <div style={{opacity:0}} ref={introductionContent} className="snap-start introBody p-4 grid grid-cols-4 h-screen gap-2 grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Visual Designer & Creative Developer</h1>
-            <p className="paragraph row-start-1 col-start-2 col-span-4 font-semibold text-black md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
-            <div className="reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-1 col-start-1 col-span-4 lg:col-start-9 lg:col-span-2 md:col-start-7 md:row-start-3 md:row-span-1">
+            <p className="clip paragraph row-start-1 col-start-2 col-span-4 font-semibold text-black md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
+            <div className="clip reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-1 col-start-1 col-span-4 lg:col-start-9 lg:col-span-2 md:col-start-7 md:row-start-3 md:row-span-1">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>
             <TextSlider wrap={heading1Wrapper} refr={heading1container} heading={"heading1"} gridPos="row-start-4 col-span-3 md:row-start-4 md:col-span-6 col-start-1" firstWord={myTitle[0]} secondWord={myTitle[3]}/>
@@ -170,7 +178,7 @@ const Intro = ({app}) => {
                 <Ampersand wrapper={ampersandWrapper} container={ampersandContainer} glyph={myTitle[2]}/>
             </div>
             <div className="funFact flex leading-tight text-msm md:text-sm row-start-6 md:row-start-5 md:col-start-2 col-span-2">
-                <div className="flex flex-col justify-center md:justify-end pb-4">
+                <div className="clip flex flex-col justify-center md:justify-end pb-4">
                 <div className="text-black overflow-hidden"><h6 className="entra text-xs font-semibold">This is NOT a website</h6></div>
                 <div className="overflow-hidden cursor-pointer">
                     <div onClick={scrollToFeature} className="entra">

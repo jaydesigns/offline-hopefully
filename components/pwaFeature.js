@@ -191,7 +191,7 @@ const PWAFeatures = () => {
                     </div>
                     <div className="flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">A</h6></div>
-                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium">Modern Web</span>
+                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium">Smoother Experience</span>
                     </div>
                 </div>
             </div>

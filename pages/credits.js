@@ -1,13 +1,18 @@
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import { gsap } from "gsap"
 import NegativeArrow from '../components/negativeArrow'
+import { BackgroundTheme, ThemeContext } from '../components/layout'
+import { useContext } from "react"
 
 const Credits = () =>{
+    const themeChange = useContext(BackgroundTheme)
+    const ThemeColors = useContext(ThemeContext)
+
     useIsomorphicLayoutEffect(()=>{
-        gsap.to(".changeBG",{backgroundColor:"#141011"})
+        themeChange(`${ThemeColors.black}`)
     },[])
     return(
-        <div className="bg-black text-white p-4 w-screen h-screen">
+        <div className="text-white p-4 w-screen h-screen">
             <h1 className="text-bio font-semibold tracking-snug border-grey border-b py-4">Credits</h1>
             <div className="py-4">
                 <p>Designed & Developed &mdash; Jay Indino</p>
