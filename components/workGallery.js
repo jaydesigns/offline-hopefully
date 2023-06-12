@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { BackgroundTheme,ThemeContext } from '../components/layout';
 import { gql } from "@apollo/client";
 import client from "../apolloClient";
+import { OutroTimeline } from "../pages/_app";
 
 const Categories = ({data,handleCategorySelection}) => {
     const plusSign = useRef()
@@ -61,15 +62,15 @@ const Categories = ({data,handleCategorySelection}) => {
     },[selectedClassification,ThemeColors.white])
 
     return(
-        <div className="flex flex-col grow border-t border-grey gap-12 md:justify-between pt-2">
+        <div className="gallery-border flex flex-col grow border-t border-grey gap-12 md:justify-between pt-2">
             <div className="flex grow gap-4">
-                <div onClick={handleChangeClassification("type")} className="classifications cursor-pointer flex gap-4 md:gap-10 justify-start grow">
+                <div onClick={handleChangeClassification("type")} className="classifications g-clip cursor-pointer flex gap-4 md:gap-10 justify-start grow">
                     <div className="relative w-5 h-5 mix-blend-exclusion">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
                     <h6 className="font-medium mix-blend-exclusion">Type of Work</h6>
                 </div>
-                <div onClick={handleChangeClassification("tech")} className="classifications cursor-pointer flex gap-4 md:gap-10 justify-start grow">
+                <div onClick={handleChangeClassification("tech")} className="classifications g-clip cursor-pointer flex gap-4 md:gap-10 justify-start grow">
                     <div className="relative w-5 h-5 mix-blend-exclusion">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
@@ -79,7 +80,7 @@ const Categories = ({data,handleCategorySelection}) => {
             <ul ref={selection} className="flex flex-col">
             {category==="type"&&type.map((el,i)=>{
                 return(
-                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="category flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="g-clip category flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
                         <span className="inline-block">{el.categoryName}</span>
                     </li>
@@ -87,7 +88,7 @@ const Categories = ({data,handleCategorySelection}) => {
             )}
             {category==="tech"&&tech.map((el,i)=>{
                 return(
-                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="category flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
+                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="g-clip category flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
                         <span className="inline-block">{el.categoryName}</span>
                     </li>
@@ -130,7 +131,7 @@ const Cards = ({data}) => {
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
             {data.map((el,i)=>{
             return(
-            <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.id}>
+            <div key={el.id} className="g-clip card flex gap-4 flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.id}>
                 <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
                     <div className="cover relative h-full overflow-hidden w-full">
                         <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
@@ -174,6 +175,7 @@ const WorkGallery = ({data}) => {
     const dataToDisplay = useContext(AllProjectObject)
     const [showAllPosts,setShowAllPosts] = useState(true)
     const [categorySelected,setCategorySelected] = useState(null)
+    const { outro,setOutro } = useContext(OutroTimeline)
     
     //const {timeline} = useContext(TransitionContext)
     const wholeGallery = useRef()
@@ -188,13 +190,7 @@ const WorkGallery = ({data}) => {
             type:"x",
             bounds: document.querySelector(".cardContainer"),
             inertia: true,
-            zIndexBoost:false,
-            /* onClick: function() {
-                console.log("clicked");
-            },
-            onDragEnd: function() {
-                console.log("drag ended");
-            } */
+            zIndexBoost:false
         })
 
         gsap.registerPlugin(ScrollTrigger)
@@ -204,20 +200,18 @@ const WorkGallery = ({data}) => {
             end: "bottom 75%",
             onToggle: (self)=>self.isActive? themeChange(`${ThemeColors.black}`) : themeChange(`${ThemeColors.grey}`)
         })
+
+        let galleryTL = gsap.timeline()
+        galleryTL.fromTo('.g-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
+        galleryTL.fromTo('.gallery-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:2},"<")
+
+        ScrollTrigger.create({
+            trigger: wholeGallery.current,
+            start: "top center",
+            end: "top 10%",
+            onToggle: () => setOutro(galleryTL)
+        })
     },[])
-    
-    /* useIsomorphicLayoutEffect(()=>{
-        gsap.registerPlugin(ScrollTrigger)
-        // cardTL.current.fromTo(images.current.querySelectorAll(".word"),{translateY:"0%"},{translateY:"-120%",stagger:0.1,scrollTrigger:{scroller:"body",trigger:".selectedWork",start:"bottom bottom",end:"bottom 35%",scrub:true,pinSpacing:false}})
-
-        const tl = gsap.timeline()
-        tl.set(images.current.querySelectorAll(".card"),{clipPath:"inset(100% 0% 0% 0%)"})
-        tl.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"75% bottom", end:"top top", scrub:true,pinSpacing:false}})
-
-        gsap.fromTo(images.current.querySelectorAll(".card"),{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",stagger: 0.1, scrollTrigger:{scroller:"body",trigger:"#selectedWork", start:"bottom bottom", end:"center top", scrub:true,pinSpacing:false}})
-    },[]) */
-
-    //console.log(responseData)
 
     const handleCategorySelection =(el)=>{
         if(el.id===categorySelected){
@@ -248,9 +242,9 @@ const WorkGallery = ({data}) => {
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h2 className="tracking-tight text-MED md:text-SM font-medium grow">Selected<br></br>Work</h2>
+                        <h2 className="g-clip tracking-tight text-MED md:text-SM font-medium grow">Selected<br></br>Work</h2>
                         <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
-                            <h4 className="align-baseline leading-suis font-light">Catalogue</h4>
+                            <h4 className="g-clip align-baseline leading-suis font-light">Catalogue</h4>
                         </div>
                     </div>
                 </div>

@@ -1,10 +1,12 @@
 import {useIsomorphicLayoutEffect} from "../useIsomorphicLayoutEffect"
-import {useState, useRef, useEffect, useCallback} from 'react'
+import {useState, useRef, useEffect, useCallback, useContext} from 'react'
 import SplitType from "split-type"
 import { gsap } from "gsap"
 import ArrowRight from "./arrowRight"
 import Link from "next/link"
 import LinkText from "./linkText"
+import { OutroTimeline } from "../pages/_app"
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 
 const ChatHeaderInnerText =({chatHeader,str})=>{
     return(
@@ -14,6 +16,7 @@ const ChatHeaderInnerText =({chatHeader,str})=>{
 
 const ChatHeader = ({step,chatHeader,firstName,purpose})=>{
     const firstNameSplit = firstName.split(" ")
+
     useIsomorphicLayoutEffect(()=>{
         let lines
         const runSplit = ()=>{
@@ -103,6 +106,8 @@ const ChatJPT =()=>{
     const wordsSlide = useRef(gsap.timeline())
     const chatHeader = useRef()
     const [firstName,setFirstName] = useState("")
+    const interactiveContact = useRef()
+    const { outro,setOutro } = useContext(OutroTimeline)
 
     const nextStep = ()=>{
         wordsSlide.current.addLabel("slideDown")
@@ -124,23 +129,37 @@ const ChatJPT =()=>{
         setPurpose(e.target.getAttribute('data-selection'))
     }
 
+    useIsomorphicLayoutEffect(() => {
+        gsap.registerPlugin(ScrollTrigger)
+        let chatTL = gsap.timeline()
+        chatTL.fromTo('.chat-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
+        chatTL.fromTo('.chat-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:2},"<")
+
+        ScrollTrigger.create({
+            trigger: interactiveContact.current,
+            start: "top center",
+            end: "top 10%",
+            onToggle: () => setOutro(chatTL)
+        })
+    },[])
+
     return (
-        <div className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid grid-rows-contact grid-cols-4 md:grid-cols-12">
+        <div ref={interactiveContact} className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid grid-rows-contact grid-cols-4 md:grid-cols-12">
             <div className="flex flex-col justify-start col-span-4 md:col-span-12">
-                <div className="border-b border-black py-2 col-span-4">
+                <div className="chat-border border-b border-black py-2 col-span-4">
                     <h4 className="text-MED md:text-SM tracking-tight font-semibold">Let&apos;s <br></br>Connect</h4>
                 </div>
             </div>
-            <div className="col-span-6 md:col-start-4 row-start-2 pt-4">
+            <div className="chat-clip col-span-6 md:col-start-4 row-start-2 pt-4">
                 <ChatHeader step={step} chatHeader={chatHeader} firstName={firstName} purpose={purpose}/>
             </div>
-            <div className="col-span-4 md:col-span-6 col-start-1 md:col-start-4 row-start-3">
+            <div className="chat-clip col-span-4 md:col-span-6 col-start-1 md:col-start-4 row-start-3">
                 <PromptBox nextStep={nextStep} previousStep={previousStep} step={step} handleChange={handleChange} firstName={firstName} selectedPurpose={selectedPurpose}/>
             </div>
-            <div className="col-span-4 md:col-span-6 col-start-1 md:col-start-4 row-start-4">
+            <div className="chat-clip col-span-4 md:col-span-6 col-start-1 md:col-start-4 row-start-4">
                 <LinkBox step={step} purpose={purpose}/>
             </div>
-            <div className="row-start-5 col-span-1">
+            <div className="chat-clip row-start-5 col-span-1">
                 <h6 className="text-red text-xs font-bold leading-tight">Don&apos;t worry, your name won&apos;t be saved anywhere.</h6>
             </div>
         </div>

@@ -22,17 +22,17 @@ const Bio = () => {
         let tl = gsap.timeline()
         
         tl.fromTo(".text-bio",{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.inOut",duration:2})
-        tl.to([givenName.current.querySelectorAll("span"),lastName.current.querySelector("span")],{translateY:"0%",stagger:0.07,ease:"power3.inOut",duration:2})
+        tl.to([givenName.current.querySelectorAll("span"),lastName.current.querySelector("span")],{translateY:"0%",stagger:0.07,ease:"power3.inOut",duration:2},"-=1.2")
         tl.fromTo(".clip",{clipPath:"inset(0% 0% 100% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:2,stagger:0.02,ease:"power3.out"},"<")
 
         setOutro(tl)
     },[setOutro])
 
-    useIsomorphicLayoutEffect(()=>{
-        themeChange(`${ThemeColors.grey}`)
+    useEffect(()=>{
         gsap.set(givenName.current.querySelectorAll("span"),{translateY:"120%"})
         gsap.set(lastName.current.querySelector("span"),{translateY:"-120%"})
         bioTL()
+        themeChange(`${ThemeColors.grey}`)
     },[])
 
     return(

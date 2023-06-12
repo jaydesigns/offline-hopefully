@@ -8,6 +8,7 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger"
 import InstallPWA from "./installPWA"
 import { duration } from "moment"
 import { ThemeContext } from "./layout"
+import { OutroTimeline } from "../pages/_app"
 
 //on mobile the top half could be the selection and image while the lower half is the text
 const FeatureDescription = (props) => {
@@ -16,19 +17,19 @@ const FeatureDescription = (props) => {
     //
     return (
         <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2 mix-blend-exclusion">
-            <div className="absolute flex flex-col h-full justify-between" data-name="installable">
+            <div className="ft-clip absolute flex flex-col h-full justify-between" data-name="installable">
                 <div>
                     <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.installable.title}</h2>
                     <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
                 </div>
                 <InstallPWA />
             </div>
-            <div className="absolute" data-name="offline">
+            <div className="ft-clip absolute" data-name="offline">
                 <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.offline.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.offline.desc}</p>
                 
             </div>
-            <div className="absolute" data-name="flexible">
+            <div className="ft-clip absolute" data-name="flexible">
                 <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.flexible.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.flexible.desc}</p>
                 
@@ -45,14 +46,14 @@ const PWAFeatures = () => {
             desc: "This web app utilizes new technology which enables you to install this web app on whatever device you're using."
         },
         offline: {
-            cover: "/images/DSC_0120-b&w-1.jpg",
+            cover: "/images/DSC_0120-b&w-1.JPG",
             title: "Offline",
             desc: "Using the local machine storage API, after installing the web application, this app should work even without internet connection."
         },
         flexible: {
             cover: "/images/PXL_20221224_211305839-b&w.jpg",
             title: "Modern Web",
-            desc: "I've designed and developed this app with performance in mind. You'll probably notice that navigating to other pages is almost seamless."
+            desc: "I've designed and developed this app with performance in mind. The rendering is decentralized so loading times and navigating to different pages are better than regular sites."
         }
     }
     //const [featureSVG,setFeatureSVG] = useState()
@@ -75,6 +76,8 @@ const PWAFeatures = () => {
     // const [ desc,setDesc ] = useState("")
     const [selectedFeature,setSelectedFeature] = useState("installable")
     const ThemeColors = useContext(ThemeContext)
+    const {outro,setOutro} = useContext(OutroTimeline)
+    const featureSection = useRef()
 
     useEffect(()=>{
         let lines;
@@ -101,7 +104,7 @@ const PWAFeatures = () => {
         }
         resetFeatureRects()
         ScrollTrigger.create({
-            trigger:".featureSection",
+            trigger: '.featureSection',
             start: "top 25%",
             onEnter: ()=>{
                 gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
@@ -111,9 +114,20 @@ const PWAFeatures = () => {
             },
         })
         ScrollTrigger.create({
-            trigger:".featureSection",
+            trigger: '.featureSection',
             onLeave: resetFeatureRects,
             onLeaveBack: resetFeatureRects,
+        })
+
+        let ftTL = gsap.timeline()
+        ftTL.fromTo('.ft-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
+        ftTL.fromTo('.ft-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:2},"<")
+
+        ScrollTrigger.create({
+            trigger: '.featureSection',
+            start: "top center",
+            end: "top 10%",
+            onToggle: () => setOutro(ftTL)
         })
 
         setSVGWidth(parseInt(SVGObj.width))
@@ -176,26 +190,26 @@ const PWAFeatures = () => {
 
 
     return (
-        <div className="snap-start relative flex flex-col gap-4 justify-between featureSection w-screen h-screen p-4 pb-32 text-white">
-            <div className="flex w-full border-b border-white py-4 mix-blend-exclusion">
+        <div ref={featureSection} className="featureSection snap-start relative flex flex-col gap-4 justify-between w-screen h-screen p-4 pb-32 text-white">
+            <div className="ft-border flex w-full border-b border-white py-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
                 <h4 className="w-1/2 md:w-1/4 text-MED md:text-SM font-medium tracking-tight">Not just<br></br>a Website</h4>
                 <div className="flex flex-col md:flex-row flex-auto">
-                    <div className="flex gap-4 grow hover:text-red text-white">
+                    <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">I</h6></div>
                         <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium">Installable</span>
                     </div>
-                    <div className="flex gap-4 grow hover:text-red text-white">
+                    <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">O</h6></div>
                         <span onClick={handleImageSwitch("offline")} data-index="offline" className="feature cursor-pointer grow font-medium">Works Offline</span>
                     </div>
-                    <div className="flex gap-4 grow hover:text-red text-white">
+                    <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">A</h6></div>
                         <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium">Smoother Experience</span>
                     </div>
                 </div>
             </div>
-            <div className="relative w-full h-2/3 md:h-5/6">
+            <div className="ft-clip relative w-full h-2/3 md:h-5/6">
                 <div className="relative featureCover w-full h-full overflow-hidden">
                     <Image src={imageSource} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 600px) 100vw,100vw"></Image>
                 </div>
