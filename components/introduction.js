@@ -65,6 +65,7 @@ const Intro = ({app}) => {
     let heading1container = useRef();
     let heading2container = useRef();
     const mm = useRef(gsap.matchMedia())
+    const introP = useRef()
 
     const splashAnimate = useContext(SplashTimeline)
 
@@ -74,8 +75,7 @@ const Intro = ({app}) => {
     useIsomorphicLayoutEffect(()=>{
         let lines;
         const runSplit = () => {
-        
-        lines = new SplitType(".paragraph",{types:'lines,words'})
+        lines = new SplitType(".intro-p",{types:'lines,words'})
         }
         runSplit()
         window.addEventListener("resize",()=>{
@@ -135,13 +135,13 @@ const Intro = ({app}) => {
         tl.to(heading1Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"<")
         tl.to(heading2Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.85")          
         tl.to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
-        tl.to(".word",{translateY:0,duration:1,stagger:0.02},"<")
+        tl.to(introP.current.querySelectorAll(".word"),{translateY:0,duration:1,stagger:0.02},"<")
         tl.to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
         setOutro(tl)
     },[setOutro])
     
     useEffect(()=>{
-        gsap.set(".word",{translateY:"2em"})
+        gsap.set(introP.current.querySelectorAll(".word"),{translateY:"2em"})
         gsap.set(".entra",{translateY:"2em"})
         gsap.set(heading1Wrapper.current,{translateY:"33.33%"})
         gsap.set(heading2Wrapper.current,{translateY:"-33.33%"})
@@ -168,7 +168,7 @@ const Intro = ({app}) => {
     return (
         <div style={{opacity:0}} ref={introductionContent} className="snap-start introBody p-4 grid grid-cols-4 h-screen gap-2 grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
             <h1 className="hidden" id="jobTitles">Visual Designer & Creative Developer</h1>
-            <p className="clip paragraph row-start-1 col-start-2 col-span-4 font-semibold text-black md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
+            <p ref={introP} className="clip intro-p paragraph row-start-1 col-start-2 col-span-4 text-black md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
             <div className="clip reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-1 col-start-1 col-span-4 lg:col-start-9 lg:col-span-2 md:col-start-7 md:row-start-3 md:row-span-1">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />
             </div>

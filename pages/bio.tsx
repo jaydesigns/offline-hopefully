@@ -77,7 +77,7 @@ const Bio = () => {
                     </div>
                     <div className="grid grid-cols-4 md:grid-cols-12">
                         <h4 className="clip hidden md:block">04</h4>
-                        <h2 className="clip font-semibold text-lg md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Interests/Hobbies</h2>
+                        <h2 className="clip font-semibold text-lg leading-[1] md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Interests/<br></br>Hobbies</h2>
                         <ul className="clip text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
                             <li>&mdash; When I&apos;m not learning programming, I&apos;ll be out in the gym playing basketball.
                                 &mdash; I also like to play chess at Chess.com. If you want to play against me, I&apos;ll have to warn you tho I have a 687 ELO rating.

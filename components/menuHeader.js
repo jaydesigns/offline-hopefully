@@ -52,10 +52,6 @@ const HeaderMenu = () => {
         outro.reverse().then(()=>router.push(tg))
     }
 
-    useIsomorphicLayoutEffect(() => {
-        console.log(outro);
-    },[])
-
     return(
         <>
         <div id="menuHeader" className={`w-full px-4 fixed bottom-0`} style={{backgroundColor:`${ThemeColors.grey}`,color:`${ThemeColors.black}`}}>

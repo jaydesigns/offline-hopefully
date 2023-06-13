@@ -22,7 +22,6 @@ const FeatureDescription = (props) => {
                     <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.installable.title}</h2>
                     <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
                 </div>
-                <InstallPWA />
             </div>
             <div className="ft-clip absolute" data-name="offline">
                 <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.offline.title}</h2>
@@ -74,21 +73,15 @@ const PWAFeatures = () => {
     const [imageSource, setImageSource] = useState(obj.installable.cover)
     // const [ title,setTitle ] = useState("")
     // const [ desc,setDesc ] = useState("")
-    const [selectedFeature,setSelectedFeature] = useState("installable")
+    const [selectedFeature,setSelectedFeature] = useState('installable')
     const ThemeColors = useContext(ThemeContext)
     const {outro,setOutro} = useContext(OutroTimeline)
     const featureSection = useRef()
 
-    useEffect(()=>{
-        let lines;
-        const runSplitType = () =>{
-            lines = new SplitType(".lined",{type:"lines"})
-        }
-        runSplitType()
-        window.addEventListener("resize",()=>{
-            lines.revert();
-            runSplitType()
-        })
+    useIsomorphicLayoutEffect(() => {
+        const text = new SplitType('.lined',{types:"lines, words"})
+        gsap.set(text.words,{translateY:"120%"})
+        setSelectedFeature('installable')
     },[])
     
     useEffect(()=>{
@@ -155,13 +148,13 @@ const PWAFeatures = () => {
             //console.log(rectsArray[0]);
             const topHalf = [rectsArray[0],rectsArray[1],rectsArray[2]]
             const bottomHalf = [rectsArray[3],rectsArray[4]]
-            setSelectedFeature(dataIndex)
             
             changeTL.current.set(featureImage.current.querySelectorAll("rect"),{clipPath:"inset(0% 0% 0% 0%)"})
             
             changeTL.current.fromTo(topHalf,{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(100% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"})
             changeTL.current.fromTo(bottomHalf,{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"},"<")
-            changeTL.current.fromTo(topHalf,{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"+=1")
+            changeTL.current.add(() => setSelectedFeature(dataIndex))
+            changeTL.current.fromTo(topHalf,{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"})
             changeTL.current.fromTo(bottomHalf,{clipPath:"inset(0% 0% 100% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"<")
 
             features.forEach(element => {
@@ -178,15 +171,10 @@ const PWAFeatures = () => {
 
     useEffect(()=>{
         let selected = document.querySelector(`[data-name='${selectedFeature}']`)
-        
         let tl = gsap.timeline()
         tl.to(featureText.current.querySelectorAll('.word'),{translateY:"120%",duration:1,ease:"power3.in"})
-        
         tl.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
-        setTimeout(()=>{
-            setImageSource(obj[`${selectedFeature}`].cover)
-        },1000)
-    })
+    },[selectedFeature])
 
 
     return (
@@ -211,7 +199,9 @@ const PWAFeatures = () => {
             </div>
             <div className="ft-clip relative w-full h-2/3 md:h-5/6">
                 <div className="relative featureCover w-full h-full overflow-hidden">
-                    <Image src={imageSource} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 600px) 100vw,100vw"></Image>
+                    {(selectedFeature==="installable")&&<Image src={'/images/guggenheim.jpg'} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 600px) 100vw,100vw"></Image>}
+                    {(selectedFeature==="offline")&&<Image src={'/images/DSC_0120-b&w-1.JPG'} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 600px) 100vw,100vw"></Image>}
+                    {(selectedFeature==="flexible")&&<Image src={'/images/PXL_20221224_211305839-b&w.jpg'} alt="image" fill style={{objectFit:"cover",objectPosition:"relative"}} placeholder="blur" blurDataURL="data:..." sizes="(max-width: 600px) 100vw,100vw"></Image>}
                 </div>
                 <svg ref={featureImage} id="clippingCanvas" className="absolute top-0 flex" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox={`0 0 ${svgWidth} ${svgHeight}`}>
                     <defs>
@@ -226,6 +216,7 @@ const PWAFeatures = () => {
                 </svg>
             </div>
             <FeatureDescription selectedFeature={selectedFeature} featureText={featureText} obj={obj}/>
+            <InstallPWA />
         </div>
     )
 }

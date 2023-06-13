@@ -10,7 +10,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 
 const ChatHeaderInnerText =({chatHeader,str})=>{
     return(
-        <h3 ref={chatHeader} className="greet leading-suis text-4xl md:text-3xl font-[500] col-span-4 md:col-span-6">{str}</h3>
+        <h3 ref={chatHeader} className="greet font-semibold text-4xl md:text-3xl col-span-4 md:col-span-6">{str}</h3>
     )
 }
 
