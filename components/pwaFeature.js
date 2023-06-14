@@ -6,7 +6,6 @@ import SplitType from "split-type"
 import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import ScrollTrigger from "gsap/dist/ScrollTrigger"
 import InstallPWA from "./installPWA"
-import { duration } from "moment"
 import { ThemeContext } from "./layout"
 import { OutroTimeline } from "../pages/_app"
 
@@ -216,7 +215,9 @@ const PWAFeatures = () => {
                 </svg>
             </div>
             <FeatureDescription selectedFeature={selectedFeature} featureText={featureText} obj={obj}/>
-            <InstallPWA />
+            <div className="mama">
+                <InstallPWA />
+            </div>
         </div>
     )
 }
