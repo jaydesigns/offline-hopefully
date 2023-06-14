@@ -61,6 +61,14 @@ export default function App({ Component, pageProps }: AppProps) {
     return () => ctx.revert();
   },[])
 
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => console.log('scope is: ', registration.scope));
+    }
+  }, []);
+
   return (
     <>
       <Layout>
