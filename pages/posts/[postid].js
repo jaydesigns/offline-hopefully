@@ -1,14 +1,16 @@
-import Layout from '../components/layout'
+import Layout from '../../components/layout'
 import Image from 'next/image'
 import gsap from 'gsap'
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import {useIsomorphicLayoutEffect} from '../useIsomorphicLayoutEffect'
+import {useIsomorphicLayoutEffect} from '../../useIsomorphicLayoutEffect'
 import axios from 'axios'
 // import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin'
-import ArrowRight from '../components/arrowRight'
-
-const Title = ({projectObject,projectId}) => {
+import ArrowRight from '../../components/arrowRight'
+import {gql} from '@apollo/client'
+import client from '../../apolloClient'
+import { useRouter } from 'next/router'
+/* const Title = ({projectObject,projectId}) => {
     const textObject = projectObject.data.find(el=>el.attributes.post.data.id===projectId)
     return(
         <div className='w-screen h-full absolute z-10 p-4'>
@@ -80,10 +82,18 @@ const Slide = ({projectObject,projectId,sliderBox}) => {
             </div>
         </div>
     )
-}
+} */
 
-const Project = () => {
-    const projectId = useContext(ProjectDataContext)
+const Project = ({data}) => {
+    const router = useRouter()
+    const postID = router.query.postid
+    const projectData = data.posts[0]
+
+    const body = useRef()
+    useEffect(() => {
+        body.current.innerHTML = projectData.body.html
+    },[projectData])
+    /* const projectId = useContext(ProjectDataContext)
     const [projectObject,setProjectObject] = useState()
     let localProjectId
     const projectContainer = useRef()   
@@ -129,7 +139,7 @@ const Project = () => {
         })
     },[]) */
 
-    useEffect(()=>{
+    /* useEffect(()=>{
         const getAll = async() => {
             try{
                 const request = await axios(baseURL).then(res=>res.data)
@@ -139,13 +149,15 @@ const Project = () => {
             }
         }
         getAll()
-    },[])
+    },[]) */
 
     //console.log(projectObject);
 
     return (
         <Layout>
-            <main ref={projectContainer} className='changeBG w-screen h-screen relative'>
+            <h1>Post {postID}</h1>
+            <div ref={body} id="projectBody"></div>
+            {/* <main ref={projectContainer} className='changeBG w-screen h-screen relative'>
                 <div className="sliderWrapper flex h-full overflow-x-auto">
                     {projectObject?<Slide projectObject={projectObject} projectId={projectIdNumber()} sliderBox={sliderBox}/>:<p>In order to retrieve additional resources, I need to connect to the internet.</p>}
                 </div>
@@ -155,8 +167,68 @@ const Project = () => {
                 <div className='w-screen h-1/6 absolute z-[9999] bottom-28'>
                     {projectObject?<Body projectObject={projectObject} projectId={projectIdNumber()} sliderBox={sliderBox}/>:<p>Mmmm</p>}
                 </div>
-            </main>
+            </main> */}
         </Layout>
     )
 }
 export default Project;
+
+// This function gets called at build time
+export async function getStaticPaths() {
+  // When this is true (in preview environments) don't
+  // prerender any static pages
+  // (faster builds, but slower initial page load)
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return {
+      paths: [],
+      fallback: 'blocking',
+    }
+  }
+ 
+  // Call an external API endpoint to get posts
+  const {data} = await client.query({
+    query: gql`
+    {
+        posts {
+            id
+        }
+    }`
+  })
+ 
+  // Get the paths we want to prerender based on posts
+  // In production environments, prerender all pages
+  // (slower builds, but faster initial page load)
+  const paths = data.posts.map((post) => ({
+    params: { postid: post.id },
+  }))
+
+  // { fallback: false } means other routes should 404
+  return { paths, fallback: false }
+}
+
+export async function getStaticProps({params}){
+    const {data} = await client.query({
+      query: gql`
+      {
+        posts (where: {id:"${params.postid}"}) {
+          id
+          body {
+            html
+          }
+          categories {
+            categoryName
+          }
+          coverImage
+          slide {
+            sliderImages
+          }
+        }
+      }`
+    })
+    return {
+      props: {
+        data
+      }
+    }
+    
+  }

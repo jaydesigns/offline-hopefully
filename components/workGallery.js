@@ -120,9 +120,10 @@ const Cards = ({data}) => {
     const handlePageChange = (e)=>{
         const tl = gsap.timeline()
         e.preventDefault()
-        const tg = e.target.closest('a').getAttribute('href')
+        //const tg = e.target.closest('a').getAttribute('href')
+        const id = e.target.closest('.card').getAttribute('projectid')
         tl.to("img",{opacity:0,duration:1})
-        tl.play().then(()=>router.push(tg))
+        tl.play().then(()=>router.push(`posts/${id}`))
     }
 
     // console.log(data);

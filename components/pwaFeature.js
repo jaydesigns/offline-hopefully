@@ -20,6 +20,7 @@ const FeatureDescription = (props) => {
                 <div>
                     <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.installable.title}</h2>
                     <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
+                    <div className="z-50"><InstallPWA /></div>
                 </div>
             </div>
             <div className="ft-clip absolute" data-name="offline">
@@ -215,9 +216,6 @@ const PWAFeatures = () => {
                 </svg>
             </div>
             <FeatureDescription selectedFeature={selectedFeature} featureText={featureText} obj={obj}/>
-            <div className="mama">
-                <InstallPWA />
-            </div>
         </div>
     )
 }
