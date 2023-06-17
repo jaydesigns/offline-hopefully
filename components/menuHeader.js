@@ -69,9 +69,9 @@ const HeaderMenu = () => {
                     <div className="text-xs font-semibold relative overflow-hidden max-h-6"><h6 className="menuEntra">Designer/Developer</h6></div>
                 </div>
                 <div className="navigationMenu flex gap-1 grow md:basis-1/3 justify-end h-full overflow-hidden" onTouchStart={state !== true ? menuExpand : menuShrink} onMouseEnter={menuExpand} onMouseLeave={menuShrink}>
-                    <MenuItem handleRouteChange={handleRouteChange} link="bio" str="bio" />
-                    <MenuItem handleRouteChange={handleRouteChange} link="press" str="press" />
-                    <MenuItem handleRouteChange={handleRouteChange} link="credits" str="credits" />
+                    <MenuItem handleRouteChange={handleRouteChange} link="/bio" str="bio" />
+                    <MenuItem handleRouteChange={handleRouteChange} link="/press" str="press" />
+                    <MenuItem handleRouteChange={handleRouteChange} link="/credits" str="credits" />
                 </div>
             </div>
         </div>

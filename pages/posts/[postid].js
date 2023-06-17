@@ -10,16 +10,17 @@ import ArrowRight from '../../components/arrowRight'
 import {gql} from '@apollo/client'
 import client from '../../apolloClient'
 import { useRouter } from 'next/router'
-/* const Title = ({projectObject,projectId}) => {
-    const textObject = projectObject.data.find(el=>el.attributes.post.data.id===projectId)
+
+const Title = ({projectData}) => {
+    console.log(projectData);
     return(
         <div className='w-screen h-full absolute z-10 p-4'>
-            <h2 className='text-black font-semibold text-6xl tracking-[-0.03em]'>{textObject.attributes.post.data.attributes.Title}</h2>
+            <h2 className='text-black font-semibold text-6xl tracking-[-0.03em]'>{projectData.title}</h2>
         </div>
     )
 }
 
-const Body = ({projectObject,projectId,sliderBox}) => {
+/* const Body = ({projectObject,projectId,sliderBox}) => {
     const textObject = projectObject.data.find(el=>el.attributes.post.data.id===projectId)
 
     const [sliderArray,setSliderArray] = useState()
@@ -59,9 +60,9 @@ const Body = ({projectObject,projectId,sliderBox}) => {
             <p className='text-black tracking-[-0.03em]'>{textObject.attributes.post.data.attributes.Body}</p>
         </div>
     )
-}
+} */
 
-const Slide = ({projectObject,projectId,sliderBox}) => {
+/* const Slide = ({projectObject,projectId,sliderBox}) => {
     // console.log(projectObject);
     const slideArray = projectObject.data.find(el=>el.attributes.post.data.id===projectId)
     const slideURL = slideArray.attributes.slideImages.data
@@ -89,6 +90,7 @@ const Project = ({data}) => {
     const postID = router.query.postid
     const projectData = data.posts[0]
 
+    const projectContainer = useRef()   
     const body = useRef()
     useEffect(() => {
         body.current.innerHTML = projectData.body.html
@@ -96,7 +98,6 @@ const Project = ({data}) => {
     /* const projectId = useContext(ProjectDataContext)
     const [projectObject,setProjectObject] = useState()
     let localProjectId
-    const projectContainer = useRef()   
     const sliderBox = useRef()
 
     // gsap.registerPlugin(ScrollToPlugin)
@@ -157,17 +158,17 @@ const Project = ({data}) => {
         <Layout>
             <h1>Post {postID}</h1>
             <div ref={body} id="projectBody"></div>
-            {/* <main ref={projectContainer} className='changeBG w-screen h-screen relative'>
-                <div className="sliderWrapper flex h-full overflow-x-auto">
+            <main ref={projectContainer} className='changeBG w-screen h-screen relative'>
+                {/* <div className="sliderWrapper flex h-full overflow-x-auto">
                     {projectObject?<Slide projectObject={projectObject} projectId={projectIdNumber()} sliderBox={sliderBox}/>:<p>In order to retrieve additional resources, I need to connect to the internet.</p>}
-                </div>
+                </div> */}
                 <div className='w-screen h-1/6 absolute z-[9999] top-0'>
-                    {projectObject?<Title projectObject={projectObject} projectId={projectIdNumber()}/>:<p>Mmmm</p>}
+                    <Title projectData={projectData}/>
                 </div>
-                <div className='w-screen h-1/6 absolute z-[9999] bottom-28'>
+                {/* <div className='w-screen h-1/6 absolute z-[9999] bottom-28'>
                     {projectObject?<Body projectObject={projectObject} projectId={projectIdNumber()} sliderBox={sliderBox}/>:<p>Mmmm</p>}
-                </div>
-            </main> */}
+                </div> */}
+            </main>
         </Layout>
     )
 }
@@ -213,6 +214,7 @@ export async function getStaticProps({params}){
         posts (where: {id:"${params.postid}"}) {
           id
           body {
+            text
             html
           }
           categories {
@@ -222,6 +224,7 @@ export async function getStaticProps({params}){
           slide {
             sliderImages
           }
+          title
         }
       }`
     })

@@ -80,17 +80,21 @@ const Categories = ({data,handleCategorySelection}) => {
             <ul ref={selection} className="flex flex-col">
             {category==="type"&&type.map((el,i)=>{
                 return(
-                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="g-clip category flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
-                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
-                        <span className="inline-block">{el.categoryName}</span>
+                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="gallery-border category border-b border-32 cursor-pointer hover:text-red">
+                        <div className="g-clip flex gap-4 md:gap-10 overflow-hidden">
+                            <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
+                            <span className="inline-block">{el.categoryName}</span>
+                        </div>
                     </li>
                 )}
             )}
             {category==="tech"&&tech.map((el,i)=>{
                 return(
-                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="g-clip category flex gap-4 md:gap-10 border-b border-32 overflow-hidden cursor-pointer hover:text-red">
-                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
-                        <span className="inline-block">{el.categoryName}</span>
+                    <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="gallery-border category border-b border-32 cursor-pointer hover:text-red">
+                        <div className="g-clip flex gap-4 md:gap-10 border-b overflow-hidden">
+                            <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
+                            <span className="inline-block">{el.categoryName}</span>
+                        </div>
                     </li>
                 )}
             )}
@@ -128,11 +132,11 @@ const Cards = ({data}) => {
 
     // console.log(data);
     return(
-        <div /* onClick={handleProjectSelection()} */ ref={cover} className="flex flex-row gap-8 flex-nowrap">
+        <div /* onClick={handleProjectSelection()} */ ref={cover} className="cardBox flex flex-row gap-8 flex-nowrap">
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
             {data.map((el,i)=>{
             return(
-            <div key={el.id} className="g-clip card flex gap-4 flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.id}>
+            <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.id}>
                 <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
                     <div className="cover relative h-full overflow-hidden w-full">
                         <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
@@ -203,8 +207,8 @@ const WorkGallery = ({data}) => {
         })
 
         let galleryTL = gsap.timeline()
-        galleryTL.fromTo('.g-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
-        galleryTL.fromTo('.gallery-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:2},"<")
+        galleryTL.fromTo('.gallery-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:2,stagger:0.15})
+        galleryTL.fromTo(['.g-clip','.cardBox'],{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2},"-=1.5")
 
         ScrollTrigger.create({
             trigger: wholeGallery.current,
@@ -215,12 +219,20 @@ const WorkGallery = ({data}) => {
     },[])
 
     const handleCategorySelection =(el)=>{
+        let master = gsap.timeline()
+        const up = ()=>gsap.fromTo(".card",{clipPath:"inset(0 0 0% 0)"},{clipPath:"inset(0 0 100% 0)",stagger:0.15,duration:1,ease:"power3.inOut"})
         if(el.id===categorySelected){
-            setShowAllPosts(true)
             gsap.to(`#${el.id}`,{color:`${ThemeColors.white}`})
+            master.add(up())
+            master.add(()=>setShowAllPosts(true))
+            master.play()
         } else {
-            setCategorySelected(el.id)
-            setShowAllPosts(false)
+            master.add(up())
+            master.add(()=>{
+                setCategorySelected(el.id)
+                setShowAllPosts(false)
+            })
+            master.play()
         }
     }
 
@@ -235,6 +247,10 @@ const WorkGallery = ({data}) => {
         })
     },[categorySelected,ThemeColors])
 
+    useEffect(() => {
+        gsap.fromTo(".card",{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",stagger:0.15,duration:1,ease:"power3.inOut"})
+    },[categorySelected])
+
     // console.log(data.posts);
 
     // console.log(data.posts.filter(post=>post.categories.map(el=>el.id).includes(`${categorySelected}`)))
@@ -243,7 +259,7 @@ const WorkGallery = ({data}) => {
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h2 className="g-clip tracking-tight text-MED md:text-SM font-medium grow">Selected<br></br>Work</h2>
+                        <h2 className="g-clip text-MED md:text-SM tracking-tighter grow">Selected<br></br>Work</h2>
                         <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
                             <h4 className="g-clip align-baseline leading-suis font-light">Catalogue</h4>
                         </div>

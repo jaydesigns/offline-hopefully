@@ -16,13 +16,6 @@ const FeatureDescription = (props) => {
     //
     return (
         <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2 mix-blend-exclusion">
-            <div className="ft-clip absolute flex flex-col h-full justify-between" data-name="installable">
-                <div>
-                    <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.installable.title}</h2>
-                    <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
-                    <div className="z-50"><InstallPWA /></div>
-                </div>
-            </div>
             <div className="ft-clip absolute" data-name="offline">
                 <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.offline.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.offline.desc}</p>
@@ -32,6 +25,13 @@ const FeatureDescription = (props) => {
                 <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.flexible.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.flexible.desc}</p>
                 
+            </div>
+            <div className="ft-clip absolute flex flex-col h-full justify-between" data-name="installable">
+                <div>
+                    <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.installable.title}</h2>
+                    <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
+                    <div className="z-50 overflow-hidden relative"><div className="cta"><InstallPWA /></div></div>
+                </div>
             </div>
         </div>
     )
@@ -79,9 +79,16 @@ const PWAFeatures = () => {
     const featureSection = useRef()
 
     useIsomorphicLayoutEffect(() => {
-        const text = new SplitType('.lined',{types:"lines, words"})
-        gsap.set(text.words,{translateY:"120%"})
-        setSelectedFeature('installable')
+        let text
+        const splitText = () => {
+            text = new SplitType('.lined',{types:"lines, words"})
+        }
+        splitText()
+        window.addEventListener("resize", () => {
+            splitText()
+            gsap.set(text.words,{translateY:"120%"})
+            setSelectedFeature('installable')
+        })
     },[])
     
     useEffect(()=>{
@@ -137,7 +144,7 @@ const PWAFeatures = () => {
             setLgRectWidth((parseInt(SVGObj.width))/3)
             setLgRectHeight((parseInt(SVGObj.height))/2)
         }
-    },[windowWidth])
+    },[windowWidth,setOutro])
 
     const handleImageSwitch = (dataIndex) => {
         const handler = (e) =>{
@@ -174,6 +181,11 @@ const PWAFeatures = () => {
         let tl = gsap.timeline()
         tl.to(featureText.current.querySelectorAll('.word'),{translateY:"120%",duration:1,ease:"power3.in"})
         tl.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
+        if(selectedFeature!=='installable'){
+            tl.to('.cta',{translateY:"120%"},"<")
+        } else {
+            tl.to('.cta',{translateY:"0%"},"-=1")
+        }
     },[selectedFeature])
 
 
@@ -181,7 +193,7 @@ const PWAFeatures = () => {
         <div ref={featureSection} className="featureSection snap-start relative flex flex-col gap-4 justify-between w-screen h-screen p-4 pb-32 text-white">
             <div className="ft-border flex w-full border-b border-white py-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
-                <h4 className="w-1/2 md:w-1/4 text-MED md:text-SM font-medium tracking-tight">Not just<br></br>a Website</h4>
+                <h4 className="w-1/2 md:w-1/4 text-MED md:text-SM tracking-tighter">Not just<br></br>a Website</h4>
                 <div className="flex flex-col md:flex-row flex-auto">
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">I</h6></div>

@@ -50,18 +50,35 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
   },[])
 
   useIsomorphicLayoutEffect(() => {
+    let mm = gsap.matchMedia()
     gsap.registerPlugin(ScrollTrigger)
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: "body",
-        //onUpdate: self => console.log(self.progress),
-        snap: {
-          snapTo:[0.2,0.4,0.6,0.8],
-          directional: false
-        }
+    
+    mm.add("(min-width:768px)",() => {
+      const ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: "body",
+          //onUpdate: self => console.log(self.progress),
+          snap: {
+            snapTo:[0.2,0.4,0.6,0.8],
+            directional: false
+          }
+        })
       })
+      return () => ctx.revert();
     })
-    return () => ctx.revert();
+    mm.add("(max-width:768px)",() => {
+      const ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: "body",
+          // onUpdate: self => console.log(self.progress),
+          snap: {
+            snapTo:[0,0.2,0.4,0.6,0.8],
+            directional: false
+          }
+        })
+      })
+      return () => ctx.revert();
+    })
   },[])
   
   useIsomorphicLayoutEffect(() => {
