@@ -45,10 +45,7 @@ const HeaderMenu = () => {
     
     const handleRouteChange = (e)=>{
         e.preventDefault()
-        // console.log(outro);
         const tg = e.target.closest('a').getAttribute('href')
-        // tl.current.fromTo(".clip",{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:2,stagger:0.02,ease:"power3.in"})
-        // tl.current.play().then(()=>router.push(tg))
         outro.reverse().then(()=>router.push(tg))
     }
 

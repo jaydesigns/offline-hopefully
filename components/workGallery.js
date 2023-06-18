@@ -108,6 +108,7 @@ const Cards = ({data}) => {
     const cover = useRef()
     const router = useRouter()
     const [showAllPosts,setShowAllPosts] = useState(true)
+    const {outro,setOutro} = useContext(OutroTimeline)
 
     useEffect(()=>{
         let cardLines;
@@ -122,12 +123,9 @@ const Cards = ({data}) => {
     },[])
 
     const handlePageChange = (e)=>{
-        const tl = gsap.timeline()
         e.preventDefault()
-        //const tg = e.target.closest('a').getAttribute('href')
         const id = e.target.closest('.card').getAttribute('projectid')
-        tl.to("img",{opacity:0,duration:1})
-        tl.play().then(()=>router.push(`posts/${id}`))
+        outro.reverse().then(()=>router.push(`posts/${id}`))
     }
 
     // console.log(data);
@@ -191,9 +189,10 @@ const WorkGallery = ({data}) => {
 
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(Draggable)
-        Draggable.create(images.current,{
-            type:"x",
-            bounds: document.querySelector(".cardContainer"),
+        const ctx = gsap.context(() => {
+            Draggable.create(images.current,{
+                type:"x",
+                bounds: document.querySelector(".cardContainer"),
             inertia: true,
             zIndexBoost:false
         })
@@ -216,6 +215,8 @@ const WorkGallery = ({data}) => {
             end: "top 10%",
             onToggle: () => setOutro(galleryTL)
         })
+    })
+    return () => ctx.revert()
     },[])
 
     const handleCategorySelection =(el)=>{
@@ -249,7 +250,7 @@ const WorkGallery = ({data}) => {
 
     useEffect(() => {
         gsap.fromTo(".card",{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",stagger:0.15,duration:1,ease:"power3.inOut"})
-    },[categorySelected])
+    },[categorySelected,showAllPosts])
 
     // console.log(data.posts);
 

@@ -15,20 +15,20 @@ const FeatureDescription = (props) => {
     //render every feature description just hidden and they just pop up when selected
     //
     return (
-        <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/3 text-white flex flex-col justify-between pb-2 mix-blend-exclusion">
-            <div className="ft-clip absolute" data-name="offline">
-                <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.offline.title}</h2>
+        <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/4 text-white pb-2 mix-blend-exclusion">
+            <div className="ft-clip absolute flex flex-col gap-4" data-name="offline">
+                <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.offline.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.offline.desc}</p>
                 
             </div>
-            <div className="ft-clip absolute" data-name="flexible">
-                <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.flexible.title}</h2>
+            <div className="ft-clip absolute flex flex-col gap-4" data-name="flexible">
+                <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.flexible.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.flexible.desc}</p>
                 
             </div>
             <div className="ft-clip absolute flex flex-col h-full justify-between" data-name="installable">
-                <div>
-                    <h2 className="featureText lined text-XL md:text-5xl tracking-tight">{props.obj.installable.title}</h2>
+                <div className=" flex flex-col gap-4">
+                    <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.installable.title}</h2>
                     <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
                     <div className="z-50 overflow-hidden relative"><div className="cta"><InstallPWA /></div></div>
                 </div>
@@ -148,6 +148,7 @@ const PWAFeatures = () => {
 
     const handleImageSwitch = (dataIndex) => {
         const handler = (e) =>{
+            let selected = document.querySelector(`[data-name='${selectedFeature}']`)
             const features = document.querySelectorAll('.feature')
             //console.log(Object.keys(featureImage.current.querySelectorAll("rect")).map(el=>console.log(el)));
             const rects = featureImage.current.querySelectorAll("rect")
@@ -161,7 +162,7 @@ const PWAFeatures = () => {
             changeTL.current.fromTo(topHalf,{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(100% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"})
             changeTL.current.fromTo(bottomHalf,{clipPath:"inset(0% 0% 0% 0%)"},{clipPath:"inset(0% 0% 100% 0%)",duration:1.3,ease:"power4.inOut"},"<")
             changeTL.current.add(() => setSelectedFeature(dataIndex))
-            changeTL.current.fromTo(topHalf,{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"})
+            changeTL.current.fromTo(topHalf,{clipPath:"inset(100% 0% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"+=0.5")
             changeTL.current.fromTo(bottomHalf,{clipPath:"inset(0% 0% 100% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.3,ease:"power4.inOut"},"<")
 
             features.forEach(element => {
@@ -177,8 +178,8 @@ const PWAFeatures = () => {
     }
 
     useEffect(()=>{
+        const tl = gsap.timeline()
         let selected = document.querySelector(`[data-name='${selectedFeature}']`)
-        let tl = gsap.timeline()
         tl.to(featureText.current.querySelectorAll('.word'),{translateY:"120%",duration:1,ease:"power3.in"})
         tl.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         if(selectedFeature!=='installable'){

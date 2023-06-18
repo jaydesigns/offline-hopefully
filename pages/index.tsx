@@ -53,8 +53,8 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
     let mm = gsap.matchMedia()
     gsap.registerPlugin(ScrollTrigger)
     
+    const ctx = gsap.context(() => {
     mm.add("(min-width:768px)",() => {
-      const ctx = gsap.context(() => {
         ScrollTrigger.create({
           trigger: "body",
           //onUpdate: self => console.log(self.progress),
@@ -64,10 +64,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
           }
         })
       })
-      return () => ctx.revert();
-    })
     mm.add("(max-width:768px)",() => {
-      const ctx = gsap.context(() => {
         ScrollTrigger.create({
           trigger: "body",
           // onUpdate: self => console.log(self.progress),
@@ -77,8 +74,8 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
           }
         })
       })
-      return () => ctx.revert();
     })
+    return () => ctx.revert();
   },[])
   
   useIsomorphicLayoutEffect(() => {

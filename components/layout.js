@@ -1,13 +1,7 @@
 import React, { useEffect,useState,useRef } from "react"
-import HeaderMenu from "./menuHeader"
-import Video from "./splashScreen"
-import axios from "axios"
-import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect"
 import { gsap } from "gsap"
+import { Flip } from "gsap/dist/Flip"
 import localFont from "@next/font/local"
-import {Lenis as ReactLenis, useLenis} from '@studio-freight/react-lenis'
-import Lenis from "@studio-freight/lenis"
-import Head from "next/head"
 
 export const ProjectDataContext = React.createContext()
 export const ThemeContext = React.createContext()
@@ -22,7 +16,7 @@ const switzer = localFont({
 const Layout = ({children}) => {    
   const [ selectedProject, setSelectedProject ] = useState()
   const [ allProjectObject, setAllProjectObject] = useState()
-  // const [ theme,setTheme ] = useState()
+  //const theme = useRef()
 
   const ThemeColors = {
     grey: '#DFE0E2',
@@ -34,8 +28,8 @@ const Layout = ({children}) => {
   }
 
   const changeTheme = (color)=>{
-    gsap.to(["#smooth-wrapper","#hjiLogo"],{backgroundColor:`${color}`,duration:1})
-    gsap.to("#menuHeader",{backgroundColor:`${color}`,color:((color===ThemeColors.grey)?ThemeColors.black:ThemeColors.white),duration:1})
+      gsap.to(["#smooth-wrapper","#hjiLogo"],{backgroundColor:`${color}`,duration:1})
+      gsap.to("#menuHeader",{backgroundColor:`${color}`,color:((color===ThemeColors.grey)?ThemeColors.black:ThemeColors.white),duration:1})
   }
   
   return (

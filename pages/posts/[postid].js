@@ -10,21 +10,25 @@ import ArrowRight from '../../components/arrowRight'
 import {gql} from '@apollo/client'
 import client from '../../apolloClient'
 import { useRouter } from 'next/router'
+import { BackgroundTheme } from '../../components/layout'
 
 const Title = ({projectData}) => {
-    console.log(projectData);
+    // console.log(projectData);
     return(
         <div className='w-screen h-full absolute z-10 p-4'>
-            <h2 className='text-black font-semibold text-6xl tracking-[-0.03em]'>{projectData.title}</h2>
+            <h1 className='text-white text-9xl tracking-[-0.03em] mix-blend-exclusion'>{projectData.title}</h1>
         </div>
     )
 }
 
-/* const Body = ({projectObject,projectId,sliderBox}) => {
-    const textObject = projectObject.data.find(el=>el.attributes.post.data.id===projectId)
-
+const Body = ({projectData,sliderBox}) => {
     const [sliderArray,setSliderArray] = useState()
-    const [currentSlide,setCurrentSlide] = useState(0)
+    const [currentSlide,setCurrentSlide] = useState(0)   
+    const body = useRef()
+
+    useEffect(() => {
+        body.current.innerHTML = projectData.body.html
+    },[projectData])
 
     useEffect(()=>{
         // console.log(sliderBox.current);
@@ -57,25 +61,24 @@ const Title = ({projectData}) => {
                 <ArrowRight fn={handlePreviousSlide} color={'black'} classToAdd={'scale-[2] rotate-[180deg] cursor-pointer'}/>
                 <ArrowRight fn={handleNextSlide} color={'black'} classToAdd={'scale-[2] cursor-pointer'}/>
             </div>
-            <p className='text-black tracking-[-0.03em]'>{textObject.attributes.post.data.attributes.Body}</p>
+            <div ref={body} id="projectBody" className='text-white tracking-[-0.03em]'></div>
         </div>
     )
-} */
+}
 
-/* const Slide = ({projectObject,projectId,sliderBox}) => {
+const Slide = ({projectData,sliderBox}) => {
     // console.log(projectObject);
-    const slideArray = projectObject.data.find(el=>el.attributes.post.data.id===projectId)
-    const slideURL = slideArray.attributes.slideImages.data
+    const slideArray = projectData.slide.sliderImages
     
 
     return(
         <div className='sliderContainer flex overflow-x-scroll w-screen h-full'>
             <div ref={sliderBox} className='block whitespace-nowrap'>
-                {slideURL.map(el=>{
+                {slideArray.map((el,i)=>{
                     return(
-                    <div className="slider w-screen h-screen inline-block" key={el.id}>
+                    <div className="slider w-screen h-screen inline-block" key={i}>
                         <div className='relative w-full h-full p-4'>
-                            <Image src={el.attributes.url} alt="project cover image" fill style={{objectFit:"cover"}} className="absolute"></Image>
+                            <Image src={el.url} alt="project cover image" fill style={{objectFit:"cover"}} className="absolute" sizes='(min-width: 768px) 100vw, (max-width) 75vw'></Image>
                         </div>
                     </div>
                     )
@@ -83,91 +86,34 @@ const Title = ({projectData}) => {
             </div>
         </div>
     )
-} */
+}
 
 const Project = ({data}) => {
     const router = useRouter()
     const postID = router.query.postid
     const projectData = data.posts[0]
 
-    const projectContainer = useRef()   
-    const body = useRef()
-    useEffect(() => {
-        body.current.innerHTML = projectData.body.html
-    },[projectData])
-    /* const projectId = useContext(ProjectDataContext)
-    const [projectObject,setProjectObject] = useState()
-    let localProjectId
+    const projectContainer = useRef()
     const sliderBox = useRef()
 
-    // gsap.registerPlugin(ScrollToPlugin)
-
-    const baseURL = 'http://localhost:1337/api/slides?populate=*'
-    // const baseURL = 'https://salty-waters-71699.herokuapp.com/api/slides?populate=*'
-
-    if (typeof window!=='undefined'){
-        localProjectId = localStorage.getItem('selectedProjectId')
-    }
+    const changeTheme = useContext(BackgroundTheme)
     
-    const projectIdNumber = ()=>{
-        if (projectId){
-            return parseInt(projectId)
-        }
-        return parseInt(localProjectId)
-    }
-    // console.log(projectIdNumber())
-    // console.log(`object:${projectObject},parsed:${projectId},local:${localProjectId}`)
-    
-    useIsomorphicLayoutEffect(()=>{
-        // setSlideData(projectObject.find(el=>el.id===parseInt(projectId)))
-        // console.log(projectObject);
-        //const el = homeWrapper.current
-        const ctx = gsap.context(()=>{
-          //@ts-ignore
-          gsap.set(".changeBG",{backgroundColor:'rgba(255,255,255,0)'})
-          gsap.set(projectContainer.current,{opacity:0})
-          gsap.to(projectContainer.current,{opacity:1,duration:1})
-          })
-        return () => ctx.revert()
+    useEffect(() => {
+        changeTheme('rgba(0,0,0,0)')
     },[])
-
-    /* useEffect(()=>{
-        gsap.registerPlugin(ScrollTrigger)
-        ScrollTrigger.create({
-            scroller:".sliderWrapper",
-            trigger: ".sliderContainer",
-            onUpdate: self=>console.log(self.progress)
-        })
-    },[]) */
-
-    /* useEffect(()=>{
-        const getAll = async() => {
-            try{
-                const request = await axios(baseURL).then(res=>res.data)
-                setProjectObject(request)
-            } catch(err){
-                console.log(err);
-            }
-        }
-        getAll()
-    },[]) */
-
-    //console.log(projectObject);
 
     return (
         <Layout>
-            <h1>Post {postID}</h1>
-            <div ref={body} id="projectBody"></div>
             <main ref={projectContainer} className='changeBG w-screen h-screen relative'>
-                {/* <div className="sliderWrapper flex h-full overflow-x-auto">
-                    {projectObject?<Slide projectObject={projectObject} projectId={projectIdNumber()} sliderBox={sliderBox}/>:<p>In order to retrieve additional resources, I need to connect to the internet.</p>}
-                </div> */}
+                <div className="sliderWrapper flex h-full overflow-x-auto">
+                    <Slide projectData={projectData} sliderBox={sliderBox}/>
+                </div>
                 <div className='w-screen h-1/6 absolute z-[9999] top-0'>
                     <Title projectData={projectData}/>
                 </div>
-                {/* <div className='w-screen h-1/6 absolute z-[9999] bottom-28'>
-                    {projectObject?<Body projectObject={projectObject} projectId={projectIdNumber()} sliderBox={sliderBox}/>:<p>Mmmm</p>}
-                </div> */}
+                <div className='w-screen h-1/6 absolute z-[9999] bottom-28'>
+                    <Body projectData={projectData} sliderBox={sliderBox}/>
+                </div>
             </main>
         </Layout>
     )
