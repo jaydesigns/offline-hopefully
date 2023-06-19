@@ -173,7 +173,8 @@ const PWAFeatures = () => {
               }
             })
         }
-        
+        //
+        //
         return handler
     }
 

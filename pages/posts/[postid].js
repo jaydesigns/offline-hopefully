@@ -1,7 +1,7 @@
 import Layout from '../../components/layout'
 import Image from 'next/image'
 import gsap from 'gsap'
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect, useRef, useCallback } from 'react'
 import {useIsomorphicLayoutEffect} from '../../useIsomorphicLayoutEffect'
 import axios from 'axios'
 // import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
@@ -11,12 +11,13 @@ import {gql} from '@apollo/client'
 import client from '../../apolloClient'
 import { useRouter } from 'next/router'
 import { BackgroundTheme } from '../../components/layout'
+import SplitType from 'split-type'
 
 const Title = ({projectData}) => {
     // console.log(projectData);
     return(
         <div className='w-screen h-full absolute z-10 p-4'>
-            <h1 className='text-white text-9xl tracking-[-0.03em] mix-blend-exclusion'>{projectData.title}</h1>
+            <h1 className='text-white text-[14vw] md:text-9xl tracking-[-0.03em] leading-suis'>{projectData.title}</h1>
         </div>
     )
 }
@@ -24,11 +25,23 @@ const Title = ({projectData}) => {
 const Body = ({projectData,sliderBox}) => {
     const [sliderArray,setSliderArray] = useState()
     const [currentSlide,setCurrentSlide] = useState(0)   
-    const body = useRef()
+    const bodyTxt = useRef()
+    // const [ switchTL, setSwitchTL ] = useState(gsap.timeline())
 
+    // console.log(projectData.body.text);
     useEffect(() => {
-        body.current.innerHTML = projectData.body.html
+        const text = new SplitType('.lined',{types:'lines,words'})
+        gsap.set(text.words,{translateY:"120%"})
     },[projectData])
+    
+    useEffect(() => {
+        if (currentSlide<projectData.body.text.split('\\n').length-1){
+            const p = document.querySelector(`#slideText-${currentSlide}`)
+            gsap.to(p.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.015,ease:"power3.out"})
+        } else {
+            return
+        }
+    },[currentSlide,projectData])
 
     useEffect(()=>{
         // console.log(sliderBox.current);
@@ -38,8 +51,11 @@ const Body = ({projectData,sliderBox}) => {
     const handleNextSlide = () =>{
         gsap.registerPlugin(ScrollToPlugin)
         if(currentSlide<sliderArray.length-1){
-            gsap.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:sliderArray[currentSlide+1]}})
-            setCurrentSlide(currentSlide+1)
+            const switchNext = (gsap.timeline({onComplete:()=>setCurrentSlide(currentSlide+1)}))
+            switchNext.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:sliderArray[currentSlide+1]}})
+            switchNext.to(bodyTxt.current.querySelectorAll('.word'),{translateY:"120%",ease:"power3.in",duration:1},"<")
+            switchNext.play()
+            
         } else {
             return
         }
@@ -48,20 +64,32 @@ const Body = ({projectData,sliderBox}) => {
     const handlePreviousSlide = () => {
         gsap.registerPlugin(ScrollToPlugin)
         if(currentSlide>0){
-            gsap.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:sliderArray[currentSlide-1]}})
-            setCurrentSlide(currentSlide-1)
+            const switchPrevious = (gsap.timeline({onComplete:()=>setCurrentSlide(currentSlide-1)}))
+            switchPrevious.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:sliderArray[currentSlide-1]}})
+            switchPrevious.to(bodyTxt.current.querySelectorAll('.word'),{translateY:"120%",ease:"power3.in",duration:1},"<")
+            switchPrevious.play()
+            
         } else {
             return
         }
     }
 
     return(
-        <div className='w-screen h-full absolute z-10 p-4'>
-            <div className='flex flex-row w-full justify-between'>
-                <ArrowRight fn={handlePreviousSlide} color={'black'} classToAdd={'scale-[2] rotate-[180deg] cursor-pointer'}/>
-                <ArrowRight fn={handleNextSlide} color={'black'} classToAdd={'scale-[2] cursor-pointer'}/>
+        <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_auto]'>
+            <div className='flex flex-row w-full justify-between col-span-4 md:col-span-12'>
+                <ArrowRight fn={handlePreviousSlide} color={'black'} style={{height:"30px",width:"40px"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
+                <ArrowRight fn={handleNextSlide} color={'black'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
             </div>
-            <div ref={body} id="projectBody" className='text-white tracking-[-0.03em]'></div>
+            {/* <div ref={body} id="projectBody" className='text-white tracking-[-0.03em]'></div> */}
+            <div ref={bodyTxt} className='text-white col-start-2 md:col-start-9 row-start-2 col-span-4 h-48 relative'>
+            {projectData.body.text.split('\\n').map((el,i) => {
+                return (
+                    <div key={i} id={`slideText-${i}`} className='absolute w-full'>
+                        <p className='lined'>{el}</p>
+                    </div>
+                )
+            })}
+            </div>
         </div>
     )
 }
@@ -111,7 +139,7 @@ const Project = ({data}) => {
                 <div className='w-screen h-1/6 absolute z-[9999] top-0'>
                     <Title projectData={projectData}/>
                 </div>
-                <div className='w-screen h-1/6 absolute z-[9999] bottom-28'>
+                <div className='w-screen min-h-max absolute z-[9999] bottom-28'>
                     <Body projectData={projectData} sliderBox={sliderBox}/>
                 </div>
             </main>
@@ -161,7 +189,6 @@ export async function getStaticProps({params}){
           id
           body {
             text
-            html
           }
           categories {
             categoryName

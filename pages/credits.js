@@ -16,7 +16,7 @@ const Credits = () =>{
     return(
         <Layout>
             <div className="text-white p-4 w-screen h-screen flex flex-col">
-                <h1 className="text-SM md:text-[32vw] tracking-tight border-grey border-b py-4">Credits</h1>
+                <h1 className="text-[28vw] md:text-[32vw] tracking-tight border-grey border-b py-4">Credits</h1>
                 <div className="grow flex flex-col justify-between mb-20">
                     <div className="py-4 flex gap-10">
                         <p>Designed & Developed &mdash; Jay Indino</p>

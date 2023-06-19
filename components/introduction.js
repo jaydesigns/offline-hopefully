@@ -14,15 +14,21 @@ import { SplashTimeline } from "../pages/_app";
 import { OutroTimeline } from "../pages/_app";
 
 const Ampersand = ({wrapper,container,glyph}) => {
+    const scrollToGallery = useCallback(()=>{
+        gsap.registerPlugin(ScrollToPlugin)
+        return(
+            gsap.to(window,{duration:2,scrollTo:"#selectedWork",duration:2,ease:"power3.inOut"})
+        )
+    },[])
     return (
         <div ref={wrapper} className="flex justify-end">
             <div className="ampersand relative overflow-hidden bg-red text-white rounded-full aspect-square w-ampMobile md:w-ampMd">
                 <div ref={container} className="amp-wrapper flex flex-col">
-                    <div className="amp flex flex-col justify-center aspect-square w-full"><ArrowRight classToAdd="lgArrow rotate-90" color="#ffffff"/></div>
+                    <div onClick={scrollToGallery} className="amp flex flex-col justify-center aspect-square w-full"><ArrowRight classToAdd="lgArrow rotate-90" color="#ffffff"/></div>
                     <div className="glyph amp flex flex-col justify-center aspect-square w-full">
                         <span className="flex justify-center text-xxl leading-none font-semibold">{glyph}</span>
                     </div>
-                    <div className="amp flex flex-col justify-center aspect-square w-full"><ArrowRight classToAdd="lgArrow rotate-90" color="#ffffff"/></div>
+                    <div onClick={scrollToGallery} className="amp flex flex-col justify-center aspect-square w-full"><ArrowRight classToAdd="lgArrow rotate-90" color="#ffffff"/></div>
                 </div>
             </div>
         </div>
