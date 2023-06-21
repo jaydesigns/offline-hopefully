@@ -103,7 +103,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
     <>
         <Head>
           <title>Jay Indino - Graphic Designer & Creative Developer</title>
-          <meta name="description" content="Award-winning Graphic Designer and Creative Developer based in Utah who has expertise in branding, web design and web development and specializes in digital experiences, creative development, and web app development." />
+          <meta name="description" content="Award-winning Graphic Designer and Creative Developer who has expertise in branding, web design and web development and specializes in digital experiences, creative development, and web app development. He currently does web design and web developent in the Utah, idaho, Nevada, Colorado, Arizona area." />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
           <link rel='manifest' href="/manifest.json" />
