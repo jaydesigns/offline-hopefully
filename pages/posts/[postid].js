@@ -12,17 +12,32 @@ import client from '../../apolloClient'
 import { useRouter } from 'next/router'
 import { BackgroundTheme } from '../../components/layout'
 import SplitType from 'split-type'
+import { OutroTimeline } from '../_app'
 
-const Title = ({projectData}) => {
+const Title = ({projectData,postTL}) => {
+
+    useEffect(() => {
+        let tl = gsap.timeline()
+        let text
+        const runSplit = () => {
+            text = new SplitType(".postTitle",{types:"lines,words"})
+        }
+        runSplit()
+        window.addEventListener("resize",()=>{
+            runSplit()
+        })
+        gsap.set(text.words,{translateY:"120%"})
+        postTL.current.to(text.words,{translateY:"0%",duration:1,ease:"power3.inOut"})
+    },[postTL])
     // console.log(projectData);
     return(
         <div className='w-screen h-full absolute z-10 p-4'>
-            <h1 className='text-white text-[14vw] md:text-9xl tracking-[-0.03em] leading-suis'>{projectData.title}</h1>
+            <h1 className='postTitle text-white text-[14vw] md:text-9xl tracking-[-0.03em] leading-suis'>{projectData.title}</h1>
         </div>
     )
 }
 
-const Body = ({projectData,sliderBox}) => {
+const Body = ({postTL,projectData,sliderBox}) => {
     const [sliderArray,setSliderArray] = useState()
     const [currentSlide,setCurrentSlide] = useState(0)   
     const bodyTxt = useRef()
@@ -31,17 +46,20 @@ const Body = ({projectData,sliderBox}) => {
     // console.log(projectData.body.text);
     useEffect(() => {
         const text = new SplitType('.lined',{types:'lines,words'})
-        gsap.set(text.words,{translateY:"120%"})
+        const ctx = gsap.context(()=>{
+            gsap.set(text.words,{translateY:"120%"})
+        })
+        return () => ctx.revert()
     },[projectData])
     
     useEffect(() => {
         if (currentSlide<projectData.body.text.split('\\n').length-1){
             const p = document.querySelector(`#slideText-${currentSlide}`)
-            gsap.to(p.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.015,ease:"power3.out"})
+            postTL.current.to(p.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.015,ease:"power3.out"})
         } else {
             return
         }
-    },[currentSlide,projectData])
+    },[currentSlide,projectData,postTL])
 
     useEffect(()=>{
         // console.log(sliderBox.current);
@@ -76,9 +94,9 @@ const Body = ({projectData,sliderBox}) => {
 
     return(
         <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_auto]'>
-            <div className='flex flex-row w-full justify-between col-span-4 md:col-span-12'>
-                <ArrowRight fn={handlePreviousSlide} color={'black'} style={{height:"30px",width:"40px"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
-                <ArrowRight fn={handleNextSlide} color={'black'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
+            <div className='flex flex-row w-full justify-between col-span-4 md:col-span-12 py-8'>
+                <ArrowRight fn={handlePreviousSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
+                <ArrowRight fn={handleNextSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
             </div>
             {/* <div ref={body} id="projectBody" className='text-white tracking-[-0.03em]'></div> */}
             <div ref={bodyTxt} className='text-white col-start-2 md:col-start-9 row-start-2 col-span-4 h-48 relative'>
@@ -94,10 +112,14 @@ const Body = ({projectData,sliderBox}) => {
     )
 }
 
-const Slide = ({projectData,sliderBox}) => {
+const Slide = ({projectData,sliderBox,postTL}) => {
     // console.log(projectObject);
     const slideArray = projectData.slide.sliderImages
     
+    useEffect(() => {
+        gsap.set('.slider',{opacity:0})
+        postTL.current.to('.slider',{opacity:1,duration:1})
+    },[postTL])
 
     return(
         <div className='sliderContainer flex overflow-x-scroll w-screen h-full'>
@@ -120,6 +142,8 @@ const Project = ({data}) => {
     const router = useRouter()
     const postID = router.query.postid
     const projectData = data.posts[0]
+    const {outro,setOutro} = useContext(OutroTimeline)
+    const postTL = useRef(gsap.timeline())
 
     const projectContainer = useRef()
     const sliderBox = useRef()
@@ -128,19 +152,21 @@ const Project = ({data}) => {
     
     useEffect(() => {
         changeTheme('rgba(0,0,0,0)')
-    },[])
+        postTL.current.play()
+        setOutro(postTL.current)
+    },[changeTheme,setOutro])
 
     return (
         <Layout>
             <main ref={projectContainer} className='changeBG w-screen h-screen relative'>
                 <div className="sliderWrapper flex h-full overflow-x-auto">
-                    <Slide projectData={projectData} sliderBox={sliderBox}/>
+                    <Slide postTL={postTL} projectData={projectData} sliderBox={sliderBox}/>
                 </div>
                 <div className='w-screen h-1/6 absolute z-[9999] top-0'>
-                    <Title projectData={projectData}/>
+                    <Title postTL={postTL} projectData={projectData}/>
                 </div>
                 <div className='w-screen min-h-max absolute z-[9999] bottom-28'>
-                    <Body projectData={projectData} sliderBox={sliderBox}/>
+                    <Body postTL={postTL} projectData={projectData} sliderBox={sliderBox}/>
                 </div>
             </main>
         </Layout>
