@@ -199,15 +199,15 @@ const PWAFeatures = () => {
                 <div className="flex flex-col md:flex-row flex-auto">
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">I</h6></div>
-                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium">Installable</span>
+                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium hover:text-red">Installable</span>
                     </div>
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">O</h6></div>
-                        <span onClick={handleImageSwitch("offline")} data-index="offline" className="feature cursor-pointer grow font-medium">Works Offline</span>
+                        <span onClick={handleImageSwitch("offline")} data-index="offline" className="feature cursor-pointer grow font-medium hover:text-red">Works Offline</span>
                     </div>
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">A</h6></div>
-                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium">Smoother Experience</span>
+                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium hover:text-red">Smoother Experience</span>
                     </div>
                 </div>
             </div>
