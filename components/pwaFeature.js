@@ -30,7 +30,7 @@ const FeatureDescription = (props) => {
                 <div className=" flex flex-col gap-4">
                     <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.installable.title}</h2>
                     <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
-                    <div className="z-50 overflow-hidden relative"><div className="cta"><InstallPWA /></div></div>
+                    <div className="z-50 overflow-hidden relative"><div className="cta"><InstallPWA text={"Try it"} /></div></div>
                 </div>
             </div>
         </div>

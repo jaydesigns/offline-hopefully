@@ -55,7 +55,7 @@ const Body = ({postTL,projectData,sliderBox}) => {
     useEffect(() => {
         if (currentSlide<projectData.body.text.split('\\n').length-1){
             const p = document.querySelector(`#slideText-${currentSlide}`)
-            postTL.current.to(p.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.015,ease:"power3.out"})
+            gsap.to(p.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.015,ease:"power3.out"})
         } else {
             return
         }
