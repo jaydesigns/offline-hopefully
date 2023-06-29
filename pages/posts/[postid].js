@@ -13,8 +13,10 @@ import { useRouter } from 'next/router'
 import { BackgroundTheme } from '../../components/layout'
 import SplitType from 'split-type'
 import { OutroTimeline } from '../_app'
+import ChatJPT from '../../components/chat'
+import Link from 'next/link'
 
-const Title = ({projectData,postTL}) => {
+const Title = ({projectData,postTL,showNextArrow}) => {
 
     useEffect(() => {
         let tl = gsap.timeline()
@@ -27,23 +29,50 @@ const Title = ({projectData,postTL}) => {
             runSplit()
         })
         gsap.set(text.words,{translateY:"120%"})
-        postTL.current.to(text.words,{translateY:"0%",duration:1,ease:"power3.inOut"})
+        postTL.current.to(text.words,{translateY:"0%",duration:2,stagger:0.1,ease:"power3.inOut"})
     },[postTL])
-    // console.log(projectData);
+    
+    console.log(projectData);
     return(
-        <div className='w-screen h-full absolute z-10 p-4'>
-            <h1 className='postTitle text-white text-[14vw] md:text-9xl tracking-[-0.03em] leading-suis'>{projectData.title}</h1>
+        <div className='grid grid-cols-12 w-screen h-full absolute z-10 p-4'>
+            <div className='col-span-8'>
+                <h1 className='postTitle text-white text-[14vw] md:text-[8vw] tracking-tight leading-suis'>{projectData.title}</h1>
+            </div>
+            {(showNextArrow===false)&&
+                <div className='col-start-9 col-span-4'>
+                    <div className='border-b border-white'>
+                        <h4 className='text-white font-semibold'>Other
+                        {projectData.categories.map((cat,i) => {
+                            return(
+                                <span key={i}>{` ${cat.categoryName} `}</span>
+                                )
+                            }).reduce((acc,next) => acc === null? next :<>{acc} & {next}</>,null)}
+                        projects</h4>
+                    </div>
+                    <div>
+                        {projectData.categories.map(c => {
+                            return c.posts.map((p,i) => {
+                                return(
+                                    <div key={i}className='border-b border-grey text-white'>
+                                        <Link href={`/posts/${p.id}`}>{p.title}</Link>
+                                    </div>
+                                )
+                            })
+                        })}
+                    </div>
+                </div>
+            }
         </div>
     )
 }
 
-const Body = ({postTL,projectData,sliderBox}) => {
+const Body = ({postTL,projectData,sliderBox,showNextArrow,showPreviousArrow,setShowNextArrow,setShowPreviousArrow}) => {
     const [sliderArray,setSliderArray] = useState()
     const [currentSlide,setCurrentSlide] = useState(0)   
     const bodyTxt = useRef()
     // const [ switchTL, setSwitchTL ] = useState(gsap.timeline())
 
-    // console.log(projectData.body.text);
+    // console.log(currentSlide,showPreviousArrow);
     useEffect(() => {
         const text = new SplitType('.lined',{types:'lines,words'})
         const ctx = gsap.context(()=>{
@@ -66,6 +95,32 @@ const Body = ({postTL,projectData,sliderBox}) => {
         setSliderArray(sliderBox.current.querySelectorAll(".slider"))
     },[sliderBox])
 
+    useEffect(() => {
+        (showNextArrow)
+        ?gsap.to('#nextArrow',{opacity:1})
+        :gsap.to('#nextArrow',{opacity:0})
+    },[showNextArrow])
+
+    useEffect(() => {
+        (showPreviousArrow)
+        ?gsap.to('#previousArrow',{opacity:1})
+        :gsap.to('#previousArrow',{opacity:0})
+    },[showPreviousArrow])
+
+    useEffect(() => {
+        (currentSlide===0)
+        ?setShowPreviousArrow(false)
+        :setShowPreviousArrow(true)
+    },[currentSlide])
+    
+    useEffect(() => {
+        if(sliderArray){
+            (currentSlide===sliderArray.length-1)
+            ?setShowNextArrow(false)
+            :setShowNextArrow(true)
+        }
+    },[currentSlide,sliderArray])
+
     const handleNextSlide = () =>{
         gsap.registerPlugin(ScrollToPlugin)
         if(currentSlide<sliderArray.length-1){
@@ -73,7 +128,7 @@ const Body = ({postTL,projectData,sliderBox}) => {
             switchNext.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:sliderArray[currentSlide+1]}})
             switchNext.to(bodyTxt.current.querySelectorAll('.word'),{translateY:"120%",ease:"power3.in",duration:1},"<")
             switchNext.play()
-            
+            setShowPreviousArrow(true)
         } else {
             return
         }
@@ -92,11 +147,19 @@ const Body = ({postTL,projectData,sliderBox}) => {
         }
     }
 
+    useEffect(() => {
+        setShowNextArrow(true)
+    },[])
+
     return(
         <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_auto]'>
             <div className='flex flex-row w-full justify-between col-span-4 md:col-span-12 py-8'>
-                <ArrowRight fn={handlePreviousSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
-                <ArrowRight fn={handleNextSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
+                <div id="previousArrow">
+                    <ArrowRight fn={handlePreviousSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
+                </div>
+                <div id="nextArrow">
+                    <ArrowRight fn={handleNextSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
+                </div>
             </div>
             {/* <div ref={body} id="projectBody" className='text-white tracking-[-0.03em]'></div> */}
             <div ref={bodyTxt} className='text-white col-start-2 md:col-start-9 row-start-2 col-span-4 h-48 relative'>
@@ -144,6 +207,9 @@ const Project = ({data}) => {
     const projectData = data.posts[0]
     const {outro,setOutro} = useContext(OutroTimeline)
     const postTL = useRef(gsap.timeline())
+    
+    const [ showPreviousArrow,setShowPreviousArrow ] = useState()
+    const [ showNextArrow,setShowNextArrow ] = useState()
 
     const projectContainer = useRef()
     const sliderBox = useRef()
@@ -163,10 +229,10 @@ const Project = ({data}) => {
                     <Slide postTL={postTL} projectData={projectData} sliderBox={sliderBox}/>
                 </div>
                 <div className='w-screen h-1/6 absolute z-[9999] top-0'>
-                    <Title postTL={postTL} projectData={projectData}/>
+                    <Title postTL={postTL} projectData={projectData} showNextArrow={showNextArrow}/>
                 </div>
                 <div className='w-screen min-h-max absolute z-[9999] bottom-28'>
-                    <Body postTL={postTL} projectData={projectData} sliderBox={sliderBox}/>
+                    <Body postTL={postTL} projectData={projectData} sliderBox={sliderBox} showNextArrow={showNextArrow} showPreviousArrow={showPreviousArrow} setShowNextArrow={setShowNextArrow} setShowPreviousArrow={setShowPreviousArrow}/>
                 </div>
             </main>
         </Layout>
@@ -218,6 +284,10 @@ export async function getStaticProps({params}){
           }
           categories {
             categoryName
+            posts {
+                title
+                id
+            }
           }
           coverImage
           slide {

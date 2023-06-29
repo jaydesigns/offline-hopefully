@@ -77,6 +77,13 @@ const Bio = () => {
                     </div>
                     <div className="grid grid-cols-4 md:grid-cols-12">
                         <h4 className="clip hidden md:block">04</h4>
+                        <h2 className="clip font-semibold text-lg md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Style</h2>
+                        <ul className="clip text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
+                            <li>I&apos;ve always been fascinated by the Swiss international Typographic Style. Although I experiment with other design aesthetics, the objectivity and no-nonsense approach of the Swiss design made me learn more about it and its proponents.</li>
+                        </ul>
+                    </div>
+                    <div className="grid grid-cols-4 md:grid-cols-12">
+                        <h4 className="clip hidden md:block">05</h4>
                         <h2 className="clip font-semibold text-lg leading-[1] md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Interests/<br></br>Hobbies</h2>
                         <ul className="clip text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
                             <li>&mdash; When I&apos;m not learning programming, I&apos;ll be out in the gym playing basketball.

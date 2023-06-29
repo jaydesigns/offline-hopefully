@@ -24,7 +24,7 @@ const Credits = () =>{
         gsap.set([text.words,'.creditTitle'],{translateY:"120%"})
         creditsTL.fromTo(".imageContainer",{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.inOut",duration:2})
         creditsTL.fromTo(".creditBorder",{width:"0"},{width:"100%"},"<")
-        creditsTL.to(['.creditTitle',text.words],{translateY:"0%",stagger:0.02,duration:1},"-=1")
+        creditsTL.to(['.creditTitle',text.words],{translateY:"0%",stagger:0.008,duration:0.5},"-=1")
         themeChange(`${ThemeColors.black}`)
         creditsTL.play()
         setOutro(creditsTL)
