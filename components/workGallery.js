@@ -124,8 +124,8 @@ const Cards = ({data}) => {
 
     const handlePageChange = (e)=>{
         e.preventDefault()
-        const id = e.target.closest('.card').getAttribute('projectid')
-        outro.reverse().then(()=>router.push(`posts/${id}`))
+        const slug = e.target.closest('.card').getAttribute('projectid')
+        outro.reverse().then(()=>router.push(`posts/${slug}`))
     }
 
     // console.log(data);
@@ -134,7 +134,7 @@ const Cards = ({data}) => {
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
             {data.map((el,i)=>{
             return(
-            <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.id}>
+            <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.slug}>
                 <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
                     <div className="cover relative h-full overflow-hidden w-full">
                         <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>

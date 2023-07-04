@@ -1,23 +1,22 @@
-import Layout from '../../components/layout'
+import Layout from '../components/layout'
 import Image from 'next/image'
 import gsap from 'gsap'
 import React, { useContext, useState, useEffect, useRef, useCallback } from 'react'
-import {useIsomorphicLayoutEffect} from '../../useIsomorphicLayoutEffect'
+import {useIsomorphicLayoutEffect} from '../useIsomorphicLayoutEffect'
 import axios from 'axios'
 // import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 import { ScrollToPlugin } from 'gsap/dist/ScrollToPlugin'
-import ArrowRight from '../../components/arrowRight'
+import ArrowRight from '../components/arrowRight'
 import {gql} from '@apollo/client'
-import client from '../../apolloClient'
+import client from '../apolloClient'
 import { useRouter } from 'next/router'
-import { BackgroundTheme } from '../../components/layout'
+import { BackgroundTheme } from '../components/layout'
 import SplitType from 'split-type'
-import { OutroTimeline } from '../_app'
-import ChatJPT from '../../components/chat'
+import { OutroTimeline } from './_app'
+import ChatJPT from '../components/chat'
 import Link from 'next/link'
 
-const Title = ({projectData,postTL,showNextArrow}) => {
-
+const Title = ({projectData,postTL,showNextArrow,renderData}) => {
     useEffect(() => {
         let tl = gsap.timeline()
         let text
@@ -31,64 +30,39 @@ const Title = ({projectData,postTL,showNextArrow}) => {
         gsap.set(text.words,{translateY:"120%"})
         postTL.current.to(text.words,{translateY:"0%",duration:2,stagger:0.1,ease:"power3.inOut"})
     },[postTL])
-    
-    console.log(projectData);
+
+    // console.log(nextPost.id);
     return(
-        <div className='grid grid-cols-12 w-screen h-full absolute z-10 p-4'>
-            <div className='col-span-8'>
-                <h1 className='postTitle text-white text-[14vw] md:text-[8vw] tracking-tight leading-suis'>{projectData.title}</h1>
+        <div className='grid grid-cols-4 md:grid-cols-12 grid-rows-[fit_fit] w-screen h-full absolute z-10 p-4'>
+            <div className='col-span-4 md:col-span-8'>
+                <h1 className='postTitle text-white text-[10vw] md:text-[8vw] tracking-tight leading-suis'>{projectData.title}</h1>
             </div>
-            {(showNextArrow===false)&&
-                <div className='col-start-9 col-span-4'>
-                    <div className='border-b border-white'>
-                        <h4 className='text-white font-semibold'>Other
-                        {projectData.categories.map((cat,i) => {
-                            return(
-                                <span key={i}>{` ${cat.categoryName} `}</span>
-                                )
-                            }).reduce((acc,next) => acc === null? next :<>{acc} & {next}</>,null)}
-                        projects</h4>
-                    </div>
-                    <div>
-                        {projectData.categories.map(c => {
-                            return c.posts.map((p,i) => {
-                                return(
-                                    <div key={i}className='border-b border-grey text-white'>
-                                        <Link href={`/posts/${p.id}`}>{p.title}</Link>
-                                    </div>
-                                )
-                            })
-                        })}
-                    </div>
-                </div>
-            }
         </div>
     )
 }
 
-const Body = ({postTL,projectData,sliderBox,showNextArrow,showPreviousArrow,setShowNextArrow,setShowPreviousArrow}) => {
+const Body = ({postTL,projectData,sliderBox,showNextArrow,showPreviousArrow,setShowNextArrow,setShowPreviousArrow,renderData,outro}) => {
     const [sliderArray,setSliderArray] = useState()
     const [currentSlide,setCurrentSlide] = useState(0)   
     const bodyTxt = useRef()
+    const [ nextPost,setNextPost ] = useState()
+    const router = useRouter()
     // const [ switchTL, setSwitchTL ] = useState(gsap.timeline())
 
     // console.log(currentSlide,showPreviousArrow);
     useEffect(() => {
         const text = new SplitType('.lined',{types:'lines,words'})
-        const ctx = gsap.context(()=>{
-            gsap.set(text.words,{translateY:"120%"})
-        })
-        return () => ctx.revert()
+        gsap.set(text.words,{translateY:"120%"})
     },[projectData])
     
-    useEffect(() => {
-        if (currentSlide<projectData.body.text.split('\\n').length-1){
-            const p = document.querySelector(`#slideText-${currentSlide}`)
-            gsap.to(p.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.015,ease:"power3.out"})
-        } else {
-            return
-        }
-    },[currentSlide,projectData,postTL])
+    // useEffect(() => {
+    //     if (currentSlide<projectData.body.text.split('\\n').length-1){
+    //         const p = document.querySelector(`#slideText-${currentSlide}`)
+    //         gsap.to(p.querySelectorAll(".word"),{translateY:"0%",duration:1,stagger:0.015,ease:"power3.out"})
+    //     } else {
+    //         return
+    //     }
+    // },[currentSlide,projectData,postTL])
 
     useEffect(()=>{
         // console.log(sliderBox.current);
@@ -149,7 +123,42 @@ const Body = ({postTL,projectData,sliderBox,showNextArrow,showPreviousArrow,setS
 
     useEffect(() => {
         setShowNextArrow(true)
-    },[])
+    },[setShowNextArrow])
+
+    useEffect(() => {
+        async function fetchPostID(){
+            const res = await client.query({
+                query: gql`
+                {
+                    posts{
+                    id
+                    slug
+                    }
+                }
+                `
+            })
+
+            const currentIndex = (el) => el.id === renderData.posts[0].id
+            const indexOfCurrentPost = res.data.posts.findIndex(currentIndex)
+            if(indexOfCurrentPost===res.data.posts.length-1){
+                setNextPost(res.data.posts[0])
+            } else (
+                setNextPost(res.data.posts[indexOfCurrentPost+1])
+            )
+        }
+        fetchPostID()
+    },[renderData])
+
+    //
+    //Navigate to the next post
+    //
+    //
+    console.log(nextPost);
+    const handleChangePost = (e) => {
+        // e.preventDefault()
+        setCurrentSlide(0)
+        outro.reverse().then(()=>router.push(`/posts/${nextPost.slug}`))
+    }
 
     return(
         <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_auto]'>
@@ -157,19 +166,31 @@ const Body = ({postTL,projectData,sliderBox,showNextArrow,showPreviousArrow,setS
                 <div id="previousArrow">
                     <ArrowRight fn={handlePreviousSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
                 </div>
-                <div id="nextArrow">
-                    <ArrowRight fn={handleNextSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
-                </div>
+                {(showNextArrow)&&
+                    <div id="nextArrow">
+                        <ArrowRight fn={handleNextSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
+                    </div>
+                }
+                {(showNextArrow===false)&&
+                    <button onClick={handleChangePost} className='nextPost row-start-2 md:row-start-1  col-start-2 md:col-start-9 col-span-4'>
+                        <div className='bg-white p-8'>
+                            <h4 className='text-black font-semibold'>View the next project</h4>
+                        </div>
+                    </button>
+                }
             </div>
             {/* <div ref={body} id="projectBody" className='text-white tracking-[-0.03em]'></div> */}
             <div ref={bodyTxt} className='text-white col-start-2 md:col-start-9 row-start-2 col-span-4 h-48 relative'>
-            {projectData.body.text.split('\\n').map((el,i) => {
+            {/* {projectData.body.text.split('\\n').map((el,i) => {
                 return (
                     <div key={i} id={`slideText-${i}`} className='absolute w-full'>
                         <p className='lined'>{el}</p>
                     </div>
                 )
-            })}
+            })} */}
+            <div>
+                <p>{projectData.body.text}</p>
+            </div>
             </div>
         </div>
     )
@@ -203,10 +224,11 @@ const Slide = ({projectData,sliderBox,postTL}) => {
 
 const Project = ({data}) => {
     const router = useRouter()
-    const postID = router.query.postid
-    const projectData = data.posts[0]
+    // const postID = router.query.postid
+    const [ projectData,setProjectData ] = useState()//RIGHT HERE!!!! change the index
     const {outro,setOutro} = useContext(OutroTimeline)
     const postTL = useRef(gsap.timeline())
+    const [renderData,setRenderData] = useState(data)
     
     const [ showPreviousArrow,setShowPreviousArrow ] = useState()
     const [ showNextArrow,setShowNextArrow ] = useState()
@@ -222,19 +244,24 @@ const Project = ({data}) => {
         setOutro(postTL.current)
     },[changeTheme,setOutro])
 
+    useEffect(() => {
+        setProjectData(data.posts[0])
+    },[data])
+
+    // console.log(data,projectData);
     return (
         <Layout>
-            <main ref={projectContainer} className='changeBG w-screen h-screen relative'>
+            {(projectData)&&<main ref={projectContainer} className='changeBG w-screen h-screen relative'>
                 <div className="sliderWrapper flex h-full overflow-x-auto">
                     <Slide postTL={postTL} projectData={projectData} sliderBox={sliderBox}/>
                 </div>
                 <div className='w-screen h-1/6 absolute z-[9999] top-0'>
-                    <Title postTL={postTL} projectData={projectData} showNextArrow={showNextArrow}/>
+                    <Title postTL={postTL} projectData={projectData} showNextArrow={showNextArrow} outro={outro}/>
                 </div>
                 <div className='w-screen min-h-max absolute z-[9999] bottom-28'>
-                    <Body postTL={postTL} projectData={projectData} sliderBox={sliderBox} showNextArrow={showNextArrow} showPreviousArrow={showPreviousArrow} setShowNextArrow={setShowNextArrow} setShowPreviousArrow={setShowPreviousArrow}/>
+                    <Body postTL={postTL} projectData={projectData} sliderBox={sliderBox} showNextArrow={showNextArrow} showPreviousArrow={showPreviousArrow} setShowNextArrow={setShowNextArrow} setShowPreviousArrow={setShowPreviousArrow} renderData={renderData} outro={outro} />
                 </div>
-            </main>
+            </main>}
         </Layout>
     )
 }
@@ -277,7 +304,7 @@ export async function getStaticProps({params}){
     const {data} = await client.query({
       query: gql`
       {
-        posts (where: {id:"${params.postid}"}) {
+        posts (where: {slug:"${params.postid}"}) {
           id
           body {
             text
