@@ -206,8 +206,8 @@ const WorkGallery = ({data}) => {
         })
 
         let galleryTL = gsap.timeline()
-        galleryTL.fromTo('.gallery-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:2,stagger:0.15})
-        galleryTL.fromTo(['.g-clip','.cardBox'],{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2},"-=1.5")
+        galleryTL.fromTo('.gallery-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:1,stagger:0.15})
+        galleryTL.fromTo(['.g-clip','.cardBox'],{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:1},"-=1.5")
 
         ScrollTrigger.create({
             trigger: wholeGallery.current,

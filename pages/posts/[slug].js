@@ -17,7 +17,28 @@ import ChatJPT from '../../components/chat'
 import Link from 'next/link'
 import { getPostBySlug,getPostList } from '../../utils/posts'
 
-const Paragraph = ({el}) => {
+/* const PostTitle = ({postData,postTL}) => {
+    useEffect(() => {
+        let text
+        const runSplit = () => {
+            text = new SplitType(".postTitle",{types:"lines,words"})
+        }
+        runSplit()
+        window.addEventListener("resize",()=>{
+            runSplit()
+        })
+        gsap.set(text.words,{translateY:"120%"})
+        postTL.current.to(text.words,{translateY:"0%",duration:2,stagger:0.1,ease:"power3.inOut"})
+    },[postTL])
+
+    return (
+        <div className='col-span-4 md:col-span-8'>
+            <h1 className='postTitle text-white text-[10vw] md:text-[7vw] tracking-tight leading-suis'>{postData.title}</h1>
+        </div>
+    )
+} */
+
+/* const Paragraph = ({el}) => {
     const [ splitText,setSplitText ] = useState()
 
     //
@@ -37,22 +58,26 @@ const Paragraph = ({el}) => {
     // }
 
     return (
-        <p className='leading-[1.15]'>{el}</p>
+        <div className=''>
+            
+        </div>
     )
-}
+} */
 
 
-const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviousArrow,showNextArrow,setShowNextArrow}) => {
+const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviousArrow,showNextArrow,setShowNextArrow,postTL}) => {
     const [currentSlide,setCurrentSlide] = useState(0)
     const slideArray = postData.slide.sliderImages
     const [postImages,setPostImages] = useState()
     const sliderBox = useRef()
+    const postTitle = useRef()
     const bodyTxt = useRef()
     const [ postBody,setPostBody ] = useState()
     const router = useRouter()
 
     const props = {
-        postBody
+        postBody,
+        postTL
     }
 
     // Initialize post content
@@ -60,18 +85,32 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
     //    
     useEffect(() => {
         setPostBody(postData)
+        gsap.to(`#parallax-0`,{clipPath:"inset(0 0 0 0%)"})
     },[postData])
+
+    useEffect(() => {
+        if (postBody) {
+            let firstParagraph = document.querySelector('#slideText-0')
+            let firstSlideText = firstParagraph.querySelectorAll('.word')
+            let title = new SplitType(postTitle.current,{types:"lines,words"})
+            let body = new SplitType('.lined',{types:"lines,words"})
+            gsap.set([title.words,body.words],{translateY:"120%"})
+            // Run Split
+            postTL.current.to(title.words,{translateY:"0%",duration:2,stagger:0.2,ease:"power3.out"})
+            // postTL.current.to(firstSlideText,{translateY:"0%",duration:1,stagger:0.02,ease:"power3.inOut"},'<')
+        }
+    },[postBody,postTL])
     
     //
     //Reset current slide when switching posts
     //
     //
-    useEffect(() => {
+    /* useEffect(() => {
         if(postImages) {
             gsap.set('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:postImages[0]}})
         }
         setCurrentSlide(0)
-    },[postImages])
+    },[postImages]) */
 
     //
     //Initialize the post images
@@ -113,11 +152,15 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
     },[currentSlide,postImages,setShowNextArrow])
 
     const handleNextSlide = () =>{
+        const p = document.querySelector(`#slideText-${currentSlide}`)
         gsap.registerPlugin(ScrollToPlugin)
         if(currentSlide<postImages.length-1){
             const switchNext = (gsap.timeline({onComplete:()=>setCurrentSlide(currentSlide+1)}))
-            switchNext.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:postImages[currentSlide+1]}})
-            switchNext.to('.paragraphContainer',{clipPath:"inset(0 0 100% 0)",ease:"power3.in",duration:1},"<")
+            //switchNext.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:postImages[currentSlide+1]}})
+            // switchNext.to('.paragraphContainer',{scrollTo:{x:p},ease:"power3.in",duration:1},"<")
+            switchNext.to(`#parallax-${currentSlide}`,{duration:2,ease:"power3.inOut",objectPosition:'180% 50%',clipPath:"inset(0 100% 0 0)"},"<")
+            switchNext.to(`#parallax-${currentSlide+1}`,{duration:2,ease:"power3.inOut",objectPosition:'90% 50%',clipPath:'inset(0 0 0 0%)'},"<")
+            switchNext.to(p.querySelectorAll('.word'),{translateY:"120%"},"<")
             switchNext.play()
             setShowPreviousArrow(true)
         } else {
@@ -126,13 +169,16 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
     }
 
     const handlePreviousSlide = () => {
+        const p = document.querySelector(`#slideText-${currentSlide}`)
         gsap.registerPlugin(ScrollToPlugin)
         if(currentSlide>0){
             const switchPrevious = (gsap.timeline({onComplete:()=>setCurrentSlide(currentSlide-1)}))
-            switchPrevious.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:postImages[currentSlide-1]}})
-            switchPrevious.to('.paragraphContainer',{clipPath:"inset(0 0 100% 0)",ease:"power3.in",duration:1},"<")
+            // switchPrevious.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:postImages[currentSlide-1]}})
+            // switchPrevious.to('.paragraphContainer',{scrollTo:{x:p},ease:"power3.in",duration:1},"<")
+            switchPrevious.to(`#parallax-${currentSlide}`,{duration:2,ease:"power3.inOut",objectPosition:'-80% 50%',clipPath:"inset(0 0 0 100%)"},"<")
+            switchPrevious.to(`#parallax-${currentSlide-1}`,{duration:2,ease:"power3.inOut",objectPosition:'10% 50%',clipPath:'inset(0 0% 0 0)'},"<")
+            switchPrevious.to(p.querySelectorAll('.word'),{translateY:"120%"},"<")
             switchPrevious.play()
-            
         } else {
             return
         }
@@ -146,11 +192,11 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
         if(postBody){
             if (currentSlide<postBody.body.text.split('\\n').length-1){
             const p = document.querySelector(`#slideText-${currentSlide}`)
-            gsap.to(p,{opacity:1,duration:1,ease:"power3.out"})
-            gsap.to('.paragraphContainer',{clipPath:"inset(0 0 0% 0)",duration:1,stagger:0.015,ease:"power3.out"})
+            gsap.to(p.querySelectorAll('.word'),{translateY:"0%",stagger:0.015,duration:1,ease:"power3.out"})
+            // gsap.to('.paragraphContainer',{scrollTo:{x:p},duration:1,ease:"power3.inOut",delay:0.7})
             }
         }
-    },[currentSlide,postBody])
+    },[postBody,currentSlide,postTL])
 
     //
     // SWITCH POST
@@ -164,9 +210,9 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
         <div className='absolute z-50'>
             {(postBody)&&
             
-                <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[30vh_1fr_2fr]'>
+                <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[40vh_150px_2fr]'>
                     <div className='col-span-4 md:col-span-8'>
-                        <h1 className='postTitle text-white text-[10vw] md:text-[8vw] tracking-tight leading-suis'>{postBody.title}</h1>
+                        <h1 ref={postTitle} className='postTitle text-white text-[10vw] md:text-[7vw] tracking-tight leading-suis'>{postData.title}</h1>
                     </div>
                     <div className='flex flex-row w-full justify-between row-start-2 col-span-4 md:col-span-12 py-8'>
                         <div id="previousArrow">
@@ -178,21 +224,22 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
                             </div>
                         }
                         {(showNextArrow===false)&&
-                            <button onClick={handleChangePost} className='nextPost row-start-2 md:row-start-1  col-start-2 md:col-start-9 col-span-4'>
-                                <div className='bg-white p-8 text-red'>
-                                    <h4>Next Post</h4>
+                            <button onClick={handleChangePost} className='nextPost overflow-hidden'>
+                                <div className='bg-white px-8 py-4 text-red text-justify'>
+                                    <h4 className='font-bold'>Next Post</h4>
+                                    <h6>{nextPost.title}</h6>
                                 </div>
                             </button>
                         }
                     </div>
-                    <div ref={bodyTxt} className='paragraphContainer text-white col-start-2 md:col-start-9 row-start-3 col-span-4 relative h-full overflow-y-hidden'>
-                    {postBody.body.text.split('\\n').map((el,i) => {
-                        return (
-                            <div key={i} id={`slideText-${i}`} className='w-full h-full' style={{opacity:0}}>
-                                <Paragraph el={el}/>
-                            </div>
-                        )
-                    })}
+                    <div ref={bodyTxt} className='paragraphContainer relative text-white col-start-2 md:col-start-9 row-start-3 col-span-4 w-full h-full'>
+                        {postBody.body.text.split('\\n').map((el,i) => {
+                            return (
+                                <div key={i} className='slideText relative w-full h-full'>
+                                    <p id={`slideText-${i}`} className='lined absolute leading-[1.15]'>{el}</p>
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             }
@@ -209,9 +256,9 @@ const Slide = ({postData}) => {
             <div ref={sliderBox} className='block whitespace-nowrap'>
                 {slideArray.map((el,i)=>{
                     return(
-                    <div className="slider w-screen h-screen inline-block" key={i}>
+                    <div className="absolute slider w-screen h-screen inline-block" key={i}>
                         <div className='relative w-full h-full p-4'>
-                            <Image src={el.url} alt="project cover image" fill style={{objectFit:"cover"}} className="absolute" sizes='(min-width: 768px) 100vw, (max-width: 768px) 75vw'></Image>
+                            <Image src={el.url} alt="project cover image" fill style={{objectFit:"cover",objectPosition:"50% 50%",clipPath:"inset(0 0 0 100%)"}} id={`parallax-${i}`} className="absolute" sizes='(min-width: 768px) 100vw, (max-width: 768px) 75vw'></Image>
                         </div>
                     </div>
                     )
@@ -228,13 +275,26 @@ const Post = ({post,nextPost}) => {
     const postWrapper = useRef()
     const [ showPreviousArrow,setShowPreviousArrow ] = useState()
     const [ showNextArrow,setShowNextArrow ] = useState()
+    const postTL = useRef(gsap.timeline())
+    const router = useRouter()
+    const [key,setKey] = useState('')
+    const {outro,setOutro} = useContext(OutroTimeline)
 
     const props = {
         postData : postData,
         nextPost : nextPost,
         showPreviousArrow,setShowPreviousArrow,
-        showNextArrow,setShowNextArrow,setPostData
+        showNextArrow,setShowNextArrow,setPostData,
+        postTL
     }
+
+    useEffect(() => {
+        // Generate a unique key based on the slug or any other identifier
+        const slug = router.query.slug;
+        const uniqueKey = slug ? `dynamic-component-${slug}` : '';
+
+        setKey(uniqueKey);
+    },[router.query.slug])
     
     useEffect(() => {
         setPostData(post)
@@ -244,21 +304,25 @@ const Post = ({post,nextPost}) => {
         changeTheme("rgba(0,0,0,0)")
     },[changeTheme,ThemeColors])
 
+    useEffect(() => {
+        setOutro(postTL.current)
+    },[setOutro])
+
     return (
         <Layout>
-            <main className='flex overflow-x-scroll w-screen h-screen text-white'>
                 {(postData)&&
-                    <div className='block whitespace-nowrap'>
-                        <div ref={postWrapper} className='w-screen h-screen inline-block whitespace-normal'>
-                            <Content {...props} />
-                            <Slide {...props} />
-                        </div>
-                        <div className='relative w-screen h-screen inline-block'>
-                            <Image src={nextPost.slide.sliderImages[0].url} alt={'wow'} sizes='100vw' fill style={{objectFit:'cover',position:'absolute'}}/>
-                        </div>
-                    </div>
+                    <main key={key} className='flex overflow-x-scroll w-screen h-screen text-white'>
+                            <div className='block whitespace-nowrap'>
+                                <div ref={postWrapper} className='w-screen h-screen inline-block whitespace-normal'>
+                                    <Content {...props} />
+                                    <Slide {...props} />
+                                </div>
+                                <div className='relative w-screen h-screen inline-block'>
+                                    <Image src={nextPost.slide.sliderImages[0].url} alt={'wow'} sizes='100vw' fill style={{objectFit:'cover',position:'absolute'}}/>
+                                </div>
+                            </div>
+                    </main>
                 }
-            </main>
         </Layout>
     )
 }
