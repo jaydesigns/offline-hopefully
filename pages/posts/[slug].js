@@ -17,55 +17,8 @@ import ChatJPT from '../../components/chat'
 import Link from 'next/link'
 import { getPostBySlug,getPostList } from '../../utils/posts'
 
-/* const PostTitle = ({postData,postTL}) => {
-    useEffect(() => {
-        let text
-        const runSplit = () => {
-            text = new SplitType(".postTitle",{types:"lines,words"})
-        }
-        runSplit()
-        window.addEventListener("resize",()=>{
-            runSplit()
-        })
-        gsap.set(text.words,{translateY:"120%"})
-        postTL.current.to(text.words,{translateY:"0%",duration:2,stagger:0.1,ease:"power3.inOut"})
-    },[postTL])
 
-    return (
-        <div className='col-span-4 md:col-span-8'>
-            <h1 className='postTitle text-white text-[10vw] md:text-[7vw] tracking-tight leading-suis'>{postData.title}</h1>
-        </div>
-    )
-} */
-
-/* const Paragraph = ({el}) => {
-    const [ splitText,setSplitText ] = useState()
-
-    //
-    //
-    //INSTEAD OF SPLITTYPE, SCROLL VERTICALLY WITH OVERFLOW HIDDEN
-    //
-    //
-    
-    // useEffect(() => {
-    //     setSplitText(SplitType.create('.lined',{types: "lines,words"}))
-    //     return () => SplitType.revert('.lined')
-    //     console.log("paragraph")
-    // },[el])
-    
-    // if(splitText){
-    //     gsap.set(splitText.words,{translateY:"120%"})
-    // }
-
-    return (
-        <div className=''>
-            
-        </div>
-    )
-} */
-
-
-const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviousArrow,showNextArrow,setShowNextArrow,postTL}) => {
+const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,setShowPreviousArrow,showNextArrow,setShowNextArrow,postTL}) => {
     const [currentSlide,setCurrentSlide] = useState(0)
     const slideArray = postData.slide.sliderImages
     const [postImages,setPostImages] = useState()
@@ -74,6 +27,7 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
     const bodyTxt = useRef()
     const [ postBody,setPostBody ] = useState()
     const router = useRouter()
+    const {outro,setOutro} = useContext(OutroTimeline)
 
     const props = {
         postBody,
@@ -83,7 +37,7 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
     // Initialize post content
     //
     //    
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         setPostBody(postData)
         gsap.to(`#parallax-0`,{clipPath:"inset(0 0 0 0%)"})
     },[postData])
@@ -96,21 +50,11 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
             let body = new SplitType('.lined',{types:"lines,words"})
             gsap.set([title.words,body.words],{translateY:"120%"})
             // Run Split
+            postTL.current.to('.contentContainer',{translateX:"-50%",ease:"power3.inOut",duration:2})
             postTL.current.to(title.words,{translateY:"0%",duration:2,stagger:0.2,ease:"power3.out"})
             // postTL.current.to(firstSlideText,{translateY:"0%",duration:1,stagger:0.02,ease:"power3.inOut"},'<')
         }
-    },[postBody,postTL])
-    
-    //
-    //Reset current slide when switching posts
-    //
-    //
-    /* useEffect(() => {
-        if(postImages) {
-            gsap.set('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:postImages[0]}})
-        }
-        setCurrentSlide(0)
-    },[postImages]) */
+    },[postBody,postTL,setOutro])
 
     //
     //Initialize the post images
@@ -127,14 +71,14 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
     //
     useEffect(() => {
         (showNextArrow)
-        ?gsap.to('#nextArrow',{opacity:1})
-        :gsap.to('#nextArrow',{opacity:0})
+        ?gsap.to('#nextArrow',{translateX:"0%"})
+        :gsap.to('#nextArrow',{translateX:"100%"})
     },[showNextArrow])
 
     useEffect(() => {
         (showPreviousArrow)
-        ?gsap.to('#previousArrow',{opacity:1})
-        :gsap.to('#previousArrow',{opacity:0})
+        ?gsap.to('#previousArrow',{translateX:"0%"})
+        :gsap.to('#previousArrow',{translateX:"-100%"})
     },[showPreviousArrow])
 
     useEffect(() => {
@@ -156,8 +100,6 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
         gsap.registerPlugin(ScrollToPlugin)
         if(currentSlide<postImages.length-1){
             const switchNext = (gsap.timeline({onComplete:()=>setCurrentSlide(currentSlide+1)}))
-            //switchNext.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:postImages[currentSlide+1]}})
-            // switchNext.to('.paragraphContainer',{scrollTo:{x:p},ease:"power3.in",duration:1},"<")
             switchNext.to(`#parallax-${currentSlide}`,{duration:2,ease:"power3.inOut",objectPosition:'180% 50%',clipPath:"inset(0 100% 0 0)"},"<")
             switchNext.to(`#parallax-${currentSlide+1}`,{duration:2,ease:"power3.inOut",objectPosition:'90% 50%',clipPath:'inset(0 0 0 0%)'},"<")
             switchNext.to(p.querySelectorAll('.word'),{translateY:"120%"},"<")
@@ -173,8 +115,6 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
         gsap.registerPlugin(ScrollToPlugin)
         if(currentSlide>0){
             const switchPrevious = (gsap.timeline({onComplete:()=>setCurrentSlide(currentSlide-1)}))
-            // switchPrevious.to('.sliderContainer',{duration:2,ease:"power3.inOut",scrollTo:{x:postImages[currentSlide-1]}})
-            // switchPrevious.to('.paragraphContainer',{scrollTo:{x:p},ease:"power3.in",duration:1},"<")
             switchPrevious.to(`#parallax-${currentSlide}`,{duration:2,ease:"power3.inOut",objectPosition:'-80% 50%',clipPath:"inset(0 0 0 100%)"},"<")
             switchPrevious.to(`#parallax-${currentSlide-1}`,{duration:2,ease:"power3.inOut",objectPosition:'10% 50%',clipPath:'inset(0 0% 0 0)'},"<")
             switchPrevious.to(p.querySelectorAll('.word'),{translateY:"120%"},"<")
@@ -193,7 +133,6 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
             if (currentSlide<postBody.body.text.split('\\n').length-1){
             const p = document.querySelector(`#slideText-${currentSlide}`)
             gsap.to(p.querySelectorAll('.word'),{translateY:"0%",stagger:0.015,duration:1,ease:"power3.out"})
-            // gsap.to('.paragraphContainer',{scrollTo:{x:p},duration:1,ease:"power3.inOut",delay:0.7})
             }
         }
     },[postBody,currentSlide,postTL])
@@ -203,6 +142,9 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
     //
     //
     const handleChangePost = () => {
+        let tl = gsap.timeline()
+        tl.to('.word',{translateY:"120%"})
+        tl.to('.contentContainer',{translateX:'-50%'})
         setTimeout(()=>router.push(`/posts/${nextPost.slug}`),1000)
     }
 
@@ -212,15 +154,19 @@ const Content = ({postData,setPostData,nextPost,showPreviousArrow,setShowPreviou
             
                 <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[40vh_150px_2fr]'>
                     <div className='col-span-4 md:col-span-8'>
-                        <h1 ref={postTitle} className='postTitle text-white text-[10vw] md:text-[7vw] tracking-tight leading-suis'>{postData.title}</h1>
+                        <h1 ref={postTitle} className='postTitle text-white text-[10vw] md:text-[7vw] tracking-tighter leading-suis font-light uppercase'>{postData.title}</h1>
                     </div>
                     <div className='flex flex-row w-full justify-between row-start-2 col-span-4 md:col-span-12 py-8'>
-                        <div id="previousArrow">
-                            <ArrowRight fn={handlePreviousSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
+                        <div className='overflow-hidden'>
+                            <div id="previousArrow" className='overflow-hidden'>
+                                <ArrowRight fn={handlePreviousSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
+                            </div>
                         </div>
                         {(showNextArrow)&&
-                            <div id="nextArrow">
-                                <ArrowRight fn={handleNextSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
+                            <div className='overflow-hidden'>
+                                <div id="nextArrow" className='overflow-hidden'>
+                                    <ArrowRight fn={handleNextSlide} color={'white'} style={{height:"30px",width:"40px"}} classToAdd={'cursor-pointer'}/>
+                                </div>
                             </div>
                         }
                         {(showNextArrow===false)&&
@@ -268,7 +214,7 @@ const Slide = ({postData}) => {
     )
 }
 
-const Post = ({post,nextPost}) => {
+const Post = ({post,nextPost,previousPost}) => {
     const [postData,setPostData] = useState()
     const changeTheme = useContext(BackgroundTheme)
     const ThemeColors = useContext(ThemeContext)
@@ -279,10 +225,11 @@ const Post = ({post,nextPost}) => {
     const router = useRouter()
     const [key,setKey] = useState('')
     const {outro,setOutro} = useContext(OutroTimeline)
+    const sliderImagesLength = previousPost.slide.sliderImages.length
 
     const props = {
         postData : postData,
-        nextPost : nextPost,
+        nextPost, previousPost,
         showPreviousArrow,setShowPreviousArrow,
         showNextArrow,setShowNextArrow,setPostData,
         postTL
@@ -298,27 +245,24 @@ const Post = ({post,nextPost}) => {
     
     useEffect(() => {
         setPostData(post)
-    },[post])
+    },[post,previousPost])
 
     useEffect(() => {
         changeTheme("rgba(0,0,0,0)")
     },[changeTheme,ThemeColors])
 
-    useEffect(() => {
-        setOutro(postTL.current)
-    },[setOutro])
-
+    console.log(previousPost.slide.sliderImages[sliderImagesLength-1])
     return (
         <Layout>
                 {(postData)&&
                     <main key={key} className='flex overflow-x-scroll w-screen h-screen text-white'>
-                            <div className='block whitespace-nowrap'>
+                            <div className='contentContainer block whitespace-nowrap'>
+                                <div className='relative w-screen h-screen inline-block'>
+                                    <Image src={previousPost.slide.sliderImages[sliderImagesLength-1].url} alt={'wow'} sizes='100vw' fill style={{objectFit:'cover',position:'absolute'}}/>
+                                </div>
                                 <div ref={postWrapper} className='w-screen h-screen inline-block whitespace-normal'>
                                     <Content {...props} />
                                     <Slide {...props} />
-                                </div>
-                                <div className='relative w-screen h-screen inline-block'>
-                                    <Image src={nextPost.slide.sliderImages[0].url} alt={'wow'} sizes='100vw' fill style={{objectFit:'cover',position:'absolute'}}/>
                                 </div>
                             </div>
                     </main>
@@ -364,21 +308,31 @@ export async function getStaticPaths() {
 }
   
 export async function getStaticProps({params}){
-    const posts = await getPostList()
-    const list = posts.data.posts
+    const posts = await getPostList();
+    const list = posts.data.posts;
     const currentIndex = list.findIndex((post) => post.slug === params.slug);
     const currentPost = list[currentIndex];
-    let nextPost
-    if(currentIndex===list.length-1){
-        nextPost = list[0];
+    let nextPost;
+    let previousPost;
+
+    if (currentIndex > 0) {
+        if(currentIndex === list.length-1){
+            nextPost = list[0];
+            previousPost = list[currentIndex - 1];
+        } else {
+            nextPost = list[currentIndex + 1];
+            previousPost = list[currentIndex - 1];
+        }
     } else {
+        previousPost = list[list.length - 1];
         nextPost = list[currentIndex + 1];
     }
 
     return {
         props: {
             post: currentPost,
-            nextPost
+            nextPost,
+            previousPost
         }
     }
     
