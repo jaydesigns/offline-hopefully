@@ -44,9 +44,9 @@ const Credits = () =>{
                         <div className="flex flex-col col-start-2 col-span-3 md:col-start-9 md:col-span-4">
                             <p className="lined">Designed & Developed &mdash; Jay Indino</p>
                             <p className="lined">Programming Language &mdash; JavaScript</p>
-                            <p className="lined">CMS &mdash; Hygraph</p>
-                            <p className="lined">Font &mdash; Switzer by Jeremie Hornus</p>
-                            <p className="lined">Cascade Stylesheet &mdash; Tailwind</p>
+                            <p className="lined">CMS &mdash; Hygraph&trade;</p>
+                            <p className="lined">Font &mdash; Saans&trade; by Displaay&reg;</p>
+                            <p className="lined">Cascade Stylesheet &mdash; Tailwind&reg;</p>
                         </div>
                         <div className="imageContainer relative row-span-2 row-start-1 col-start-2 md:col-start-1 col-span-3 md:col-span-6">
                             <Image
@@ -60,7 +60,7 @@ const Credits = () =>{
                             sizes="(min-width:768px) 100vw, 100vw"/>
                         </div>
                         <div className="row-start-3 col-start-1 col-span-4 md:col-start-5">
-                            <p className="lined">Try this optical illusion that I learned when I was younger. All you have to do is look at the center of the image and hold it for 30 seconds. And then move the cursor over the image or tap it to see what it is.</p><p className="lined"> Is it a colored image or a black and white one? Pretty cool huh!</p>
+                            <p className="lined">Try this optical illusion that I learned when I was younger. All you have to do is look at the center of the image and hold it for 30 seconds. And then move the cursor over the image or tap it to see what it is.</p><br></br><p className="lined"> Is it a colored image or a black and white one? Pretty cool huh!</p>
                         </div>
                     </div>
                 </div>

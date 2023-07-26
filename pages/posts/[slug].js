@@ -190,7 +190,7 @@ const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,s
                         {postBody.body.text.split('\\n').map((el,i) => {
                             return (
                                 <div key={i} className='slideText relative w-full h-full'>
-                                    <p id={`slideText-${i}`} className='lined absolute leading-[1.15]'>{el}</p>
+                                    <p id={`slideText-${i}`} className='lined absolute leading-[1.15] font-thin'>{el}</p>
                                 </div>
                             )
                         })}
