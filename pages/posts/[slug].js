@@ -212,7 +212,7 @@ const Slide = ({postData}) => {
                     return(
                     <div className="absolute slider w-screen h-screen inline-block" key={i}>
                         <div className='relative w-full h-full p-4'>
-                            <Image src={el.url} alt="project cover image" fill style={{objectFit:"cover",clipPath:"inset(0 0 0 100%)"}} id={`parallax-${i}`} className="absolute" sizes='(min-width: 768px) 100vw, (max-width: 768px) 75vw'></Image>
+                            <Image src={el.url} alt="project cover image" fill style={{objectFit:"cover",clipPath:"inset(0 0 0 100%)"}} id={`parallax-${i}`} loading='eager' className="absolute" sizes='(min-width: 768px) 100vw, (max-width: 768px) 75vw'></Image>
                         </div>
                     </div>
                     )
