@@ -160,11 +160,11 @@ const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,s
         <div className='absolute z-50'>
             {(postBody)&&
             
-                <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[40vh_150px_2fr]'>
+                <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[50vh_100px_2fr]'>
                     <div className='col-span-4 md:col-span-8'>
                         <h1 ref={postTitle} className='postTitle text-white text-[10vw] md:text-[6vw] tracking-tighter leading-suis font-light uppercase'>{postData.title}</h1>
                     </div>
-                    <div className='flex flex-row w-full justify-between row-start-2 col-span-4 md:col-span-12 py-8'>
+                    <div className='flex flex-row w-full justify-between row-start-2 col-span-4 md:col-span-12 py-2'>
                         <div className='overflow-hidden'>
                             <div id="previousArrow" className='overflow-hidden'>
                                 <ArrowRight fn={handlePreviousSlide} color={'white'} style={{height:"30px",width:"40px",translateX:"-100%"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
@@ -179,7 +179,7 @@ const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,s
                         }
                         {(showNextArrow===false)&&
                             <button onClick={handleChangePost} className='nextPost overflow-hidden' style={{clipPath:"inset(0 0 0 100%)"}}>
-                                <div className='bg-white px-8 py-4 text-red text-justify'>
+                                <div className='bg-white px-8 py-2 text-red text-justify'>
                                     <h4 className='font-bold'>Next Post</h4>
                                     <h6>{nextPost.title}</h6>
                                 </div>
@@ -190,7 +190,7 @@ const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,s
                         {postBody.body.text.split('\\n').map((el,i) => {
                             return (
                                 <div key={i} className='slideText relative w-full h-full'>
-                                    <p id={`slideText-${i}`} className='lined absolute leading-[1.15] font-thin'>{el}</p>
+                                    <p id={`slideText-${i}`} className='lined absolute text-lg md:text-base leading-[1.15] font-thin'>{el}</p>
                                 </div>
                             )
                         })}
