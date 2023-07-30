@@ -119,7 +119,9 @@ const Cards = ({data}) => {
         window.addEventListener("resize",()=>{
             cardLines.revert();
             runLineSplit()
-        })   
+        })
+
+        gsap.to('.cover',{translateY:"20%",scrollTrigger:{trigger:".selectedWork",start:"top 35%",end:"bottom 10%",scrub:true,pinSpacing:false}})
     },[])
 
     const handlePageChange = (e)=>{
@@ -134,10 +136,10 @@ const Cards = ({data}) => {
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
             {data.map((el,i)=>{
             return(
-            <div key={el.id} className="card flex gap-4 flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.slug}>
-                <Link onClick={handlePageChange} className="h-full" href="project" scroll={false}>
-                    <div className="cover relative h-full overflow-hidden w-full">
-                        <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw"></Image>
+            <div key={el.id} className="card gap-4 flex flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.slug}>
+                <Link onClick={handlePageChange} className="h-full overflow-hidden" href="project" scroll={false}>
+                    <div className="cover relative h-[130%] -top-[20%] overflow-hidden w-full">
+                        <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw" className="projectImage"></Image>
                     </div>
                 </Link>
                 <div className="flex flex-col text-sm h-1/4 md:h-1/6 leading-tight">
