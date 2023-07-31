@@ -161,8 +161,8 @@ const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,s
             {(postBody)&&
             
                 <div className='w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[50vh_100px_2fr]'>
-                    <div className='col-span-4 md:col-span-8'>
-                        <h1 ref={postTitle} className='postTitle text-white text-[10vw] md:text-[6vw] tracking-tighter leading-suis font-medium uppercase'>{postData.title}</h1>
+                    <div className='col-span-4'>
+                        <h1 ref={postTitle} className='postTitle text-white text-[10vw] md:text-[4vw] tracking-tighter leading-suis font-medium uppercase'>{postData.title}</h1>
                     </div>
                     <div className='flex flex-row w-full justify-between row-start-2 col-span-4 md:col-span-12 py-2'>
                         <div className='overflow-hidden'>
