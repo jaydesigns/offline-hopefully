@@ -102,7 +102,7 @@ const Intro = ({app}) => {
             .set(heading1container.current,{translateY:0})
             .set(heading2container.current,{translateY:"-66.66%"})
             marquee.current = gsap.timeline({repeat:-1})
-            .to(heading1container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2,delay:8.5})
+            .to(heading1container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2,delay:3.5})
             .to(heading2container.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2},"-=1.05")
             .to(ampersandContainer.current,{translateY:"-33.33%",ease:"power3.inOut",duration:1.2},"-=1.05")
             .to(heading1container.current,{translateY:"-66.66%",ease:"power3.inOut",duration:1.2},"+=6")

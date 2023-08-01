@@ -18,18 +18,18 @@ const FeatureDescription = (props) => {
         <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/4 text-white pb-2 mix-blend-exclusion">
             <div className="ft-clip absolute flex flex-col gap-4" data-name="offline">
                 <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.offline.title}</h2>
-                <p className="featureDescription lined md:pl-0">{props.obj.offline.desc}</p>
+                <p className="featureDescription lined md:pl-0 text-lg md:text-base">{props.obj.offline.desc}</p>
                 
             </div>
             <div className="ft-clip absolute flex flex-col gap-4" data-name="flexible">
                 <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.flexible.title}</h2>
-                <p className="featureDescription lined md:pl-0">{props.obj.flexible.desc}</p>
+                <p className="featureDescription lined md:pl-0 text-lg md:text-base">{props.obj.flexible.desc}</p>
                 
             </div>
             <div className="ft-clip absolute flex flex-col h-full justify-between" data-name="installable">
                 <div className=" flex flex-col gap-4">
                     <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.installable.title}</h2>
-                    <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
+                    <p className="featureDescription lined md:pl-0 text-lg md:text-base">{props.obj.installable.desc}</p>
                     <div className="z-50 overflow-hidden relative"><div className="cta"><InstallPWA text={"Try it"} /></div></div>
                 </div>
             </div>

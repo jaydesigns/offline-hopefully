@@ -43,6 +43,7 @@ const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,s
     },[postData])
 
     useEffect(() => {
+        let postTL = gsap.timeline()
         if (postBody) {
             let firstParagraph = document.querySelector('#slideText-0')
             let firstSlideText = firstParagraph.querySelectorAll('.word')
@@ -50,15 +51,16 @@ const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,s
             let body = new SplitType('.lined',{types:"lines,words"})
             gsap.set([title.words,body.words],{translateY:"120%"})
             // Run Split
-            postTL.current.to(title.words,{translateY:"0%",stagger:0.2,ease:"power3.out",duration:2})
+            gsap.to(title.words,{translateY:"0%",stagger:0.2,ease:"power3.out",duration:2})
+            postTL.fromTo('.contentContainer',{opacity:0},{opacity:1},"<")
             // postTL.current.to('.contentContainer',{clipPath:"inset(0% 0 0 0)",ease:"power3.inOut"},"<")
             // postTL.current.to(firstSlideText,{translateY:"0%",duration:1,stagger:0.02,ease:"power3.inOut"},'<')
         }
+        setOutro(postTL)
     },[postBody,postTL,setOutro])
 
     //
     //Initialize the post images
-    //
     //
     useEffect(() => {
         setPostImages(document.querySelectorAll(".slider"))
@@ -67,7 +69,6 @@ const Content = ({postData,setPostData,nextPost,previousPost,showPreviousArrow,s
 
     //
     //SHOW OR HIDE ARROWS
-    //
     //
     useEffect(() => {
         (showNextArrow)
@@ -257,11 +258,11 @@ const Post = ({post,nextPost,previousPost}) => {
 
     useEffect(() => {
         changeTheme("rgba(0,0,0,0)")
-    },[changeTheme,ThemeColors])
+    },[changeTheme])
 
-    useEffect(() => {
+    /* useEffect(() => {
         setOutro(postTL.current)
-    },[setOutro])
+    },[setOutro]) */
 
     // console.log(previousPost.slide.sliderImages[sliderImagesLength-1])
     return (

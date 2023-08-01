@@ -46,7 +46,7 @@ const HeaderMenu = () => {
     const handleRouteChange = (e)=>{
         e.preventDefault()
         const tg = e.target.closest('a').getAttribute('href')
-        gsap.to('.contentContainer',{clipPath:"inset(0 100% 0 0)",ease:"power3.inOut",duration:1})
+        // gsap.to('.contentContainer',{clipPath:"inset(0 100% 0 0)",ease:"power3.inOut",duration:1})
         outro.reverse().then(()=>router.push(tg))
     }
 

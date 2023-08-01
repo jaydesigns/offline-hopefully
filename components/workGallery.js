@@ -68,13 +68,13 @@ const Categories = ({data,handleCategorySelection}) => {
                     <div className="relative w-5 h-5 mix-blend-exclusion">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
-                    <h6 className="font-medium mix-blend-exclusion">Type of Work</h6>
+                    <h6 className="font-medium mix-blend-exclusion text-lg md:text-base">Type of Work</h6>
                 </div>
                 <div onClick={handleChangeClassification("tech")} className="classifications g-clip cursor-pointer flex gap-4 md:gap-10 justify-start grow">
                     <div className="relative w-5 h-5 mix-blend-exclusion">
                         <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]" ref={plusSign}><span className="text-3xl">+</span></div>
                     </div>
-                    <h6 className="font-medium mix-blend-exclusion">Technology Used</h6>
+                    <h6 className="font-medium mix-blend-exclusion text-lg md:text-base">Technology Used</h6>
                 </div>
             </div>
             <ul ref={selection} className="flex flex-col">
@@ -83,7 +83,7 @@ const Categories = ({data,handleCategorySelection}) => {
                     <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="gallery-border category border-b border-32 cursor-pointer hover:text-red">
                         <div className="g-clip flex gap-4 md:gap-10 overflow-hidden">
                             <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
-                            <span className="inline-block">{el.categoryName}</span>
+                            <span className="inline-block hover:text-red text-lg md:text-base">{el.categoryName}</span>
                         </div>
                     </li>
                 )}
@@ -144,9 +144,9 @@ const Cards = ({data}) => {
                 </Link>
                 <div className="flex flex-col text-sm h-1/4 md:h-1/6 leading-tight">
                     <div className="w-full">
-                        <h6 className="font-semibold">{el.title}</h6>
+                        <h6 className="font-semibold text-lg md:text-base">{el.title}</h6>
                     </div>
-                    <div className="font-light text-darkGrey">
+                    <div className="font-light text-lg md:text-base text-darkGrey">
                         <h6>
                             {el.categories.map(x => {
                                 return (
