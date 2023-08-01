@@ -41,7 +41,7 @@ const Credits = () =>{
                 </div>
                 <div className="grow flex flex-col justify-between mb-20">
                     <div className="grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_200px_auto] py-4 gap-4">
-                        <div className="flex flex-col col-start-2 col-span-3 md:col-start-9 md:col-span-4 text-lg md:text-base">
+                        <div className="flex flex-col col-start-2 col-span-3 md:col-start-9 md:col-span-4">
                             <p className="lined">Designed & Developed &mdash; Jay Indino</p>
                             <p className="lined">Programming Language &mdash; JavaScript</p>
                             <p className="lined">CMS &mdash; Hygraph&trade;</p>
@@ -60,7 +60,7 @@ const Credits = () =>{
                             sizes="(min-width:768px) 100vw, 100vw"/>
                         </div>
                         <div className="row-start-3 col-start-1 col-span-4 md:col-start-5">
-                            <p className="lined text-lg md:text-base">Try this optical illusion that I learned when I was younger. All you have to do is look at the center of the image and hold it for 30 seconds. And then move the cursor over the image or tap it to see what it is.</p><br></br><p className="lined"> Is it a colored image or a black and white one? Pretty cool huh!</p>
+                            <p className="lined">Try this optical illusion that I learned when I was younger. All you have to do is look at the center of the image and hold it for 30 seconds. And then move the cursor over the image or tap it to see what it is.</p><br></br><p className="lined"> Is it a colored image or a black and white one? Pretty cool huh!</p>
                         </div>
                     </div>
                 </div>

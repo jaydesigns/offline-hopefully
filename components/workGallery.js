@@ -144,9 +144,9 @@ const Cards = ({data}) => {
                 </Link>
                 <div className="flex flex-col text-sm h-1/4 md:h-1/6 leading-tight">
                     <div className="w-full">
-                        <h6 className="font-semibold text-lg md:text-base">{el.title}</h6>
+                        <h6 className="font-semibold">{el.title}</h6>
                     </div>
-                    <div className="font-light text-lg md:text-base text-darkGrey">
+                    <div className="font-light text-darkGrey">
                         <h6>
                             {el.categories.map(x => {
                                 return (

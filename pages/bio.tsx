@@ -52,22 +52,22 @@ const Bio = () => {
                         <h4 className="clip hidden md:block">01</h4>
                         <h2 className="clip font-semibold text-xl md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Education</h2>
                         <ul className='clip col-start-3 md:col-start-9 col-span-3'>
-                            <li className="text-[16px] md:text-sm leading-tight">Design &ndash; BYU&mdash;Hawai&apos;i</li>
-                            <li className="text-[16px] md:text-sm leading-tight">MERN &ndash; Helsingin Yliopisto</li>
+                            <li className="text-sm leading-tight">Design &ndash; BYU&mdash;Hawai&apos;i</li>
+                            <li className="text-sm leading-tight">MERN &ndash; Helsingin Yliopisto</li>
                         </ul>
                     </div>
                     <div className="grid grid-cols-4 md:grid-cols-12">
                         <h4 className="clip hidden md:block">02</h4>
                         <h2 className="clip font-semibold text-xl md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Awards</h2>
                         <div className='clip col-start-3 md:col-start-9 col-span-3'>
-                            <p className="text-[16px] md:text-sm leading-tight">Awwwards &ndash; Honorable Mention for Portfolio 2020</p>
-                            <p className="text-[16px] md:text-sm leading-tight">Awwwards &ndash; Developer Excellence - for Portfolio 2020</p>
+                            <p className="text-sm leading-tight">Awwwards &ndash; Honorable Mention for Portfolio 2020</p>
+                            <p className="text-sm leading-tight">Awwwards &ndash; Developer Excellence - for Portfolio 2020</p>
                         </div>
                     </div>
                     <div className="grid grid-cols-4 md:grid-cols-12">
                         <h4 className="clip hidden md:block">03</h4>
                         <h2 className="clip font-semibold text-xl md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Skills</h2>
-                        <ul className="clip text-[16px] md:text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
+                        <ul className="clip text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
                             <li>Visual Design</li>
                             <li>Front-end Development &#40;React,NextJS&#41;</li>
                             <li>Back-end Development &#40;ExpressJS,NoSQL&#41;</li>
@@ -78,14 +78,14 @@ const Bio = () => {
                     <div className="grid grid-cols-4 md:grid-cols-12">
                         <h4 className="clip hidden md:block">04</h4>
                         <h2 className="clip font-semibold text-xl md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Style</h2>
-                        <ul className="clip text-[16px] md:text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
+                        <ul className="clip text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
                             <li>I&apos;ve always been fascinated by the Swiss international Typographic Style. Although I experiment with other design aesthetics, the objectivity and no-nonsense approach of the Swiss design made me learn more about it and its proponents.</li>
                         </ul>
                     </div>
                     <div className="grid grid-cols-4 md:grid-cols-12">
                         <h4 className="clip hidden md:block">05</h4>
                         <h2 className="clip font-semibold text-xl leading-[1] md:text-3xl col-start-1 md:col-start-5 md:col-span-3">Interests/<br></br>Hobbies</h2>
-                        <ul className="clip text-[16px] md:text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
+                        <ul className="clip text-sm leading-tight col-start-3 md:col-start-9 col-span-3">
                             <li>&mdash; When I&apos;m not learning programming, I&apos;ll be out in the gym playing basketball.
                                 &mdash; I also like to play chess at Chess.com. If you want to play against me, I&apos;ll have to warn you tho I have a 687 ELO rating.
                                 &mdash; When I was in Hawaii, I like to go surfing.
