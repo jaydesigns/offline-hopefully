@@ -259,7 +259,7 @@ const Post = ({post,nextPost,previousPost}) => {
 
     useEffect(() => {
         let postTL = gsap.timeline()
-        postTL.fromTo('.contentContainer',{opacity:0},{opacity:1})
+        postTL.fromTo('.contentContainer',{opacity:0},{opacity:1,duration:1})
         setOutro(postTL)
     },[setOutro])
 
