@@ -104,7 +104,7 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
         let tl = gsap.timeline()
         tl.to('.word',{translateY:"120%",duration:1})
         tl.to('#main',{clipPath:"inset(51% 0 50% 0)",duration:1.2,ease:"ease3.inOut"})
-        setTimeout(()=>router.push(`/posts/${nextPost.slug}`),2200)
+        setTimeout(()=>router.push(`/posts/${nextPost.slug}`),1200)
     }
 
     useEffect(() => {
@@ -123,8 +123,8 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
 
     return (
         <div className='text-white absolute z-10 w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[50vh_100px_2fr]'>
-            <div className='col-span-4'>
-                <h1 className='lined postTitle text-white text-[10vw] md:text-[4vw] tracking-tighter leading-suis font-medium uppercase'>{post.title}</h1>
+            <div className='col-span-4 md:col-span-8'>
+                <h1 className='lined postTitle text-white text-[13vw] md:text-[10vw] tracking-tighter leading-suis font-extrabold'>{post.title}</h1>
             </div>
             <div className='flex flex-row w-full justify-between row-start-2 col-span-4 md:col-span-12 py-2'>
                 <div className='overflow-hidden'>

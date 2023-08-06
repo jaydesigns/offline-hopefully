@@ -55,7 +55,7 @@ const Links = () => {
         <>
         <div className="flex flex-col p-4">
             <div style={{width:0}} className="linkBorder border-32 border-b overflow-y-hidden">
-                <h1 className="title text-MED font-semibold">Links</h1>
+                <h1 className="title text-MED md:text-SM font-extrabold">Links</h1>
             </div>
             <div className="flex overflow-y-hidden">
                 <div className="slideDown grow"><InstallPWA text={"Install"}/></div>

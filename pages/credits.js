@@ -37,10 +37,10 @@ const Credits = () =>{
         <Layout>
             <div className="text-white p-4 w-screen h-screen flex flex-col">
                 <div className="creditBorder border-grey border-b py-4 shrink overflow-hidden">
-                    <h1 className="creditTitle text-[28vw] md:text-[16vw] leading-suis tracking-tighter">Credits</h1>
+                    <h1 className="creditTitle text-MED md:text-SM leading-suis tracking-tighter font-extrabold">Credits</h1>
                 </div>
                 <div className="grow flex flex-col justify-between mb-20">
-                    <div className="grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_200px_auto] py-4 gap-4">
+                    <div className="grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_40vh_auto] py-4 gap-4">
                         <div className="flex flex-col col-start-2 col-span-3 md:col-start-9 md:col-span-4">
                             <p className="lined">Designed & Developed &mdash; Jay Indino</p>
                             <p className="lined">Programming Language &mdash; JavaScript</p>
