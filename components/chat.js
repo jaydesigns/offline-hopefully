@@ -133,7 +133,7 @@ const ChatJPT =()=>{
         gsap.registerPlugin(ScrollTrigger)
         let chatTL = gsap.timeline()
         chatTL.fromTo('.chat-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
-        chatTL.fromTo('.chat-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:2},"<")
+        chatTL.fromTo('.chat-border',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2},"<")
 
         ScrollTrigger.create({
             trigger: interactiveContact.current,

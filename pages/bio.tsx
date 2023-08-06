@@ -35,15 +35,17 @@ const Bio = () => {
         themeChange(`${ThemeColors.grey}`)
     },[])
 
+    gsap.set(bioContainer.current,{opacity:1})
+
     return(
-        <main ref={bioContainer} className={`bioContainer`}>
+        <main ref={bioContainer} className={`bioContainer`} style={{opacity:0}}>
             <div className="p-4 text-black pb-28">
                 <div ref={givenName} className="text-bio tracking-tighter uppercase font-semibold grid grid-cols-12 border-b-2 pt-2 border-darkGrey overflow-hidden">
                     <span className='clip col-span-7'>Heber</span><span className="clip col-start-9 col-span-4">Jay</span>
                 </div>
                 <div ref={lastName} className="text-bio tracking-tighter uppercase font-semibold grid grid-cols-12 border-b-2 pt-2 pb-2 border-darkGrey overflow-hidden">
                     <div className="clip relative w-24 md:w-48 h-full ">
-                        <Image src={'/images/PORTRAIT-sq.jpg'} alt="jay indino monochromatic portrait" fill style={{objectFit:"cover"}} className="col-start-1 col-span-1"></Image>
+                        <Image src={'/images/PORTRAIT-sq.jpg'} alt="jay indino monochromatic portrait" fill style={{objectFit:"cover"}} className="col-start-1 col-span-1" sizes='(min-width: 768px) 100vw, (max-width: 768px) 75vw'></Image>
                     </div>
                     <span className="clip col-start-5 col-end-13">Indino</span>
                 </div>

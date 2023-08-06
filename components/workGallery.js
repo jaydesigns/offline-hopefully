@@ -93,7 +93,7 @@ const Categories = ({data,handleCategorySelection}) => {
                     <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="gallery-border category border-b border-32 cursor-pointer hover:text-red">
                         <div className="g-clip flex gap-4 md:gap-10 overflow-hidden">
                             <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
-                            <span className="inline-block">{el.categoryName}</span>
+                            <span className="inline-block hover:text-red text-lg md:text-base">{el.categoryName}</span>
                         </div>
                     </li>
                 )}
@@ -208,7 +208,7 @@ const WorkGallery = ({data}) => {
         })
 
         let galleryTL = gsap.timeline()
-        galleryTL.fromTo('.gallery-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:1,stagger:0.15})
+        galleryTL.fromTo('.gallery-border',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:1,stagger:0.15})
         galleryTL.fromTo(['.g-clip','.cardBox'],{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:1},"-=1.5")
 
         ScrollTrigger.create({

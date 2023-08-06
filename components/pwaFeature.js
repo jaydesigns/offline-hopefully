@@ -121,7 +121,7 @@ const PWAFeatures = () => {
 
         let ftTL = gsap.timeline()
         ftTL.fromTo('.ft-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
-        ftTL.fromTo('.ft-border',{clipPath:"inset(0 100% 0 0)"},{clipPath:"inset(0 0% 0 0)",ease:"power3.out",duration:2},"<")
+        ftTL.fromTo('.ft-border',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2},"<")
 
         ScrollTrigger.create({
             trigger: '.featureSection',

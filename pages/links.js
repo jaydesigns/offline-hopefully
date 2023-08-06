@@ -44,9 +44,9 @@ const Links = () => {
         gsap.set(".clip",{clipPath:"inset(100% 0 0 0)"})
 
         linkTL.to('.linkBorder',{width:"100%",duration:1,ease:"power3.inOut"})
-        linkTL.to('.title',{translateY:"0%",duration:1,ease:"power3.inOut"},"-=0.5")
+        linkTL.to('.title',{translateY:"0%",duration:1,ease:"power3.inOut"},"<")
         linkTL.to('.slideDown',{translateY:"0%",duration:1,stagger:0.15,ease:"power3.inOut"},"<")
-        linkTL.to('.clip',{clipPath:"inset(0% 0 0 0)",duration:1,stagger:0.15,ease:"power3.inOut"},"-=0.5")
+        linkTL.to('.clip',{clipPath:"inset(0% 0 0 0)",duration:1,stagger:0.15,ease:"power3.inOut"},"-=1")
         setOutro(linkTL)
     },[setOutro,linkData])
 
