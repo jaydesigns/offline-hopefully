@@ -83,7 +83,7 @@ const Categories = ({data,handleCategorySelection}) => {
                     <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="gallery-border category border-b border-32 cursor-pointer hover:text-red">
                         <div className="g-clip flex gap-4 md:gap-10 overflow-hidden">
                             <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
-                            <span className="inline-block hover:text-red text-lg md:text-base">{el.categoryName}</span>
+                            <span className="g-line inline-block hover:text-red text-lg md:text-base">{el.categoryName}</span>
                         </div>
                     </li>
                 )}
@@ -93,7 +93,7 @@ const Categories = ({data,handleCategorySelection}) => {
                     <li onClick={()=>handleCategorySelection(el)} key={i} id={el.id} className="gallery-border category border-b border-32 cursor-pointer hover:text-red">
                         <div className="g-clip flex gap-4 md:gap-10 overflow-hidden">
                             <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">{el.categoryName[0]}</h6></div>
-                            <span className="inline-block hover:text-red text-lg md:text-base">{el.categoryName}</span>
+                            <span className="g-line inline-block hover:text-red text-lg md:text-base">{el.categoryName}</span>
                         </div>
                     </li>
                 )}
@@ -111,16 +111,6 @@ const Cards = ({data}) => {
     const {outro,setOutro} = useContext(OutroTimeline)
 
     useEffect(()=>{
-        let cardLines;
-        const runLineSplit = () =>{
-            cardLines = new SplitType(".cardText",{types:"lines,words"})
-        }
-        runLineSplit()
-        window.addEventListener("resize",()=>{
-            cardLines.revert();
-            runLineSplit()
-        })
-
         gsap.to('.cover',{translateY:"20%",scrollTrigger:{trigger:".selectedWork",start:"top 35%",end:"bottom 10%",scrub:true,pinSpacing:false}})
     },[])
 
@@ -144,10 +134,10 @@ const Cards = ({data}) => {
                 </Link>
                 <div className="flex flex-col text-sm h-1/4 md:h-1/6 leading-tight">
                     <div className="w-full">
-                        <h6 className="font-semibold">{el.title}</h6>
+                        <h6 className="g-line font-semibold">{el.title}</h6>
                     </div>
                     <div className="font-light text-darkGrey">
-                        <h6>
+                        <h6 className="g-line">
                             {el.categories.map(x => {
                                 return (
                                     x.categoryName
@@ -189,6 +179,10 @@ const WorkGallery = ({data}) => {
     const ThemeColors = useContext(ThemeContext)
     const themeChange = useContext(BackgroundTheme)
 
+    useEffect(() => {
+        
+    },[])
+
     useIsomorphicLayoutEffect(()=>{
         gsap.registerPlugin(Draggable)
         const ctx = gsap.context(() => {
@@ -207,9 +201,21 @@ const WorkGallery = ({data}) => {
             onToggle: (self)=>self.isActive? themeChange(`${ThemeColors.black}`) : themeChange(`${ThemeColors.grey}`)
         })
 
+        let cardLines;
+        const runLineSplit = () =>{
+            cardLines = new SplitType(".g-line",{types:"lines,words"})
+        }
+        runLineSplit()
+        window.addEventListener("resize",()=>{
+            cardLines.revert();
+            runLineSplit()
+        })
+        gsap.set(cardLines.words,{translateY:"120%"})
+
         let galleryTL = gsap.timeline()
         galleryTL.fromTo('.gallery-border',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:1,stagger:0.15})
         galleryTL.fromTo(['.g-clip','.cardBox'],{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:1},"-=1.5")
+        galleryTL.fromTo(cardLines.words,{translateY:"120%"},{translateY:"0%",ease:"power3.out",stagger:0.03,duration:1},"<")
 
         ScrollTrigger.create({
             trigger: wholeGallery.current,

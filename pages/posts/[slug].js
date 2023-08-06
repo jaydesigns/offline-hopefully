@@ -91,7 +91,7 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
         const p = document.querySelector(`#slideText-0`)
         const title = document.querySelector(`.postTitle`)
         const postIntroTL = gsap.timeline({delay:1})
-        postIntroTL.to("#main",{clipPath:"inset(0% 0 0% 0)",duration:1.2,ease:"power3.out"})
+        postIntroTL.to("#main",{clipPath:"inset(0% 0 0% 0)",duration:1.2,ease:"power3.inOut"})
         gsap.to(p.querySelectorAll(".word"),{translateY:"0%",stagger:0.02,duration:1,ease:"power3.out",delay:2})
         gsap.to(title.querySelectorAll(".word"),{translateY:"0%",stagger:0.02,duration:2,ease:"power3.out",delay:2})
         setOutro(postIntroTL)
@@ -103,8 +103,8 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
     const handleChangePost = () => {
         let tl = gsap.timeline()
         tl.to('.word',{translateY:"120%",duration:1})
-        tl.to('#main',{clipPath:"inset(51% 0 50% 0)",duration:1.2,ease:"ease3.in"})
-        setTimeout(()=>router.push(`/posts/${nextPost.slug}`),1000)
+        tl.to('#main',{clipPath:"inset(51% 0 50% 0)",duration:1.2,ease:"ease3.inOut"})
+        setTimeout(()=>router.push(`/posts/${nextPost.slug}`),2200)
     }
 
     useEffect(() => {
