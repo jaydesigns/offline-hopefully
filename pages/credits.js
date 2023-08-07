@@ -21,7 +21,7 @@ const Credits = () =>{
             text = new SplitType(".lined",{types:'lines,words'})
         }
         runSplit()
-        gsap.set([text.words,'.creditTitle'],{translateY:"120%"})
+        gsap.set([text.words,'.creditTitle'],{translateY:"180%"})
         creditsTL.fromTo(".imageContainer",{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.inOut",duration:2})
         creditsTL.fromTo(".creditBorder",{width:"0"},{width:"100%"},"<")
         creditsTL.to(['.creditTitle',text.words],{translateY:"0%",stagger:0.008,duration:0.5},"-=1")
