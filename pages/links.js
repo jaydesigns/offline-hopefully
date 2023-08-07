@@ -7,12 +7,19 @@ import client from "../apolloClient"
 import InstallPWA from "../components/installPWA"
 import { OutroTimeline } from "./_app"
 import { gsap } from "gsap"
+import { useIsomorphicLayoutEffect } from "react-use"
 
 const Links = () => {
     const themeChange = useContext(BackgroundTheme)
     const ThemeColors = useContext(ThemeContext)
     const [ linkData,setLinkData ] = useState()
     const {outro,setOutro} = useContext(OutroTimeline)
+
+    useIsomorphicLayoutEffect(() => {
+        gsap.set(".title",{translateY:"120%"})
+        gsap.set(".slideDown",{translateY:"-120%"})
+        gsap.set(".clip",{clipPath:"inset(100% 0 0 0)"})
+    },[])
 
     useEffect(() => {
         themeChange(`${ThemeColors.grey}`)
@@ -39,14 +46,11 @@ const Links = () => {
 
     useEffect(() => {
         const linkTL = gsap.timeline()
-        gsap.set(".title",{translateY:"120%"})
-        gsap.set(".slideDown",{translateY:"-120%"})
-        gsap.set(".clip",{clipPath:"inset(100% 0 0 0)"})
 
         linkTL.to('.linkBorder',{width:"100%",duration:1,ease:"power3.inOut"})
         linkTL.to('.title',{translateY:"0%",duration:1,ease:"power3.inOut"},"<")
         linkTL.to('.slideDown',{translateY:"0%",duration:1,stagger:0.15,ease:"power3.inOut"},"<")
-        linkTL.to('.clip',{clipPath:"inset(0% 0 0 0)",duration:1,stagger:0.15,ease:"power3.inOut"},"-=1")
+        linkTL.fromTo('.clip',{clipPath:"inset(100% 0 0 0)"},{clipPath:"inset(0% 0 0 0)",duration:1,stagger:0.15,ease:"power3.inOut"},"-=1")
         setOutro(linkTL)
     },[setOutro,linkData])
 
@@ -54,8 +58,8 @@ const Links = () => {
     return(
         <>
         <div className="flex flex-col p-4">
-            <div style={{width:0}} className="linkBorder border-32 border-b overflow-y-hidden">
-                <h1 className="title text-MED md:text-SM font-extrabold">Links</h1>
+            <div style={{width:0}} className="linkBorder border-32 border-b overflow-y-hidden pb-2">
+                <h1 className="title text-5xl md:text-SM font-semibold">Links</h1>
             </div>
             <div className="flex overflow-y-hidden">
                 <div className="slideDown grow"><InstallPWA text={"Install"}/></div>

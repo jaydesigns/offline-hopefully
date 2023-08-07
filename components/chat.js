@@ -147,7 +147,7 @@ const ChatJPT =()=>{
         <div ref={interactiveContact} className="interactiveContact snap-start w-screen h-screen text-black p-4 pt-4 grid grid-rows-contact grid-cols-4 md:grid-cols-12">
             <div className="flex flex-col justify-start col-span-4 md:col-span-12">
                 <div className="chat-border border-b border-black py-2 col-span-4">
-                    <h4 className="text-MED md:text-SM tracking-tight font-extrabold">Let&apos;s <br></br>Connect</h4>
+                    <h4 className="text-MED md:text-SM tracking-tight font-semibold">Let&apos;s <br></br>Connect</h4>
                 </div>
             </div>
             <div className="chat-clip col-span-6 md:col-start-4 row-start-2 pt-4">

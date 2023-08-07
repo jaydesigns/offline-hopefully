@@ -36,8 +36,8 @@ const Credits = () =>{
     return(
         <Layout>
             <div className="text-white p-4 w-screen h-screen flex flex-col">
-                <div className="creditBorder border-grey border-b py-4 shrink overflow-hidden">
-                    <h1 className="creditTitle text-MED md:text-SM leading-suis tracking-tighter font-extrabold">Credits</h1>
+                <div className="creditBorder pb-2 border-grey border-b overflow-hidden">
+                    <h1 className="creditTitle text-5xl md:text-SM font-semibold">Credits</h1>
                 </div>
                 <div className="grow flex flex-col justify-between mb-20">
                     <div className="grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_40vh_auto] py-4 gap-4">

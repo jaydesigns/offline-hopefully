@@ -1,5 +1,4 @@
 import { useCallback, useEffect,useRef,useState,useContext} from "react";
-//import img from "../assets/DSC_0120_2.JPG";
 import ArrowRight from "./arrowRight";
 import gsap from "gsap";
 import MotionReel from "./heroCarousel";
@@ -39,7 +38,7 @@ const TextSlider = ({wrap,refr,heading,gridPos,firstWord,secondWord}) => {
     let classList = 'overflow-hidden overflow-y-hidden relative align-baseline'
     let headingList = `${heading} text-[11.5vw] md:text-[10.5vw] font-extrabold uppercase text-black tracking-tighter leading-none`
     return (
-        <div className={`clip ${gridPos} overflow-hidden realtive`}>
+        <div className={`clip titleClip ${gridPos} overflow-hidden realtive`}>
             <div ref={wrap} className={classList}>
                 <div ref={refr} className="flex flex-col flex-nowrap">
                     <span className={headingList}>
@@ -111,28 +110,6 @@ const Intro = ({app}) => {
         },introductionContent)
         return ()=>ctx.revert();
     },[])
-
-    // splashAnimate.current =()=>{
-    //     gsap.set(".word",{translateY:"2em"})
-    //     gsap.set(".entra",{translateY:"2em"})
-    //     gsap.set(heading1Wrapper.current,{translateY:"33.33%"})
-    //     gsap.set(heading2Wrapper.current,{translateY:"-33.33%"})
-    //     gsap.set(ampersandWrapper.current,{translateY:"-110%"})
-    //     let tl = gsap.timeline()
-    //     tl.to(introductionContent.current,{opacity:1})
-    //     tl.fromTo(".reel",{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",duration:2,ease:"power4.inOut"})        
-    //     tl.to(heading1Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"<")
-    //     tl.to(heading2Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.85")          
-    //     tl.to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
-    //     tl.to(".word",{translateY:0,duration:1,stagger:0.02},"<")
-    //     tl.to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
-    //     return tl
-    // }
-
-    //
-    //This timeline here gets rendered everytime the intro is rendered
-    //including the splash animate
-    //
     
     const introTL = useCallback(() => {
         let tl = gsap.timeline()
@@ -141,6 +118,7 @@ const Intro = ({app}) => {
         tl.to(heading1Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"<")
         tl.to(heading2Wrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.85")          
         tl.to(ampersandWrapper.current,{translateY:0,duration:2,ease:"power3.inOut"},"-=1.7")
+        tl.fromTo('.titleClip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)"},"<")
         tl.to(introP.current.querySelectorAll(".word"),{translateY:0,duration:1,stagger:0.02},"<")
         tl.to(".entra",{translateY:0, stagger: 0.2, ease:"power3.inOut", duration: 2},"<")
         setOutro(tl)

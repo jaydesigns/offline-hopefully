@@ -52,7 +52,7 @@ const PWAFeatures = () => {
         flexible: {
             cover: "/images/PXL_20221224_211305839-b&w.jpg",
             title: "Modern Web",
-            desc: "I've designed and developed this app with performance in mind. Through composable architecture, this app is faster, more secure, and scalable."
+            desc: "I've designed and developed this app with performance in mind. Through composable architecture, this app is faster, more secure, and scalable than traaditional websites."
         }
     }
     //const [featureSVG,setFeatureSVG] = useState()
@@ -119,12 +119,15 @@ const PWAFeatures = () => {
             splitText()
             gsap.set(pwa.words,{translateY:"120%"})
             setSelectedFeature('installable')
+            let selected = document.querySelector(`[data-name='${selectedFeature}']`)
+            gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         })
 
+        let selected = document.querySelector(`[data-name='${selectedFeature}']`)
         let ftTL = gsap.timeline()
         ftTL.fromTo('.ft-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
         ftTL.fromTo('.ft-border',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2},"<")
-        //ftTL.fromTo(pwa.words,{translateY:"120%"},{translateY:"0%",ease:"power3.out",duration:1,stagger:0.03},"<")
+        ftTL.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"},"<")
 
         ScrollTrigger.create({
             trigger: '.featureSection',
@@ -198,19 +201,19 @@ const PWAFeatures = () => {
         <div ref={featureSection} className="featureSection snap-start relative flex flex-col gap-4 justify-between w-screen h-screen p-4 pb-32 text-white">
             <div className="ft-border flex w-full border-b border-white py-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
-                <h4 className="w-1/2 md:w-1/4 text-MED md:text-SM font-extrabold">Not just<br></br>a Website</h4>
+                <h4 className="w-1/2 md:w-1/4 text-MED md:text-SM font-semibold">Not just<br></br>a Website</h4>
                 <div className="flex flex-col md:flex-row flex-auto">
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">I</h6></div>
-                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="lined feature cursor-pointer grow font-medium hover:text-red">Installable</span>
+                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium hover:text-red">Installable</span>
                     </div>
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">O</h6></div>
-                        <span onClick={handleImageSwitch("offline")} data-index="offline" className="lined feature cursor-pointer grow font-medium hover:text-red">Works Offline</span>
+                        <span onClick={handleImageSwitch("offline")} data-index="offline" className="feature cursor-pointer grow font-medium hover:text-red">Works Offline</span>
                     </div>
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">A</h6></div>
-                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="lined feature cursor-pointer grow font-medium hover:text-red">Smoother Experience</span>
+                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium hover:text-red">Smoother Experience</span>
                     </div>
                 </div>
             </div>
