@@ -64,7 +64,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
           }
         })
       })
-    mm.add("(max-width:768px)",() => {
+    /* mm.add("(max-width:768px)",() => {
         ScrollTrigger.create({
           trigger: "body",
           // onUpdate: self => console.log(self.progress),
@@ -73,7 +73,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
             directional: false
           }
         })
-      })
+      }) */
     })
     return () => ctx.revert();
   },[])
@@ -130,12 +130,12 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
           <meta name="twitter:card" content="summary" />
           <meta name="twitter:url" content="https://jayindino.com" />
           <meta name="twitter:title" content="Heber Jay Indino" />
-          <meta name="twitter:description" content="Award-winning Graphic Designer and Creative Developer based in Utah who has expertise in branding, web design and web development and specializes in digital experiences, creative development, and web app development." />
+          <meta name="twitter:description" content="Award-winning Graphic Designer and Creative Developer who has expertise in branding, web design and web development and specializes in digital experiences, creative development, and web app development. He currently does web design and web developent in the Utah, idaho, Nevada, Colorado, Arizona area." />
           <meta name="twitter:image" content="https://jayindino.com/icons/android-chrome-192x192.png" />
           <meta name="twitter:creator" content="@DavidWShadow" />
           <meta property="og:type" content="website" />
           <meta property="og:title" content="Heber Jay Indino" />
-          <meta property="og:description" content="Award-winning Graphic Designer and Creative Developer based in Utah who has expertise in branding, web design and web development and specializes in digital experiences, creative development, and web app development." />
+          <meta property="og:description" content="Award-winning Graphic Designer and Creative Developer who has expertise in branding, web design and web development and specializes in digital experiences, creative development, and web app development. He currently does web design and web developent in the Utah, idaho, Nevada, Colorado, Arizona area." />
           <meta property="og:site_name" content="Heber Jay Indino" />
           <meta property="og:url" content="https://jayindino.com" />
           <meta property="og:image" content="https://jayindino.com/icons/apple-touch-icon.png" />

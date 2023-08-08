@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { useEffect, useState, useRef, useCallback,useContext } from "react"
+import Link from "next/link"
 import LinkText from './linkText'
 import gsap from "gsap"
 import SplitType from "split-type"
@@ -16,21 +17,21 @@ const FeatureDescription = (props) => {
     //
     return (
         <div ref={props.featureText} className="relative md:absolute md:bottom-32 w-full md:w-1/4 pr-6 h-1/3 md:h-1/4 text-white pb-2 mix-blend-exclusion">
-            <div className="ft-clip absolute flex flex-col gap-4" data-name="offline">
+            <div className="ol ft-clip absolute flex flex-col gap-4" data-name="offline">
                 <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.offline.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.offline.desc}</p>
-                
+                <div className="overflow-hidden relative h-6"><Link href="mailto:jayindinodesigns@gmail.com" className="offcta absolute min-h-min"><LinkText str={"Ask me about it"} /></Link></div>
             </div>
-            <div className="ft-clip absolute flex flex-col gap-4" data-name="flexible">
+            <div className="flx ft-clip absolute flex flex-col gap-4" data-name="flexible">
                 <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.flexible.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.flexible.desc}</p>
-                
+                <div className="overflow-hidden relative h-6"><Link href="mailto:jayindinodesigns@gmail.com" className="flexcta absolute min-h-min"><LinkText str={"Ask me about it"} /></Link></div>
             </div>
-            <div className="ft-clip absolute flex flex-col h-full justify-between" data-name="installable">
+            <div className="inst ft-clip absolute flex flex-col h-full justify-between" data-name="installable">
                 <div className=" flex flex-col gap-4">
                     <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.installable.title}</h2>
                     <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
-                    <div className="z-50 overflow-hidden relative"><div className="cta"><InstallPWA text={"Try it"} /></div></div>
+                    <div className="overflow-hidden relative"><div className="cta"><InstallPWA text={"Try it"} /></div></div>
                 </div>
             </div>
         </div>
@@ -191,8 +192,24 @@ const PWAFeatures = () => {
         tl.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         if(selectedFeature!=='installable'){
             tl.to('.cta',{translateY:"120%"},"<")
+            tl.to('.inst',{zIndex:"0"},"<")
         } else {
             tl.to('.cta',{translateY:"0%"},"-=1")
+            tl.to('.inst',{zIndex:"10"},"<")
+        }
+        if(selectedFeature!=='offline'){
+            tl.to('.offcta',{translateY:"120%"},"<")
+            tl.to('.ol',{zIndex:"0"},"<")
+        } else {
+            tl.to('.offcta',{translateY:"0%"},"-=1")
+            tl.to('.ol',{zIndex:"10"},"<")
+        }
+        if(selectedFeature!=='flexible'){
+            tl.to('.flexcta',{translateY:"120%"},"<")
+            tl.to('.flx',{zIndex:"0"},"<")
+        } else {
+            tl.to('.flexcta',{translateY:"0%"},"-=1")
+            tl.to('.flx',{zIndex:"10"},"<")
         }
     },[selectedFeature])
 
@@ -205,7 +222,7 @@ const PWAFeatures = () => {
                 <div className="flex flex-col md:flex-row flex-auto">
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                         <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">I</h6></div>
-                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium hover:text-red">Installable</span>
+                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium hover:text-red text-red">Installable</span>
                     </div>
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">O</h6></div>

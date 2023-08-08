@@ -34,7 +34,7 @@ module.exports = {
       },
       gridTemplateRows: {
         layout: 'auto 1fr 1fr 9.7vw 9.7vw 1fr',
-        mobileLayout: 'auto 1fr 10vw 10.5vw 10.5vw 1fr',
+        mobileLayout: 'auto 1fr 10vw 12vw 12vw 1fr',
         contact: 'fit-content(10%) fit-content 1fr 1fr fit-content(10%) 10%',
       },
       width: {

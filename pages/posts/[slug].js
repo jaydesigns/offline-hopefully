@@ -124,7 +124,7 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
     return (
         <div className='text-white absolute z-10 w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[60vh_100px_2fr]'>
             <div className='col-span-4 md:col-span-8'>
-                <h1 className='lined postTitle text-white text-[10vw] md:text-[6vw] tracking-tighter leading-suis font-extrabold'>{post.title}</h1>
+                <h1 className='lined postTitle text-white text-[9vw] md:text-[6vw] tracking-tighter leading-suis font-semibold uppercase'>{post.title}</h1>
             </div>
             <div className='flex flex-row w-full justify-between row-start-2 col-span-4 md:col-span-12 py-2'>
                 <div className='overflow-hidden'>
