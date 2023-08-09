@@ -80,7 +80,18 @@ const PWAFeatures = () => {
     const featureSection = useRef()
 
     useIsomorphicLayoutEffect(() => {
-        
+        let pwa
+        const splitText = () => {
+            pwa = new SplitType('.lined',{types:"lines, words"})
+        }
+        splitText()
+        window.addEventListener("resize", () => {
+            splitText()
+            gsap.set(pwa.words,{translateY:"120%"})
+            setSelectedFeature('installable')
+            let selected = document.querySelector(`[data-name='${selectedFeature}']`)
+            gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
+        })
     },[])
     
     useEffect(()=>{
@@ -109,19 +120,6 @@ const PWAFeatures = () => {
             trigger: '.featureSection',
             onLeave: resetFeatureRects,
             onLeaveBack: resetFeatureRects,
-        })
-
-        let pwa
-        const splitText = () => {
-            pwa = new SplitType('.lined',{types:"lines, words"})
-        }
-        splitText()
-        window.addEventListener("resize", () => {
-            splitText()
-            gsap.set(pwa.words,{translateY:"120%"})
-            setSelectedFeature('installable')
-            let selected = document.querySelector(`[data-name='${selectedFeature}']`)
-            gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         })
 
         let selected = document.querySelector(`[data-name='${selectedFeature}']`)
