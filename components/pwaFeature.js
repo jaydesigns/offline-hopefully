@@ -106,33 +106,11 @@ const PWAFeatures = () => {
             gsap.to([rects[3],rects[4]],{clipPath:"inset(0% 0% 100% 0%)",duration:1})
         }
         resetFeatureRects()
-        ScrollTrigger.create({
-            trigger: '.featureSection',
-            start: "top 25%",
-            onEnter: ()=>{
-                gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
-            },
-            onEnterBack: ()=>{
-                gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
-            },
-        })
+
         ScrollTrigger.create({
             trigger: '.featureSection',
             onLeave: resetFeatureRects,
             onLeaveBack: resetFeatureRects,
-        })
-
-        let selected = document.querySelector(`[data-name='${selectedFeature}']`)
-        let ftTL = gsap.timeline()
-        ftTL.fromTo('.ft-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
-        ftTL.fromTo('.ft-border',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2},"<")
-        ftTL.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"},"<")
-
-        ScrollTrigger.create({
-            trigger: '.featureSection',
-            start: "top center",
-            end: "top 10%",
-            onToggle: () => setOutro(ftTL)
         })
 
         setSVGWidth(parseInt(SVGObj.width))
@@ -149,11 +127,41 @@ const PWAFeatures = () => {
             setLgRectWidth((parseInt(SVGObj.width))/3)
             setLgRectHeight((parseInt(SVGObj.height))/2)
         }
-    },[windowWidth,setOutro])
+    },[windowWidth])
+
+    const handleChangeFeature = (i) => {
+        
+    }
+
+    useEffect(() => {
+        ScrollTrigger.create({
+            trigger: '.featureSection',
+            start: "top 25%",
+            onEnter: ()=>{
+                gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
+            },
+            onEnterBack: ()=>{
+                gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
+            },
+        })
+
+        let selected = document.querySelector(`[data-name='${selectedFeature}']`)
+        let ftTL = gsap.timeline()
+        ftTL.fromTo('.ft-clip',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2})
+        ftTL.fromTo('.ft-border',{clipPath:"inset(0 0 100% 0)"},{clipPath:"inset(0 0 0% 0)",ease:"power3.out",duration:2},"<")
+        ftTL.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"},"<")
+
+        ScrollTrigger.create({
+            trigger: '.featureSection',
+            start: "top center",
+            end: "top 10%",
+            onToggle: () => setOutro(ftTL)
+        })
+    },[])
 
     const handleImageSwitch = (dataIndex) => {
         const handler = (e) =>{
-            let selected = document.querySelector(`[data-name='${selectedFeature}']`)
+            let selected = document.querySelector(`[data-name='${dataIndex}']`)
             const features = document.querySelectorAll('.feature')
             //console.log(Object.keys(featureImage.current.querySelectorAll("rect")).map(el=>console.log(el)));
             const rects = featureImage.current.querySelectorAll("rect")
@@ -210,7 +218,6 @@ const PWAFeatures = () => {
             tl.to('.flx',{zIndex:"10"},"<")
         }
     },[selectedFeature])
-
 
     return (
         <div ref={featureSection} className="featureSection snap-start relative flex flex-col gap-4 justify-between w-screen h-screen p-4 pb-32 text-white">
