@@ -103,7 +103,7 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
     const handleChangePost = () => {
         let tl = gsap.timeline()
         tl.to('.word',{translateY:"120%",duration:1})
-        tl.to('#main',{clipPath:"inset(51% 0 50% 0)",duration:1.2,ease:"ease3.inOut"})
+        tl.to('#main',{clipPath:"inset(51% 0 50% 0)",duration:1,ease:"ease3.in"})
         setTimeout(()=>router.push(`/posts/${nextPost.slug}`),1200)
     }
 
@@ -122,11 +122,20 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
     },[showNextArrow])
 
     return (
-        <div className='text-white absolute z-10 w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[60vh_100px_2fr]'>
+        <div className='text-white absolute z-10 w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[max-content_20vh_100px] gap-2'>
             <div className='col-span-4 md:col-span-8'>
-                <h1 className='lined postTitle text-white text-[9vw] md:text-[6vw] tracking-tighter leading-suis font-semibold uppercase'>{post.title}</h1>
+                <h1 className='lined postTitle text-white text-[11vw] md:text-[6vw] tracking-tighter leading-suis font-medium'>{post.title}</h1>
             </div>
-            <div className='flex flex-row w-full justify-between row-start-2 col-span-4 md:col-span-12 py-2'>
+            <div className='paragraphContainer relative text-white col-start-2 md:col-start-9 row-start-2 col-span-4 w-full h-full'>
+                {post.body.text.split('\\n').map((el,i) => {
+                    return (
+                        <div key={i} className='slideText absolute w-full h-full'>
+                            <p id={`slideText-${i}`} className='lined text-lg leading-[1.15]'>{el}</p>
+                        </div>
+                    )
+                })}
+            </div>
+            <div className='flex flex-row w-full justify-between row-start-3 col-span-4 md:col-span-12 py-2'>
                 <div className='overflow-hidden'>
                     <div id="previousArrow" className='overflow-hidden'>
                         <ArrowRight fn={handlePreviousSlide} color={'white'} style={{height:"30px",width:"40px",translateX:"-100%"}} classToAdd={'rotate-[180deg] cursor-pointer'}/>
@@ -147,15 +156,6 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
                         </div>
                 </button>
                 }
-            </div>
-            <div className='paragraphContainer relative text-white col-start-2 md:col-start-9 row-start-3 col-span-4 w-full h-full'>
-                {post.body.text.split('\\n').map((el,i) => {
-                    return (
-                        <div key={i} className='slideText absolute w-full h-full'>
-                            <p id={`slideText-${i}`} className='lined text-lg leading-[1.15]'>{el}</p>
-                        </div>
-                    )
-                })}
             </div>
         </div>
     )
