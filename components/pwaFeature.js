@@ -88,7 +88,6 @@ const PWAFeatures = () => {
         window.addEventListener("resize", () => {
             splitText()
             gsap.set(pwa.words,{translateY:"120%"})
-            setSelectedFeature('installable')
             let selected = document.querySelector(`[data-name='${selectedFeature}']`)
             gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         })
@@ -130,7 +129,7 @@ const PWAFeatures = () => {
     },[windowWidth])
 
     useEffect(() => {
-        /* ScrollTrigger.create({
+        ScrollTrigger.create({
             trigger: '.featureSection',
             start: "top 25%",
             onEnter: ()=>{
@@ -139,7 +138,7 @@ const PWAFeatures = () => {
             onEnterBack: ()=>{
                 gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
             },
-        }) */
+        })
 
         let selected = document.querySelector(`[data-name='${selectedFeature}']`)
         let ftTL = gsap.timeline()
