@@ -128,7 +128,7 @@ const PWAFeatures = () => {
         }
     },[windowWidth])
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         ScrollTrigger.create({
             trigger: '.featureSection',
             start: "top 25%",
@@ -147,7 +147,7 @@ const PWAFeatures = () => {
         ftTL.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"},"<")
 
         ScrollTrigger.create({
-            trigger: '.featureSection',
+            trigger: featureSection.current,
             start: "top center",
             end: "top 10%",
             onEnter: () => setOutro(ftTL)
