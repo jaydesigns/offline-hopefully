@@ -90,9 +90,9 @@ const PWAFeatures = () => {
         gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         window.addEventListener("resize", () => {
             splitText()
-            gsap.set(pwa.words,{translateY:"120%"})
-            let selected = document.querySelector(`[data-name='${selectedFeature}']`)
-            gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
+            // gsap.set(pwa.words,{translateY:"120%"})
+            // let selected = document.querySelector(`[data-name='${selectedFeature}']`)
+            // gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         })
     },[])
     
@@ -122,13 +122,13 @@ const PWAFeatures = () => {
         setSmRectWidth((parseInt(SVGObj.width))/6)
         setLgRectHeight((parseInt(SVGObj.height))/2)
 
-        window.onresize = () => {
-            setWindowWidth(window.innerWidth)
-            setSVGWidth(parseInt(SVGObj.width))
-            setSVGHeight(parseInt(SVGObj.height))
-            setLgRectWidth((parseInt(SVGObj.width))/3)
-            setLgRectHeight((parseInt(SVGObj.height))/2)
-        }
+        // window.onresize = () => {
+        //     setWindowWidth(window.innerWidth)
+        //     setSVGWidth(parseInt(SVGObj.width))
+        //     setSVGHeight(parseInt(SVGObj.height))
+        //     setLgRectWidth((parseInt(SVGObj.width))/3)
+        //     setLgRectHeight((parseInt(SVGObj.height))/2)
+        // }
     },[windowWidth])
 
     useIsomorphicLayoutEffect(() => {
