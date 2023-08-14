@@ -129,12 +129,8 @@ const PWAFeatures = () => {
         }
     },[windowWidth])
 
-    const handleChangeFeature = (i) => {
-        
-    }
-
     useEffect(() => {
-        ScrollTrigger.create({
+        /* ScrollTrigger.create({
             trigger: '.featureSection',
             start: "top 25%",
             onEnter: ()=>{
@@ -143,7 +139,7 @@ const PWAFeatures = () => {
             onEnterBack: ()=>{
                 gsap.to("rect",{clipPath:"inset(0% 0% 0% 0%)",duration:1,ease:"power3.inOut"})
             },
-        })
+        }) */
 
         let selected = document.querySelector(`[data-name='${selectedFeature}']`)
         let ftTL = gsap.timeline()
@@ -155,7 +151,7 @@ const PWAFeatures = () => {
             trigger: '.featureSection',
             start: "top center",
             end: "top 10%",
-            onToggle: () => setOutro(ftTL)
+            onEnter: () => setOutro(ftTL)
         })
     },[])
 
