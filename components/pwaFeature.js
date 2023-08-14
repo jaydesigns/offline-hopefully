@@ -86,9 +86,9 @@ const PWAFeatures = () => {
         }
         splitText()
         gsap.set(pwa.words,{translateY:"120%"})
-        window.addEventListener("resize", () => {
-            splitText()
-        })
+        // window.addEventListener("resize", () => {
+        //     splitText()
+        // })
     },[])
     
     useEffect(()=>{
