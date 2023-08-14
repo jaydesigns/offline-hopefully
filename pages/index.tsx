@@ -54,7 +54,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
     gsap.registerPlugin(ScrollTrigger)
     
     const ctx = gsap.context(() => {
-    mm.add("(min-width:768px)",() => {
+    // mm.add("(min-width:768px)",() => {
         ScrollTrigger.create({
           trigger: "body",
           //onUpdate: self => console.log(self.progress),
@@ -63,7 +63,7 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
             directional: false
           }
         })
-      })
+      // })
     /* mm.add("(max-width:768px)",() => {
         ScrollTrigger.create({
           trigger: "body",
