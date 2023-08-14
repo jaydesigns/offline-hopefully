@@ -85,12 +85,11 @@ const PWAFeatures = () => {
             pwa = new SplitType('.lined',{types:"lines, words"})
         }
         splitText()
-        
+        gsap.set(pwa.words,{translateY:"120%"})
+        let selected = document.querySelector(`[data-name='${selectedFeature}']`)
+        gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         window.addEventListener("resize", () => {
             splitText()
-            gsap.set(pwa.words,{translateY:"120%"})
-            let selected = document.querySelector(`[data-name='${selectedFeature}']`)
-            gsap.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         })
     },[])
     
