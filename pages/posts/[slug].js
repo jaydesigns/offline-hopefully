@@ -122,7 +122,7 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
     },[showNextArrow])
 
     return (
-        <div className='text-white absolute z-10 w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[max-content_20vh_100px] gap-2'>
+        <div className='text-white absolute z-10 w-screen h-full p-4 grid grid-cols-4 md:grid-cols-12 grid-rows-[max-content_20vh_100px] gap-4'>
             <div className='col-span-4 md:col-span-8'>
                 <h1 className='lined postTitle text-white text-[11vw] md:text-[6vw] tracking-tighter leading-suis font-medium'>{post.title}</h1>
             </div>
