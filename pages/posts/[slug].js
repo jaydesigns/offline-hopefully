@@ -54,7 +54,7 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
             switchNext.to(`#parallax-${currentSlide+1}`,{duration:2,ease:"power3.inOut",clipPath:'inset(0 0 0 0%)'},"<")
             if(p&&pNext){
                 switchNext.to(p.querySelectorAll('.word'),{translateY:"120%"},"<")
-                switchNext.to(pNext.querySelectorAll('.word'),{translateY:"0%",stagger:0.03,duration:"power3.out",duration:1})
+                switchNext.to(pNext.querySelectorAll('.word'),{translateY:"0%",stagger:0.03,duration:"power3.out",duration:0.5})
             }
             switchNext.play()
             // setShowPreviousArrow(true)
@@ -73,7 +73,7 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
             switchPrevious.to(`#parallax-${currentSlide-1}`,{duration:2,ease:"power3.inOut",clipPath:'inset(0 0% 0 0)'},"<")
             if(p&&pPrev){
                 switchPrevious.to(p.querySelectorAll('.word'),{translateY:"120%"},"<")
-                switchPrevious.to(pPrev.querySelectorAll('.word'),{translateY:"0%",stagger:0.03,duration:"power3.out",duration:1})
+                switchPrevious.to(pPrev.querySelectorAll('.word'),{translateY:"0%",stagger:0.03,duration:"power3.out",duration:0.5})
             }
             switchPrevious.play()
         } else {
@@ -102,8 +102,8 @@ const Content = ({post,nextPost,showPreviousArrow,setShowPreviousArrow,
     // SWITCH POST
     const handleChangePost = () => {
         let tl = gsap.timeline()
-        tl.to('.word',{translateY:"120%",duration:1})
-        tl.to('#main',{clipPath:"inset(51% 0 50% 0)",duration:1,ease:"ease3.in"})
+        tl.to('.word',{translateY:"120%",duration:0.5,ease:"power3.in"})
+        tl.to('#main',{clipPath:"inset(51% 0 50% 0)",duration:1,ease:"power3.in"})
         setTimeout(()=>router.push(`/posts/${nextPost.slug}`),1200)
     }
 
