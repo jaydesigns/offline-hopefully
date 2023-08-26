@@ -126,7 +126,7 @@ const Cards = ({data}) => {
             {/* TRY GETTING THE API HERE INSTEAD OF USING STATE */}
             {data.map((el,i)=>{
             return(
-            <div key={el.id} className="card gap-4 flex flex-col justify-start h-full" style={{minWidth:"200px"}} projectid={el.slug}>
+            <div key={el.id} className="card gap-4 flex flex-col justify-start h-full" style={{minWidth:"250px"}} projectid={el.slug}>
                 <Link onClick={handlePageChange} className="h-full overflow-hidden" href="project" scroll={false}>
                     <div className="cover relative h-[130%] -top-[20%] overflow-hidden w-full">
                         <Image src={el.coverImage.url} alt="image" priority loading="eager" fill style={{objectFit:"cover"}} sizes="(max-width: 768px) 50vw,33vw" className="projectImage"></Image>

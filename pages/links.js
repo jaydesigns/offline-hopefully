@@ -8,6 +8,7 @@ import InstallPWA from "../components/installPWA"
 import { OutroTimeline } from "./_app"
 import { gsap } from "gsap"
 import { useIsomorphicLayoutEffect } from "react-use"
+import LinkText from "../components/linkText"
 
 const Links = () => {
     const themeChange = useContext(BackgroundTheme)
@@ -61,10 +62,16 @@ const Links = () => {
             <div style={{width:0}} className="linkBorder border-32 border-b overflow-y-hidden pb-2">
                 <h1 className="title text-5xl md:text-SM font-semibold">Links</h1>
             </div>
-            <div className="flex overflow-y-hidden">
-                <div className="slideDown grow"><InstallPWA text={"Install"}/></div>
-                <Link href={'/'} className="slideDown grow">Connect</Link>
-                <button className="slideDown grow">Follow</button>
+            <div className="flex flex-col md:flex-row">
+                <div className="overflow-y-hidden grow relative h-[2rem]">
+                    <a href="mailto:jayindinodesigns@gmail.com" target="_blank" rel="noreferrer" className="absolute slideDown underline"><LinkText str={"jayindinodesigns@gmail.com"} arrowClass={"rotate-[-45deg]"}/></a>
+                </div>
+                <div className="overflow-y-hidden grow relative h-[2rem]">
+                    <a href="https://instagram.com/jay.indino" target="_blank" rel="noreferrer" className="absolute slideDown underline"><LinkText str={"Instagram"} arrowClass={"rotate-[-45deg]"}/></a>
+                </div>
+                <div className="overflow-y-hidden grow relative h-[2rem]">
+                    <a href="https://facebook.com/jaeyiminam" target="_blank" rel="noreferrer" className="absolute slideDown underline"><LinkText str={"Facebook"} arrowClass={"rotate-[-45deg]"}/></a>
+                </div>
             </div>
         </div>
         <div>
