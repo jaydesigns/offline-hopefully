@@ -76,7 +76,7 @@ const Links = () => {
         </div>
         <div>
             {(linkData)&&
-            <div className="grid grid-cols-3 gap-4 p-4 w-full">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-4 p-4 w-full">
                 {linkData.map((el,i) => {
                     return (
                         <div key={i} className="clip relative w-full aspect-square">
