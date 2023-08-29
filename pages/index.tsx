@@ -18,6 +18,7 @@ import { gql } from '@apollo/client'
 import client from '../apolloClient'
 import Lenis from '@studio-freight/lenis'
 import ChatJPT from '../components/chat'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -151,6 +152,20 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
           <link rel='apple-touch-startup-image' href='/images/apple_splash_640.png' sizes='640x1136' />
           --> */}
         </Head>
+
+
+          {/* Google Analytics */}
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-12JW11Q6MG" />
+          <Script id="google analytics">
+            {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-12JW11Q6MG');
+            `}
+          </Script>
+
       <Intro heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
       <div className='darkTheme'>
         <WorkGallery handleProjectSelection={handleProjectSelection} data={data}/>
