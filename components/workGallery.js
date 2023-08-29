@@ -268,7 +268,7 @@ const WorkGallery = ({data}) => {
             <div className="flex flex-col gap-4 md:border-b-0 md:flex-row md:h-1/4">
                 <div className="flex flex-col justify-end md:w-1/2">
                     <div className="flex flex-row md:flex-col justify-between h-full">
-                        <h2 className="g-clip text-MED md:text-SM font-semibold grow">Selected<br></br>Work</h2>
+                        <h2 className="g-clip text-MED md:text-SM font-medium grow">Selected<br></br>Work</h2>
                         <div className="flex flex-col justify-start md:justify-end grow md:py-1 uppercase font-light">
                             <h4 className="g-clip align-baseline leading-suis font-light">Catalogue</h4>
                         </div>

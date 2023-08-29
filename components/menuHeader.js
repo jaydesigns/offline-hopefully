@@ -14,7 +14,7 @@ const MenuItem = ({handleRouteChange,link,str}) => {
         <div className="flex flex-row gap-2 content-center menuEntra">
                 <div className="bg-red w-6 h-6 flex justify-around items-center rounded-full"></div>
                 <Link onClick={handleRouteChange} href={link}><div className="linkName overflow-hidden relative h-6">
-                    <span className="linkText cursor-pointer">{str}</span>
+                    <span className="linkText cursor-pointer font-medium">{str}</span>
                 </div></Link>
         </div>
     )

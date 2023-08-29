@@ -9,7 +9,7 @@ export const AllProjectObject = React.createContext()
 export const BackgroundTheme = React.createContext()
 
 const switzer = localFont({
-  src:'../pages/font/SaansTRIALVF.woff',
+  src:'../pages/font/GeneralSans-Variable.ttf',
   variable: '--font-switzer'
 })
 

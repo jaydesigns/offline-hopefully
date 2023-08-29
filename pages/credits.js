@@ -45,7 +45,7 @@ const Credits = () =>{
                             <p className="lined">Designed & Developed &mdash; Jay Indino</p>
                             <p className="lined">Programming Language &mdash; JavaScript</p>
                             <p className="lined">CMS &mdash; Hygraph&trade;</p>
-                            <p className="lined">Font &mdash; Saans&trade; by Displaay&reg;</p>
+                            <p className="lined">Font &mdash; General Sans by Indian Type Foundry&reg;</p>
                             <p className="lined">Cascade Stylesheet &mdash; Tailwind&reg;</p>
                         </div>
                         <div className="imageContainer relative row-span-2 row-start-1 col-start-2 md:col-start-1 col-span-3 md:col-span-6">
