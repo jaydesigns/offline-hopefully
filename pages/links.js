@@ -60,7 +60,7 @@ const Links = () => {
         <>
         <div className="flex flex-col p-4">
             <div style={{width:0}} className="linkBorder border-32 border-b overflow-y-hidden pb-2">
-                <h1 className="title text-5xl md:text-SM font-semibold">Links</h1>
+                <h1 className="title text-5xl md:text-SM font-medium">Links</h1>
             </div>
             <div className="flex flex-col md:flex-row">
                 {/* <div className="overflow-y-hidden grow relative h-[2rem]">

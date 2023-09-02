@@ -37,7 +37,7 @@ const Credits = () =>{
         <Layout>
             <div className="text-white p-4 w-screen h-screen flex flex-col">
                 <div className="creditBorder pb-2 border-grey border-b overflow-hidden">
-                    <h1 className="creditTitle text-5xl md:text-SM font-semibold">Credits</h1>
+                    <h1 className="creditTitle text-5xl md:text-SM font-medium">Credits</h1>
                 </div>
                 <div className="grow flex flex-col justify-between mb-20">
                     <div className="grid grid-cols-4 md:grid-cols-12 grid-rows-[auto_40vh_auto] py-4 gap-4">
