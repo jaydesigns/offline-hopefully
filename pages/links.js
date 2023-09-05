@@ -79,7 +79,7 @@ const Links = () => {
                     <Link href="/#chat" className="absolute slideDown underline"><LinkText str={"Contact"} arrowClass={"rotate-[-45deg]"}/></Link>
                 </div>
                 <div className="overflow-y-hidden grow relative h-[2rem]">
-                    <Link href="/#web-app" className="absolute slideDown underline"><LinkText str={"Web App"} arrowClass={"rotate-[-45deg]"}/></Link>
+                    <Link href="https://www.behance.net/jay-indino" target="_blank" className="absolute slideDown underline"><LinkText str={"Behance"} arrowClass={"rotate-[-45deg]"}/></Link>
                 </div>
             </div>
         </div>
