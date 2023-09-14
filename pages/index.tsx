@@ -166,6 +166,8 @@ const Home =({heading1Wrapper,heading2Wrapper,ampersandWrapper,handleProjectSele
         `}
       </Script>
 
+      <Script id="seona-js-plugin" src="https://assets.usestyle.ai/seonajsplugin"></Script>
+
       <Intro heading1Wrapper={heading1Wrapper} heading2Wrapper={heading2Wrapper} ampersandWrapper={ampersandWrapper}/>
       <div className='darkTheme'>
         <WorkGallery handleProjectSelection={handleProjectSelection} data={data}/>
