@@ -151,7 +151,7 @@ const Intro = ({app}) => {
     
     return (
         <div style={{opacity:0}} ref={introductionContent} className="snap-start introBody px-4 pb-4 pt-24 md:pt-4 grid grid-cols-4 h-screen gap-2 grid-rows-mobileLayout md:grid-cols-12 md:grid-rows-layout">
-            <h1 className="hidden" id="jobTitles">Visual Designer & Creative Developer</h1>
+            <h1 className="hidden" id="jobTitles">Graphic Designer & Creative Developer</h1>
             <p ref={introP} className="clip intro-p paragraph row-start-1 col-start-2 col-span-4 text-black text-[4.5vw] font-medium md:text-base md:col-start-2 md:col-end-5 md:row-start-2 md:row-span-2">Hi! My name is Heber Jay Indino, most people know me as Jay, I&apos;m a designer and developer who specialize in creating meaningful and beautiful digital experiences. I have skills in traditional graphic design and modern web development architecture. I can build design systems and develop web applications.</p>
             <div className="clip reel relative overflow-hidden flex flex-col gap-4 row-start-2 row-span-2 col-start-1 col-span-4 lg:col-start-9 lg:col-span-2 md:col-start-7 md:row-start-3 md:row-span-1">
                 <MotionReel classList="heroImage absolute bottom-0 object-cover w-full h-full" />

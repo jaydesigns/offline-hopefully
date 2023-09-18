@@ -20,18 +20,18 @@ const FeatureDescription = (props) => {
             <div className="ol ft-clip absolute flex flex-col gap-4" data-name="offline">
                 <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.offline.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.offline.desc}</p>
-                <div className="overflow-hidden relative h-6"><Link href="mailto:jayindinodesigns@gmail.com" className="offcta absolute min-h-min"><LinkText str={"Ask me about it"} /></Link></div>
+                {/* <div className="overflow-hidden relative h-6"><Link href="mailto:jayindinodesigns@gmail.com" className="offcta absolute min-h-min"><LinkText str={"Ask me about it"} /></Link></div> */}
             </div>
             <div className="flx ft-clip absolute flex flex-col gap-4" data-name="flexible">
                 <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.flexible.title}</h2>
                 <p className="featureDescription lined md:pl-0">{props.obj.flexible.desc}</p>
-                <div className="overflow-hidden relative h-6"><Link href="mailto:jayindinodesigns@gmail.com" className="flexcta absolute min-h-min"><LinkText str={"Ask me about it"} /></Link></div>
+                <div className="overflow-hidden relative"><div className="cta"><InstallPWA text={"Try it"} /></div></div>
+                {/* <div className="overflow-hidden relative h-6"><Link href="mailto:jayindinodesigns@gmail.com" className="flexcta absolute min-h-min"><LinkText str={"Ask me about it"} /></Link></div> */}
             </div>
             <div className="inst ft-clip absolute flex flex-col h-full justify-between" data-name="installable">
                 <div className=" flex flex-col gap-4">
                     <h2 className="featureText lined text-XL md:text-4xl font-medium tracking-tight">{props.obj.installable.title}</h2>
                     <p className="featureDescription lined md:pl-0">{props.obj.installable.desc}</p>
-                    <div className="overflow-hidden relative"><div className="cta"><InstallPWA text={"Try it"} /></div></div>
                 </div>
             </div>
         </div>
@@ -39,21 +39,24 @@ const FeatureDescription = (props) => {
 }
 
 const PWAFeatures = () => {
+    const currentYear = new Date().getFullYear()
+    const yrs = currentYear - 2017
+
     const obj = {
         installable:{
             cover: "/images/guggenheim.jpg",
-            title: "Installable",
-            desc: "This web app utilizes new technology which enables you to install this web app on whatever device you're using."
+            title: "Graphic Design",
+            desc: `I have ${yrs} years of experience in Graphic Design both in-house and as an independent creative. My clients include the Polynesian Cultural Center, United Way of Utah County, & EnglishConnect.`
         },
         offline: {
             cover: "/images/DSC_0120-b&w-1.JPG",
-            title: "Offline",
-            desc: "Using the local machine storage API, after installing the web application, this app should work even without internet connection."
+            title: "Web Design",
+            desc: "I am also a web designer and developer using Figma, Webflow, Adobe XD, Invision, WordPress to name a few of the tools that I use."
         },
         flexible: {
             cover: "/images/PXL_20221224_211305839-b&w.jpg",
-            title: "Modern Web",
-            desc: "I've designed and developed this app with performance in mind. Through composable architecture, this app is faster, more secure, and scalable than traaditional websites."
+            title: "Web Application",
+            desc: "This is actually a web app. Through composable architecture and microservices, this app is faster, more secure, and scalable than traaditional websites."
         }
     }
     //const [featureSVG,setFeatureSVG] = useState()
@@ -190,10 +193,10 @@ const PWAFeatures = () => {
         tl.to(featureText.current.querySelectorAll('.word'),{translateY:"120%",duration:1,ease:"power3.in"})
         tl.to(selected.querySelectorAll(".word"),{translateY:"0%", duration:1.5,ease:"power3.out"})
         if(selectedFeature!=='installable'){
-            tl.to('.cta',{translateY:"120%"},"<")
+            tl.to('.flexcta',{translateY:"120%"},"<")
             tl.to('.inst',{zIndex:"0"},"<")
         } else {
-            tl.to('.cta',{translateY:"0%"},"-=1")
+            tl.to('.flexcta',{translateY:"0%"},"-=1")
             tl.to('.inst',{zIndex:"10"},"<")
         }
         if(selectedFeature!=='offline'){
@@ -204,10 +207,10 @@ const PWAFeatures = () => {
             tl.to('.ol',{zIndex:"10"},"<")
         }
         if(selectedFeature!=='flexible'){
-            tl.to('.flexcta',{translateY:"120%"},"<")
+            tl.to('.cta',{translateY:"120%"},"<")
             tl.to('.flx',{zIndex:"0"},"<")
         } else {
-            tl.to('.flexcta',{translateY:"0%"},"-=1")
+            tl.to('.cta',{translateY:"0%"},"-=1")
             tl.to('.flx',{zIndex:"10"},"<")
         }
     },[selectedFeature])
@@ -216,19 +219,19 @@ const PWAFeatures = () => {
         <div ref={featureSection} id="web-app" className="featureSection snap-start relative flex flex-col gap-4 justify-between w-screen h-screen p-4 pb-32 text-white">
             <div className="ft-border flex w-full border-b border-white py-4 mix-blend-exclusion">
                 {/* You could probably use an object here as the argument, also for future-proofing when geting data from API */}
-                <h4 className="w-1/2 md:w-1/4 text-MED md:text-SM font-medium">Not just<br></br>a Website</h4>
+                <h4 className="w-1/2 md:w-1/4 text-MED md:text-SM font-medium">Skills</h4>
                 <div className="flex flex-col md:flex-row flex-auto">
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
-                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">I</h6></div>
-                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium hover:text-red text-red">Installable</span>
+                        <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">G</h6></div>
+                        <span onClick={handleImageSwitch("installable")} data-index="installable" className="feature cursor-pointer grow font-medium hover:text-red text-red">Graphic Design</span>
                     </div>
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
-                    <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">O</h6></div>
-                        <span onClick={handleImageSwitch("offline")} data-index="offline" className="feature cursor-pointer grow font-medium hover:text-red">Works Offline</span>
+                    <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">W</h6></div>
+                        <span onClick={handleImageSwitch("offline")} data-index="offline" className="feature cursor-pointer grow font-medium hover:text-red">Web Design</span>
                     </div>
                     <div className="ft-clip flex gap-4 grow hover:text-red text-white">
                     <div className="flex rounded-full border border-white flex-col justify-center w-4 h-4 my-1"><h6 className="text-[10px] text-center text-white">A</h6></div>
-                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium hover:text-red">Smoother Experience</span>
+                        <span onClick={handleImageSwitch("flexible")} data-index="flexible" className="feature cursor-pointer grow font-medium hover:text-red">Web Applications</span>
                     </div>
                 </div>
             </div>

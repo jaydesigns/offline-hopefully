@@ -110,9 +110,9 @@ const Cards = ({data}) => {
     const [showAllPosts,setShowAllPosts] = useState(true)
     const {outro,setOutro} = useContext(OutroTimeline)
 
-    useEffect(()=>{
-        gsap.to('.cover',{translateY:"20%",scrollTrigger:{trigger:".selectedWork",start:"top 35%",end:"bottom 10%",scrub:true,pinSpacing:false}})
-    },[])
+    // useEffect(()=>{
+    //     gsap.to('.cover',{translateY:"20%",scrollTrigger:{trigger:".selectedWork",start:"top 35%",end:"bottom 10%",scrub:true,pinSpacing:false}})
+    // },[])
 
     const handlePageChange = (e)=>{
         e.preventDefault()
